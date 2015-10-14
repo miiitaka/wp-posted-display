@@ -30,7 +30,7 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	public function form( $instance ) {
 		echo '<p>Title : ';
 		printf(
-			'<input type="text" id="%s" name="%s", value="%s">',
+			'<input type="text" id="%s" name="%s" value="%s">',
 			$this->get_field_id( 'title' ),
 			$this->get_field_name( 'title' ),
 			esc_attr( $instance['title'] )
@@ -47,7 +47,7 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @return array Parent::Settings to save or bool false to cancel saving.
 	 */
 	public function update( $new_instance, $old_instance ) {
-
+		return $new_instance;
 	}
 
 	/**
@@ -59,6 +59,10 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 *
 	 */
 	public function widget( $args, $instance ) {
-
+		echo $args['before_widget'];
+		echo $args['before_title'];
+		echo esc_html( $instance['title'] );
+		echo $args['after_title'];
+		echo $args['after_widget'];
 	}
 }
