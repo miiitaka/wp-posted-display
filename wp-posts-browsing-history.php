@@ -26,6 +26,35 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function __construct () {
+		if ( is_admin() ) {
+			$this->widget_register();
+		} else {
+			$this->set_cookie();
+		}
+	}
 
+	/**
+	 * Widget Register.
+	 *
+	 * @since 1.0.0
+	 */
+	private function widget_register () {
+		require_once(  plugin_dir_path( __FILE__ ) . 'wp-posts-browsing-history-widget.php' );
+		add_action( 'widgets_init', function () {
+			register_widget( 'Posts_Browsing_History_Widget' );
+		});
+	}
+
+	/**
+	 * Set Cookie.
+	 *
+	 * @since 1.0.0
+	 */
+	private function set_cookie () {
+		add_action( 'get_header', function () {
+			if ( is_single() ) {
+				setcookie( 'test', 'true', time() + 60 * 60 * 24 * 7, '/', $_SERVER["SERVER_NAME"] );
+			}
+		} );
 	}
 }

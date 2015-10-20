@@ -20,7 +20,7 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Widget Form
+	 * Widget Form Display.
 	 *
 	 * @since  1.0.0
 	 * @access public
@@ -28,6 +28,10 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @return string Parent::Default return is 'noform'
 	 */
 	public function form( $instance ) {
+		if ( !isset( $instance['title'] ) ) {
+			$instance['title'] = "";
+		}
+
 		echo '<p>Title : ';
 		printf(
 			'<input type="text" id="%s" name="%s" value="%s">',
@@ -39,7 +43,7 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Update
+	 * Widget Form Update.
 	 * @since  1.0.0
 	 * @access public
 	 * @param  array $new_instance
@@ -51,7 +55,7 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Widget
+	 * Widget Display.
 	 * @since  1.0.0
 	 * @access public
 	 * @param  array $args
