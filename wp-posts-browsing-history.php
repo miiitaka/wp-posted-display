@@ -15,8 +15,8 @@ new Posts_Browsing_History();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 1.0.0
  * @since   1.0.0
+ * @version 1.0.0
  */
 class Posts_Browsing_History {
 
@@ -26,9 +26,9 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function __construct () {
-		if ( is_admin() ) {
-			$this->widget_register();
-		} else {
+		$this->widget_register();
+
+		if ( !is_admin() ) {
 			$this->set_cookie();
 		}
 	}
@@ -53,7 +53,29 @@ class Posts_Browsing_History {
 	private function set_cookie () {
 		add_action( 'get_header', function () {
 			if ( is_single() ) {
-				setcookie( 'test', 'true', time() + 60 * 60 * 24 * 7, '/', $_SERVER["SERVER_NAME"] );
+				global $post;
+
+				/** Cookie data read and convert string from array. */
+				$array = array();
+				if ( isset( $_COOKIE['wp-posts-browsing-history'] ) ) {
+					$array = explode( ',', esc_html( $_COOKIE['wp-posts-browsing-history'] ) );
+				}
+
+				/** Existence check. */
+				$position = array_search( $post->ID, $array, true );
+				if ( is_numeric( $position ) ) {
+					unset( $array[$position] );
+				}
+
+				/** Cookie data add and Array reverse. */
+				$array[] = $post->ID;
+				$array = array_reverse( $array );
+
+				if ( count( $array) > 10 ) {
+					array_pop( $array );
+				}
+
+				setcookie( 'wp-posts-browsing-history', implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 			}
 		} );
 	}

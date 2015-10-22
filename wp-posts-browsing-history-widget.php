@@ -63,10 +63,28 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 *
 	 */
 	public function widget( $args, $instance ) {
-		echo $args['before_widget'];
-		echo $args['before_title'];
-		echo esc_html( $instance['title'] );
-		echo $args['after_title'];
-		echo $args['after_widget'];
+		if ( isset( $_COOKIE['wp-posts-browsing-history'] ) ) {
+			$query_args = array(
+				"post__in" => explode( ',', esc_html( $_COOKIE['wp-posts-browsing-history'] ) ),
+				"posts_per_page" => 10,
+			);
+
+			$query = new WP_Query( $query_args );
+
+			if ( $query->have_posts() ) {
+				/** Widget header display. */
+				echo $args['before_widget'];
+				echo $args['before_title'];
+				echo esc_html($instance['title']);
+				echo $args['after_title'];
+				echo $args['after_widget'];
+
+				while ( $query->have_posts() ) {
+					the_title();
+					$query->the_post();
+				}
+				wp_reset_postdata();
+			}
+		}
 	}
 }
