@@ -9,6 +9,13 @@
 class Posts_Browsing_History_Widget extends WP_Widget {
 
 	/**
+	 * Variable definition.
+	 *
+	 * @since 1.0.0
+	 */
+	private $cookie_name = 'wp-posts-browsing-history';
+
+	/**
 	 * Constructor Define.
 	 *
 	 * @since  1.0.0
@@ -28,22 +35,32 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @return string Parent::Default return is 'noform'
 	 */
 	public function form( $instance ) {
+		$id = "";
+		$name = "";
+
 		if ( !isset( $instance['title'] ) ) {
 			$instance['title'] = "";
 		}
+		if ( !isset( $instance['posts'] ) ) {
+			$instance['posts'] = 0;
+		}
 
-		echo '<p>Title : ';
-		printf(
-			'<input type="text" id="%s" name="%s" value="%s">',
-			$this->get_field_id( 'title' ),
-			$this->get_field_name( 'title' ),
-			esc_attr( $instance['title'] )
-		);
+		$id = $this->get_field_id( 'title' );
+		$name = $this->get_field_name( 'title' );
+		echo '<p><label for="' . $id . '">Title:</label><br>';
+		printf( '<input type="text" id="%s" name="%s" value="%s" class="widefat">', $id, $name, esc_attr( $instance['title'] ) );
+		echo '</p>';
+
+		$id = $this->get_field_id( 'posts' );
+		$name = $this->get_field_name( 'posts' );
+		echo '<p><label for="' . $id . '">Number of posts to show:</label>';
+		printf( '<input type="text" id="%s" name="%s" value="%s" size="3">', $id, $name, esc_attr( $instance['posts'] ) );
 		echo '</p>';
 	}
 
 	/**
 	 * Widget Form Update.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @param  array $new_instance
@@ -51,11 +68,20 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @return array Parent::Settings to save or bool false to cancel saving.
 	 */
 	public function update( $new_instance, $old_instance ) {
+		if ( isset( $new_instance['posts'] ) ) {
+			if ( !is_numeric( $new_instance['posts'] ) ) {
+				$new_instance['posts'] = 0;
+			}
+		} else {
+			$new_instance['posts'] = 0;
+		}
+
 		return $new_instance;
 	}
 
 	/**
 	 * Widget Display.
+	 *
 	 * @since  1.0.0
 	 * @access public
 	 * @param  array $args
@@ -63,27 +89,40 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 *
 	 */
 	public function widget( $args, $instance ) {
-		if ( isset( $_COOKIE['wp-posts-browsing-history'] ) ) {
-			$query_args = array(
-				"post__in" => explode( ',', esc_html( $_COOKIE['wp-posts-browsing-history'] ) ),
-				"posts_per_page" => 10,
-			);
+		if ( isset( $_COOKIE[$this->cookie_name] ) && isset( $instance['posts'] ) ) {
+			if ( $instance['posts'] > 0 ) {
+				$query_args = array(
+					"post__in"       => explode( ',', esc_html( $_COOKIE[$this->cookie_name] ) ),
+					"posts_per_page" => esc_html( $instance['posts'] ),
+					"post_status"    => "publish"
+				);
 
-			$query = new WP_Query( $query_args );
+				$query = new WP_Query($query_args);
 
-			if ( $query->have_posts() ) {
-				/** Widget header display. */
-				echo $args['before_widget'];
-				echo $args['before_title'];
-				echo esc_html($instance['title']);
-				echo $args['after_title'];
-				echo $args['after_widget'];
+				if ( $query->have_posts() ) {
+					/** Display widget header. */
+					echo $args['before_widget'];
+					echo $args['before_title'];
+					echo esc_html( $instance['title'] );
+					echo $args['after_title'];
 
-				while ( $query->have_posts() ) {
-					the_title();
-					$query->the_post();
+					/** Display widget body. */
+					echo '<ul>';
+
+					while ( $query->have_posts() ) {
+						echo '<li>';
+						echo '<span>' . esc_html( the_time( get_option( 'date_format' ) ) ) . '</span>';
+						echo '<span>' . esc_html( the_title() ) . '</span>';
+						echo '</li>';
+
+						$query->the_post();
+					}
+
+					echo '</ul>';
+					echo $args['after_widget'];
+
+					wp_reset_postdata();
 				}
-				wp_reset_postdata();
 			}
 		}
 	}

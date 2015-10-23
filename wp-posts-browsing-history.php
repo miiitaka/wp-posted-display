@@ -21,6 +21,13 @@ new Posts_Browsing_History();
 class Posts_Browsing_History {
 
 	/**
+	 * Variable definition.
+	 *
+	 * @since 1.0.0
+	 */
+	private $cookie_name = 'wp-posts-browsing-history';
+
+	/**
 	 * Constructor Define.
 	 *
 	 * @since 1.0.0
@@ -39,7 +46,7 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	private function widget_register () {
-		require_once(  plugin_dir_path( __FILE__ ) . 'wp-posts-browsing-history-widget.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'wp-posts-browsing-history-widget.php' );
 		add_action( 'widgets_init', function () {
 			register_widget( 'Posts_Browsing_History_Widget' );
 		});
@@ -55,27 +62,29 @@ class Posts_Browsing_History {
 			if ( is_single() ) {
 				global $post;
 
-				/** Cookie data read and convert string from array. */
-				$array = array();
-				if ( isset( $_COOKIE['wp-posts-browsing-history'] ) ) {
-					$array = explode( ',', esc_html( $_COOKIE['wp-posts-browsing-history'] ) );
+				if ( $post->post_status === 'publish' ) {
+					/** Cookie data read and convert string from array. */
+					$array = array();
+					if ( isset( $_COOKIE[$this->cookie_name] ) ) {
+						$array = explode( ',', esc_html( $_COOKIE[$this->cookie_name]) );
+					}
+
+					/** Existence check. */
+					$position = array_search( $post->ID, $array, true );
+					if ( is_numeric( $position ) ) {
+						unset( $array[$position] );
+					}
+
+					/** Cookie data add and Array reverse. */
+					$array[] = $post->ID;
+					$array = array_reverse( $array );
+
+					if ( count( $array ) > 10 ) {
+						array_pop( $array );
+					}
+
+					setcookie( $this->cookie_name, implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 				}
-
-				/** Existence check. */
-				$position = array_search( $post->ID, $array, true );
-				if ( is_numeric( $position ) ) {
-					unset( $array[$position] );
-				}
-
-				/** Cookie data add and Array reverse. */
-				$array[] = $post->ID;
-				$array = array_reverse( $array );
-
-				if ( count( $array) > 10 ) {
-					array_pop( $array );
-				}
-
-				setcookie( 'wp-posts-browsing-history', implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 			}
 		} );
 	}
