@@ -13,7 +13,7 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 *
 	 * @since 1.0.0
 	 */
-	private $cookie_name = 'wp-posts-browsing-history';
+	private $domain_name = 'wp-posts-browsing-history';
 
 	/**
 	 * Constructor Define.
@@ -35,9 +35,6 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @return string Parent::Default return is 'noform'
 	 */
 	public function form( $instance ) {
-		$id = "";
-		$name = "";
-
 		if ( !isset( $instance['title'] ) ) {
 			$instance['title'] = "";
 		}
@@ -47,13 +44,13 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 
 		$id = $this->get_field_id( 'title' );
 		$name = $this->get_field_name( 'title' );
-		echo '<p><label for="' . $id . '">Title:</label><br>';
+		echo '<p><label for="' . $id . '">' . esc_html__( 'Title', $this->domain_name ) . ':</label><br>';
 		printf( '<input type="text" id="%s" name="%s" value="%s" class="widefat">', $id, $name, esc_attr( $instance['title'] ) );
 		echo '</p>';
 
 		$id = $this->get_field_id( 'posts' );
 		$name = $this->get_field_name( 'posts' );
-		echo '<p><label for="' . $id . '">Number of posts to show:</label>';
+		echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->domain_name ) . ':</label>';
 		printf( '<input type="text" id="%s" name="%s" value="%s" size="3">', $id, $name, esc_attr( $instance['posts'] ) );
 		echo '</p>';
 	}
@@ -89,10 +86,10 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 *
 	 */
 	public function widget( $args, $instance ) {
-		if ( isset( $_COOKIE[$this->cookie_name] ) && isset( $instance['posts'] ) ) {
+		if ( isset( $_COOKIE[$this->domain_name] ) && isset( $instance['posts'] ) ) {
 			if ( $instance['posts'] > 0 ) {
 				$query_args = array(
-					"post__in"       => explode( ',', esc_html( $_COOKIE[$this->cookie_name] ) ),
+					"post__in"       => explode( ',', esc_html( $_COOKIE[$this->domain_name] ) ),
 					"posts_per_page" => esc_html( $instance['posts'] ),
 					"post_status"    => "publish"
 				);

@@ -8,6 +8,7 @@ Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
 Text Domain: wp-posts-browsing-history
+Domain Path: /languages
 */
 new Posts_Browsing_History();
 
@@ -25,7 +26,7 @@ class Posts_Browsing_History {
 	 *
 	 * @since 1.0.0
 	 */
-	private $cookie_name = 'wp-posts-browsing-history';
+	private $domain_name = 'wp-posts-browsing-history';
 
 	/**
 	 * Constructor Define.
@@ -33,11 +34,8 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function __construct () {
-		$this->widget_register();
-
-		if ( !is_admin() ) {
-			$this->set_cookie();
-		}
+		add_action( 'widgets_init', array( $this, 'widget_init' ) );
+		add_action( 'get_header',   array( $this, 'get_header' ) );
 	}
 
 	/**
@@ -45,11 +43,9 @@ class Posts_Browsing_History {
 	 *
 	 * @since 1.0.0
 	 */
-	private function widget_register () {
-		require_once( plugin_dir_path( __FILE__ ) . 'wp-posts-browsing-history-widget.php' );
-		add_action( 'widgets_init', function () {
-			register_widget( 'Posts_Browsing_History_Widget' );
-		});
+	public function widget_init () {
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-history-widget.php' );
+		register_widget( 'Posts_Browsing_History_Widget' );
 	}
 
 	/**
@@ -57,35 +53,34 @@ class Posts_Browsing_History {
 	 *
 	 * @since 1.0.0
 	 */
-	private function set_cookie () {
-		add_action( 'get_header', function () {
-			if ( is_single() ) {
-				global $post;
+	public function get_header () {
+		if ( is_single() ) {
+			global $post;
+			$array = array();
 
-				if ( $post->post_status === 'publish' ) {
-					/** Cookie data read and convert string from array. */
-					$array = array();
-					if ( isset( $_COOKIE[$this->cookie_name] ) ) {
-						$array = explode( ',', esc_html( $_COOKIE[$this->cookie_name]) );
-					}
+			if ( $post->post_status === 'publish' ) {
 
-					/** Existence check. */
-					$position = array_search( $post->ID, $array, true );
-					if ( is_numeric( $position ) ) {
-						unset( $array[$position] );
-					}
-
-					/** Cookie data add and Array reverse. */
-					$array[] = $post->ID;
-					$array = array_reverse( $array );
-
-					if ( count( $array ) > 10 ) {
-						array_pop( $array );
-					}
-
-					setcookie( $this->cookie_name, implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
+				/** Cookie data read and convert string from array. */
+				if ( isset( $_COOKIE[$this->domain_name] ) ) {
+					$array = explode( ',', esc_html( $_COOKIE[$this->domain_name] ) );
 				}
+
+				/** Existence check. */
+				$position = array_search( $post->ID, $array );
+				if ( is_numeric( $position ) ) {
+					unset( $array[$position] );
+				}
+
+				/** Cookie data add and Array reverse. */
+				$array[] = ( string ) $post->ID;
+				$array = array_reverse( $array );
+
+				if ( count( $array ) > 10 ) {
+					array_pop( $array );
+				}
+
+				setcookie( $this->domain_name, implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 			}
-		} );
+		}
 	}
 }
