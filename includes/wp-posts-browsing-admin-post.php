@@ -5,7 +5,7 @@
  * @author Kazuya Takami
  * @since  1.0.0
  */
-class Posts_Browsing_History_Admin {
+class Posts_Browsing_History_Admin_Post {
 
 	/**
 	 * Variable definition.

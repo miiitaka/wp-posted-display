@@ -77,6 +77,21 @@ class Posts_Browsing_History_Admin_Db {
 		return (array) $results;
 	}
 
+
+	/**
+	 * Get All Data.
+	 *
+	 * @since  1.0.0
+	 * @return array $results
+	 */
+	public function get_list_options() {
+		global $wpdb;
+
+		$query = "SELECT * FROM " . $this->table_name . " ORDER BY update_date DESC";
+
+		return (array) $wpdb->get_results( $query );
+	}
+
 	/**
 	 * Insert Data.
 	 *
@@ -130,5 +145,20 @@ class Posts_Browsing_History_Admin_Db {
 		$key_prepared = array( '%d' );
 
 		$wpdb->update( $this->table_name, $data, $key, $prepared, $key_prepared );
+	}
+
+	/**
+	 * Delete Data.
+	 *
+	 * @since 1.0.0
+	 * @param integer $id
+	 */
+	public function delete_options( $id ) {
+		global $wpdb;
+
+		$key = array( 'id' => $id );
+		$key_prepared = array( '%d' );
+
+		$wpdb->delete( $this->table_name, $key, $key_prepared );
 	}
 }

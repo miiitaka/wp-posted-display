@@ -10,7 +10,7 @@ License: GPLv2 or later
 Text Domain: wp-posts-browsing-history
 Domain Path: /languages
 */
-require_once( plugin_dir_path( __FILE__ ) . 'includes/admin-db.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-db.php' );
 
 new Posts_Browsing_History();
 
@@ -36,16 +36,26 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function __construct () {
-		$db = new Posts_Browsing_History_Admin_Db();
+		$db = new Posts_Browsing_History_Admin_Db( $this->text_domain );
 		$db->create_table();
 
 		add_action( 'widgets_init', array( $this, 'widget_init' ) );
 
 		if ( is_admin() ) {
+			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		} else {
 			add_action( 'get_header', array( $this, 'get_header' ) );
 		}
+	}
+
+	/**
+	 * admin init.
+	 *
+	 * @since   1.0.0
+	 */
+	public function admin_init() {
+		wp_register_style( 'wp-posts-browsing-history-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
 	/**
@@ -54,7 +64,7 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function widget_init () {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/widget.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-widget.php' );
 		register_widget( 'Posts_Browsing_History_Widget' );
 	}
 
@@ -64,10 +74,25 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function admin_menu() {
+		add_menu_page(
+			esc_html__( 'Browsing History Setting', $this->text_domain ),
+			esc_html__( 'Browsing History Setting', $this->text_domain ),
+			'manage_options',
+			plugin_basename( __FILE__ ),
+			array( $this, 'list_page_render' )
+		);
+		add_submenu_page(
+			__FILE__,
+			esc_html__( 'Settings All', $this->text_domain ),
+			esc_html__( 'Settings All', $this->text_domain ),
+			'manage_options',
+			plugin_basename( __FILE__ ),
+			array( $this, 'list_page_render' )
+		);
 		$page = add_submenu_page(
-			'options-general.php',
+			__FILE__,
 			esc_html__( 'Posts Browsing History', $this->text_domain ),
-			esc_html__( 'Posts Browsing History', $this->text_domain ),
+			esc_html__( 'Add New', $this->text_domain ),
 			'manage_options',
 			plugin_basename( __FILE__ ),
 			array( $this, 'post_page_render' )
@@ -87,13 +112,23 @@ class Posts_Browsing_History {
 	}
 
 	/**
-	 * Admin Page Template Require.
+	 * Admin List Page Template Require.
+	 *
+	 * @since 1.0.0
+	 */
+	public function list_page_render() {
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-list.php' );
+		new Posts_Browsing_History_Admin_List( $this->text_domain );
+	}
+
+	/**
+	 * Admin Post Page Template Require.
 	 *
 	 * @since 1.0.0
 	 */
 	public function post_page_render() {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/admin.php' );
-		new Posts_Browsing_History_Admin( $this->text_domain );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-post.php' );
+		new Posts_Browsing_History_Admin_Post( $this->text_domain );
 	}
 
 	/**
