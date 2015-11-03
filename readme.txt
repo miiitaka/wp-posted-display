@@ -11,6 +11,8 @@ Plug-in Posts Browsing History Widget & Short Code Add.
 
 Plug-in Posts Browsing History Widget & Short Code Add.
 
+投稿記事の閲覧履歴をウィジェットやショートコードで表示させるプラグインです。
+
 == Installation ==
 
 * A plug-in installation screen is displayed in the WordPress admin panel.

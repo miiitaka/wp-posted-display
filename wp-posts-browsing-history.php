@@ -10,6 +10,8 @@ License: GPLv2 or later
 Text Domain: wp-posts-browsing-history
 Domain Path: /languages
 */
+require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-db.php' );
+
 new Posts_Browsing_History();
 
 /**
@@ -26,7 +28,7 @@ class Posts_Browsing_History {
 	 *
 	 * @since 1.0.0
 	 */
-	private $domain_name = 'wp-posts-browsing-history';
+	private $text_domain = 'wp-posts-browsing-history';
 
 	/**
 	 * Constructor Define.
@@ -34,8 +36,26 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function __construct () {
+		$db = new Posts_Browsing_History_Admin_Db( $this->text_domain );
+		$db->create_table();
+
 		add_action( 'widgets_init', array( $this, 'widget_init' ) );
-		add_action( 'get_header',   array( $this, 'get_header' ) );
+
+		if ( is_admin() ) {
+			add_action( 'admin_init', array( $this, 'admin_init' ) );
+			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+		} else {
+			add_action( 'get_header', array( $this, 'get_header' ) );
+		}
+	}
+
+	/**
+	 * admin init.
+	 *
+	 * @since   1.0.0
+	 */
+	public function admin_init() {
+		wp_register_style( 'wp-posts-browsing-history-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
 	/**
@@ -44,8 +64,71 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function widget_init () {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-history-widget.php' );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-widget.php' );
 		register_widget( 'Posts_Browsing_History_Widget' );
+	}
+
+	/**
+	 * Add Menu to the Admin Screen.
+	 *
+	 * @since 1.0.0
+	 */
+	public function admin_menu() {
+		add_menu_page(
+			esc_html__( 'Browsing History Settings', $this->text_domain ),
+			esc_html__( 'Browsing History Settings', $this->text_domain ),
+			'manage_options',
+			plugin_basename( __FILE__ ),
+			array( $this, 'list_page_render' )
+		);
+		add_submenu_page(
+			__FILE__,
+			esc_html__( 'All Settings', $this->text_domain ),
+			esc_html__( 'All Settings', $this->text_domain ),
+			'manage_options',
+			plugin_basename( __FILE__ ),
+			array( $this, 'list_page_render' )
+		);
+		$page = add_submenu_page(
+			__FILE__,
+			esc_html__( 'Posts Browsing History', $this->text_domain ),
+			esc_html__( 'Add New', $this->text_domain ),
+			'manage_options',
+			plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-post.php',
+			array( $this, 'post_page_render' )
+		);
+
+		/** Using registered $page handle to hook stylesheet loading */
+		add_action( 'admin_print_styles-' . $page, array( $this, 'add_style' ) );
+	}
+
+	/**
+	 * CSS admin add.
+	 *
+	 * @since 1.0.0
+	 */
+	public function add_style() {
+		wp_enqueue_style( 'wp-posts-browsing-history-admin-style' );
+	}
+
+	/**
+	 * Admin List Page Template Require.
+	 *
+	 * @since 1.0.0
+	 */
+	public function list_page_render() {
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-list.php' );
+		new Posts_Browsing_History_Admin_List( $this->text_domain );
+	}
+
+	/**
+	 * Admin Post Page Template Require.
+	 *
+	 * @since 1.0.0
+	 */
+	public function post_page_render() {
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-post.php' );
+		new Posts_Browsing_History_Admin_Post( $this->text_domain );
 	}
 
 	/**
@@ -56,30 +139,30 @@ class Posts_Browsing_History {
 	public function get_header () {
 		if ( is_single() ) {
 			global $post;
-			$array = array();
+			$args = array();
 
 			if ( $post->post_status === 'publish' ) {
 
 				/** Cookie data read and convert string from array. */
-				if ( isset( $_COOKIE[$this->domain_name] ) ) {
-					$array = explode( ',', esc_html( $_COOKIE[$this->domain_name] ) );
+				if ( isset( $_COOKIE[$this->text_domain] ) ) {
+					$args = explode( ',', esc_html( $_COOKIE[$this->text_domain] ) );
 				}
 
 				/** Existence check. */
-				$position = array_search( $post->ID, $array );
+				$position = array_search( $post->ID, $args );
 				if ( is_numeric( $position ) ) {
-					unset( $array[$position] );
+					unset( $args[$position] );
 				}
 
 				/** Cookie data add and Array reverse. */
-				$array[] = ( string ) $post->ID;
-				$array = array_reverse( $array );
+				$args[] = ( string ) $post->ID;
+				$args = array_reverse( $args );
 
-				if ( count( $array ) > 10 ) {
-					array_pop( $array );
+				if ( count( $args ) > 10 ) {
+					array_pop( $args );
 				}
 
-				setcookie( $this->domain_name, implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
+				setcookie( $this->text_domain, implode( ',', $args ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 			}
 		}
 	}
