@@ -72,7 +72,7 @@ class Posts_Browsing_History_Admin_Db {
 			$results['id']            = $args->id;
 			$results['template_name'] = $args->template_name;
 			$results['template']      = $args->template;
-			$results['storage_life']  = $args->template;
+			$results['storage_life']  = $args->storage_life;
 		}
 		return (array) $results;
 	}

@@ -35,24 +35,50 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @return string Parent::Default return is 'noform'
 	 */
 	public function form( $instance ) {
-		if ( !isset( $instance['title'] ) ) {
-			$instance['title'] = "";
-		}
-		if ( !isset( $instance['posts'] ) ) {
-			$instance['posts'] = 0;
-		}
+		/** DB Connect */
+		$db = new Posts_Browsing_History_Admin_Db();
 
-		$id = $this->get_field_id( 'title' );
-		$name = $this->get_field_name( 'title' );
-		echo '<p><label for="' . $id . '">' . esc_html__( 'Title', $this->text_domain ) . ':</label><br>';
-		printf( '<input type="text" id="%s" name="%s" value="%s" class="widefat">', $id, $name, esc_attr( $instance['title'] ) );
-		echo '</p>';
+		$results = $db->get_list_options();
 
-		$id = $this->get_field_id( 'posts' );
-		$name = $this->get_field_name( 'posts' );
-		echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->text_domain ) . ':</label>';
-		printf( '<input type="text" id="%s" name="%s" value="%s" size="3">', $id, $name, esc_attr( $instance['posts'] ) );
-		echo '</p>';
+		if ( $results ) {
+			if ( !isset( $instance['title'] ) ) {
+				$instance['title'] = "";
+			}
+			if ( !isset( $instance['template'] ) ) {
+				$instance['template'] = "";
+			}
+			if ( !isset( $instance['posts'] ) ) {
+				$instance['posts'] = 0;
+			}
+
+			$id = $this->get_field_id( 'title' );
+			$name = $this->get_field_name( 'title' );
+			echo '<p><label for="' . $id . '">' . esc_html__( 'Title', $this->text_domain ) . ':</label><br>';
+			printf( '<input type="text" id="%s" name="%s" value="%s" class="widefat">', $id, $name, esc_attr( $instance['title'] ) );
+			echo '</p>';
+
+			$id = $this->get_field_id( 'template' );
+			$name = $this->get_field_name( 'template' );
+			echo '<p><label for="' . $id . '">' . esc_html__( 'Template', $this->text_domain ) . ':</label><br>';
+			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
+			foreach ( $results as $row ) {
+				if ( $row->id === $instance['template'] ) {
+					printf( '<option value="%d" selected="selected">%s</option>', $row->id, $row->template_name );
+				} else {
+					printf( '<option value="%d">%s</option>', $row->id, $row->template_name );
+				}
+			}
+			echo '</select></p>';
+
+			$id = $this->get_field_id( 'posts' );
+			$name = $this->get_field_name( 'posts' );
+			echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->text_domain ) . ':</label>';
+			printf( '<input type="text" id="%s" name="%s" value="%s" size="3">', $id, $name, esc_attr( $instance['posts'] ) );
+			echo '</p>';
+		} else {
+			$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posts-browsing-admin-post.php';
+			echo '<p><a href="' . $post_url . '">' . esc_html__( 'Please register of template.', $this->text_domain ) . '</a></p>';
+		}
 	}
 
 	/**

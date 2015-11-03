@@ -75,16 +75,16 @@ class Posts_Browsing_History {
 	 */
 	public function admin_menu() {
 		add_menu_page(
-			esc_html__( 'Browsing History Setting', $this->text_domain ),
-			esc_html__( 'Browsing History Setting', $this->text_domain ),
+			esc_html__( 'Browsing History Settings', $this->text_domain ),
+			esc_html__( 'Browsing History Settings', $this->text_domain ),
 			'manage_options',
 			plugin_basename( __FILE__ ),
 			array( $this, 'list_page_render' )
 		);
 		add_submenu_page(
 			__FILE__,
-			esc_html__( 'Settings All', $this->text_domain ),
-			esc_html__( 'Settings All', $this->text_domain ),
+			esc_html__( 'All Settings', $this->text_domain ),
+			esc_html__( 'All Settings', $this->text_domain ),
 			'manage_options',
 			plugin_basename( __FILE__ ),
 			array( $this, 'list_page_render' )
@@ -94,7 +94,7 @@ class Posts_Browsing_History {
 			esc_html__( 'Posts Browsing History', $this->text_domain ),
 			esc_html__( 'Add New', $this->text_domain ),
 			'manage_options',
-			plugin_basename( __FILE__ ),
+			plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-post.php',
 			array( $this, 'post_page_render' )
 		);
 
@@ -139,30 +139,30 @@ class Posts_Browsing_History {
 	public function get_header () {
 		if ( is_single() ) {
 			global $post;
-			$array = array();
+			$args = array();
 
 			if ( $post->post_status === 'publish' ) {
 
 				/** Cookie data read and convert string from array. */
 				if ( isset( $_COOKIE[$this->text_domain] ) ) {
-					$array = explode( ',', esc_html( $_COOKIE[$this->text_domain] ) );
+					$args = explode( ',', esc_html( $_COOKIE[$this->text_domain] ) );
 				}
 
 				/** Existence check. */
-				$position = array_search( $post->ID, $array );
+				$position = array_search( $post->ID, $args );
 				if ( is_numeric( $position ) ) {
-					unset( $array[$position] );
+					unset( $args[$position] );
 				}
 
 				/** Cookie data add and Array reverse. */
-				$array[] = ( string ) $post->ID;
-				$array = array_reverse( $array );
+				$args[] = ( string ) $post->ID;
+				$args = array_reverse( $args );
 
-				if ( count( $array ) > 10 ) {
-					array_pop( $array );
+				if ( count( $args ) > 10 ) {
+					array_pop( $args );
 				}
 
-				setcookie( $this->text_domain, implode( ',', $array ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
+				setcookie( $this->text_domain, implode( ',', $args ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 			}
 		}
 	}

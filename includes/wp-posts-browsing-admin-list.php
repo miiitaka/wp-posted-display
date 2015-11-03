@@ -51,7 +51,7 @@ class Posts_Browsing_History_Admin_List {
 		$html  = '';
 		$html .= '<div class="wrap">';
 		$html .= '<h1>' . esc_html__( 'Posts Browsing History Settings List', $this->text_domain );
-		$html .= '<a href="' . $post_url . '" class="page-title-action">' . esc_html__( 'Add New',   $this->text_domain ) . '</a>';
+		$html .= '<a href="' . $post_url . '" class="page-title-action">' . esc_html__( 'Add New', $this->text_domain ) . '</a>';
 		$html .= '</h1>';
 		echo $html;
 
@@ -70,6 +70,7 @@ class Posts_Browsing_History_Admin_List {
 		$html .= '</tr>';
 		echo $html;
 
+		/** DB table get list */
 		$results = $db->get_list_options();
 
 		if ( $results ) {
@@ -77,16 +78,16 @@ class Posts_Browsing_History_Admin_List {
 				$html  = '';
 				$html .= '<tr>';
 				$html .= '<td>';
-				$html .= '<a href="' . $post_url . '&mode=edit&schema_post_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
+				$html .= '<a href="' . $post_url . '&posts_browsing_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
 				$html .= '</td>';
 				$html .= '<td>' . esc_html( $row->storage_life )  . '</td>';
 				$html .= '<td>' . esc_html( $row->register_date ) . '</td>';
 				$html .= '<td>' . esc_html( $row->update_date )   . '</td>';
 				$html .= '<td>';
-				$html .= '<a href="' . $post_url . '&mode=edit&schema_post_id=' . esc_html( $row->id ) . '">';
+				$html .= '<a href="' . $post_url . '&posts_browsing_id=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Edit', $this->text_domain );
 				$html .= '</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-				$html .= '<a href="' . $self_url . '&mode=delete&schema_post_id=' . esc_html( $row->id ) . '">';
+				$html .= '<a href="' . $self_url . '&mode=delete&posts_browsing_id=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Delete', $this->text_domain );
 				$html .= '</a>';
 				$html .= '</td>';
