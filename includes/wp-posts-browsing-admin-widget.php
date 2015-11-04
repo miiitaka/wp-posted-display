@@ -111,41 +111,77 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @param  array $instance
 	 */
 	public function widget( $args, $instance ) {
-		if ( isset( $_COOKIE[$this->text_domain] ) && isset( $instance['posts'] ) ) {
-			if ( $instance['posts'] > 0 ) {
+		$cookie_name = $this->text_domain . '-' . esc_html( $instance['template'] );
+
+		if ( isset( $_COOKIE[$cookie_name] ) && isset( $instance['posts'] ) ) {
+			/** DB Connect */
+			$db = new Posts_Browsing_History_Admin_Db();
+
+			$results = $db->get_options( esc_html( $instance['template'] ) );
+			if ( $results ) {
 				$query_args = array(
-					"post__in"       => explode( ',', esc_html( $_COOKIE[$this->text_domain] ) ),
+					"post__in"       => explode( ',', esc_html( $_COOKIE[$cookie_name] ) ),
 					"posts_per_page" => esc_html( $instance['posts'] ),
 					"post_status"    => "publish"
 				);
+				$query = new WP_Query( $query_args );
 
-				$query = new WP_Query($query_args);
+				/** Display widget header. */
+				echo $args['before_widget'];
+				echo $args['before_title'];
+				echo esc_html( $instance['title'] );
+				echo $args['after_title'];
 
-				if ( $query->have_posts() ) {
-					/** Display widget header. */
-					echo $args['before_widget'];
-					echo $args['before_title'];
-					echo esc_html( $instance['title'] );
-					echo $args['after_title'];
+				/** Display widget body. */
+				echo '<ul>';
 
-					/** Display widget body. */
-					echo '<ul>';
+				while ( $query->have_posts() ) {
+					$query->the_post();
 
-					while ( $query->have_posts() ) {
-						echo '<li>';
-						echo '<span>' . esc_html( the_time( get_option( 'date_format' ) ) ) . '</span>';
-						echo '<span>' . esc_html( the_title() ) . '</span>';
-						echo '</li>';
-
-						$query->the_post();
+					if ( has_post_thumbnail( get_the_ID() ) ) {
+						$images = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
+						if ( isset( $images[0] ) ) {
+							$images[0] = '<img src="' . $images[0] . '">';
+						}
+					} else {
+						$images[0] = '';
 					}
-
-					echo '</ul>';
-					echo $args['after_widget'];
-
-					wp_reset_postdata();
+					echo '<li>';
+					$this->set_template(
+						$results['template'],
+						esc_html( get_the_title() ),
+						esc_html( get_the_excerpt() ),
+						$images[0],
+						esc_html( the_time( get_option( 'date_format' ) ) )
+					);
+					echo '</li>';
 				}
+
+				echo '</ul>';
+				echo $args['after_widget'];
+
+				wp_reset_postdata();
 			}
 		}
+	}
+
+
+	/**
+	 * Widget Display.
+	 *
+	 * @since  1.0.0
+	 * @access private
+	 * @param  string $template
+	 * @param  string $title
+	 * @param  string $excerpt
+	 * @param  string $image
+	 * @param  string $date
+	 */
+	private function set_template( $template, $title, $excerpt, $image, $date ) {
+		$template = str_replace( '##title##',   $title,   $template );
+		$template = str_replace( '##summary##', $excerpt, $template );
+		$template = str_replace( '##image##',   $image,   $template );
+		$template = str_replace( '##date##',    $date,    $template );
+		echo $template;
 	}
 }

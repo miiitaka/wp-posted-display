@@ -8,15 +8,20 @@
 	text-align: left;
 }
 .wp-post-browsing-history-admin-table th {
+	padding: 3px 5px 0 0;
 	text-align: right;
+	vertical-align: top;
 	width: 120px;
 }
-.wp-post-browsing-history-admin-table td label{
-	margin: 0 10px 0 0;
+.wp-post-browsing-history-admin-table td li span {
+	background: #5c5c5c;
+	color: #ffffff;
+	margin: 0 0 0 5px;
+	padding: 1px 3px 1px 3px;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 .wp-post-browsing-history-admin-table small {
 	margin: 0 0 0 10px;
-}
-.wp-post-browsing-history-admin-table input[type="checkbox"] {
-	margin: 0 5px 0 0;
 }

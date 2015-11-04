@@ -137,32 +137,42 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function get_header () {
-		if ( is_single() ) {
-			global $post;
-			$args = array();
+		/** DB Connect */
+		$db = new Posts_Browsing_History_Admin_Db();
 
-			if ( $post->post_status === 'publish' ) {
+		/** DB table get list */
+		$results = $db->get_list_options();
 
-				/** Cookie data read and convert string from array. */
-				if ( isset( $_COOKIE[$this->text_domain] ) ) {
-					$args = explode( ',', esc_html( $_COOKIE[$this->text_domain] ) );
+		foreach ( $results as $row ) {
+			$cookie_name = $this->text_domain . '-' . esc_html( $row->id );
+
+			if ( is_single() ) {
+				global $post;
+				$args = array();
+
+				if ( $post->post_status === 'publish' ) {
+
+					/** Cookie data read and convert string from array. */
+					if ( isset( $_COOKIE[$cookie_name] ) ) {
+						$args = explode( ',', esc_html( $_COOKIE[$cookie_name] ) );
+					}
+
+					/** Existence check. */
+					$position = array_search( $post->ID, $args );
+					if ( is_numeric( $position ) ) {
+						unset( $args[$position] );
+					}
+
+					/** Cookie data add and Array reverse. */
+					$args[] = ( string ) $post->ID;
+					$args = array_reverse( $args );
+
+					if ( count( $args ) > 10 ) {
+						array_pop( $args );
+					}
+
+					setcookie( $cookie_name, implode( ',', $args ), time() + 60 * 60 * 24 * $row->storage_life, '/', $_SERVER['SERVER_NAME'] );
 				}
-
-				/** Existence check. */
-				$position = array_search( $post->ID, $args );
-				if ( is_numeric( $position ) ) {
-					unset( $args[$position] );
-				}
-
-				/** Cookie data add and Array reverse. */
-				$args[] = ( string ) $post->ID;
-				$args = array_reverse( $args );
-
-				if ( count( $args ) > 10 ) {
-					array_pop( $args );
-				}
-
-				setcookie( $this->text_domain, implode( ',', $args ), time() + 60 * 60 * 24 * 7, '/', $_SERVER['SERVER_NAME'] );
 			}
 		}
 	}
