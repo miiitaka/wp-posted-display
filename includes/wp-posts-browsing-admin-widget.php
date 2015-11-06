@@ -63,9 +63,9 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
 			foreach ( $results as $row ) {
 				if ( $row->id === $instance['template'] ) {
-					printf( '<option value="%d" selected="selected">%s</option>', $row->id, $row->template_name );
+					printf( '<option value="%d" selected="selected">%s</option>', $row->id, esc_html( $row->template_name ) );
 				} else {
-					printf( '<option value="%d">%s</option>', $row->id, $row->template_name );
+					printf( '<option value="%d">%s</option>', $row->id, esc_html( $row->template_name ) );
 				}
 			}
 			echo '</select></p>';
@@ -116,55 +116,61 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 		if ( isset( $_COOKIE[$cookie_name] ) && isset( $instance['posts'] ) ) {
 			/** DB Connect */
 			$db = new Posts_Browsing_History_Admin_Db();
-
 			$results = $db->get_options( esc_html( $instance['template'] ) );
+
 			if ( $results ) {
 				$query_args = array(
-					"post__in"       => explode( ',', esc_html( $_COOKIE[$cookie_name] ) ),
-					"posts_per_page" => esc_html( $instance['posts'] ),
-					"post_status"    => "publish"
+					"posts_per_page"      => esc_html( $instance['posts'] ),
+					"post_status"         => "publish",
+					"ignore_sticky_posts" => 1,
+					"post__in"            => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
+					"orderby"             => 'post__in',
+					"order"               => 'DESC'
 				);
+				wp_reset_query();
 				$query = new WP_Query( $query_args );
 
-				/** Display widget header. */
-				echo $args['before_widget'];
-				echo $args['before_title'];
-				echo esc_html( $instance['title'] );
-				echo $args['after_title'];
+				if ( $query->have_posts() ) {
+					/** Display widget header. */
+					echo $args['before_widget'] . PHP_EOL;
+					echo $args['before_title'] . PHP_EOL;
+					echo esc_html( $instance['title'] ) . PHP_EOL;
+					echo $args['after_title'] . PHP_EOL;
 
-				/** Display widget body. */
-				echo '<ul>';
+					/** Display widget body. */
+					echo '<ul>' . PHP_EOL;
 
-				while ( $query->have_posts() ) {
-					$query->the_post();
+					while ( $query->have_posts() ) {
+						$query->the_post();
 
-					if ( has_post_thumbnail( get_the_ID() ) ) {
-						$images = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
-						if ( isset( $images[0] ) ) {
-							$images[0] = '<img src="' . $images[0] . '">';
+						if ( has_post_thumbnail( get_the_ID() ) ) {
+							$images = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
+						} else {
+							if ( isset( $results['template_no_image'] ) ) {
+								$images[0] = $results['template_no_image'];
+							} else {
+								$images[0] = '';
+							}
 						}
-					} else {
-						$images[0] = '';
+						echo '<li>' . PHP_EOL;
+						$this->set_template(
+							$results['template'],
+							esc_html( get_the_title() ),
+							esc_html( get_the_excerpt() ),
+							$images[0],
+							esc_html( get_the_time( get_option( 'date_format' ) ) ),
+							esc_url( get_the_permalink() )
+						);
+						echo '</li>' . PHP_EOL;
 					}
-					echo '<li>';
-					$this->set_template(
-						$results['template'],
-						esc_html( get_the_title() ),
-						esc_html( get_the_excerpt() ),
-						$images[0],
-						esc_html( the_time( get_option( 'date_format' ) ) )
-					);
-					echo '</li>';
+
+					echo '</ul>';
+					echo $args['after_widget'];
 				}
-
-				echo '</ul>';
-				echo $args['after_widget'];
-
-				wp_reset_postdata();
+				wp_reset_query();
 			}
 		}
 	}
-
 
 	/**
 	 * Widget Display.
@@ -176,12 +182,19 @@ class Posts_Browsing_History_Widget extends WP_Widget {
 	 * @param  string $excerpt
 	 * @param  string $image
 	 * @param  string $date
+	 * @param  string $link
 	 */
-	private function set_template( $template, $title, $excerpt, $image, $date ) {
+	private function set_template( $template, $title, $excerpt, $image, $date, $link ) {
 		$template = str_replace( '##title##',   $title,   $template );
 		$template = str_replace( '##summary##', $excerpt, $template );
 		$template = str_replace( '##image##',   $image,   $template );
 		$template = str_replace( '##date##',    $date,    $template );
+		$template = str_replace( '##link##',    $link,    $template );
+		$template = str_replace( '\\',          '',       $template );
+
+		/** Escape */
+		$template = preg_replace('!<script.*?>.*?</script.*?>!is', '', $template );
+		$template = preg_replace('!onerror=".*?"!is', '', $template );
 		echo $template;
 	}
 }

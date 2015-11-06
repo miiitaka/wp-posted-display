@@ -42,6 +42,7 @@ class Posts_Browsing_History_Admin_Db {
 			$query .= " (id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY";
 			$query .= ",template_name tinytext NOT NULL";
 			$query .= ",template text NOT NULL";
+			$query .= ",template_no_image text";
 			$query .= ",storage_life int NOT NULL";
 			$query .= ",register_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
 			$query .= ",update_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
@@ -69,10 +70,11 @@ class Posts_Browsing_History_Admin_Db {
 		$results  = array();
 
 		if ( $args ) {
-			$results['id']            = $args->id;
-			$results['template_name'] = $args->template_name;
-			$results['template']      = $args->template;
-			$results['storage_life']  = $args->storage_life;
+			$results['id']                = $args->id;
+			$results['template_name']     = $args->template_name;
+			$results['template']          = $args->template;
+			$results['template_no_image'] = $args->template_no_image;
+			$results['storage_life']      = $args->storage_life;
 		}
 		return (array) $results;
 	}
@@ -103,13 +105,15 @@ class Posts_Browsing_History_Admin_Db {
 		global $wpdb;
 
 		$data = array(
-			'template_name' => $post['template_name'],
-			'template'      => $post['template'],
-			'storage_life'  => $post['storage_life'],
-			'register_date' => date( "Y-m-d H:i:s" ),
-			'update_date'   => date( "Y-m-d H:i:s" )
+			'template_name'     => strip_tags( $post['template_name'] ),
+			'template'          => preg_replace('!<script.*?>.*?</script.*?>!is', '', $post['template'] ),
+			'template_no_image' => strip_tags( $post['template_no_image'] ),
+			'storage_life'      => $post['storage_life'],
+			'register_date'     => date( "Y-m-d H:i:s" ),
+			'update_date'       => date( "Y-m-d H:i:s" )
 		);
 		$prepared = array(
+			'%s',
 			'%s',
 			'%s',
 			'%d',
@@ -130,13 +134,15 @@ class Posts_Browsing_History_Admin_Db {
 		global $wpdb;
 
 		$data = array(
-			'template_name' => $post['template_name'],
-			'template'      => $post['template'],
-			'storage_life'  => $post['storage_life'],
-			'update_date'   => date( "Y-m-d H:i:s" )
+			'template_name'     => strip_tags( $post['template_name'] ),
+			'template'          => preg_replace('!<script.*?>.*?</script.*?>!is', '', $post['template'] ),
+			'template_no_image' => strip_tags( $post['template_no_image'] ),
+			'storage_life'      => $post['storage_life'],
+			'update_date'       => date( "Y-m-d H:i:s" )
 		);
 		$key = array( 'id' => $post['id'] );
 		$prepared = array(
+			'%s',
 			'%s',
 			'%s',
 			'%d',

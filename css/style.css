@@ -16,8 +16,9 @@
 .wp-post-browsing-history-admin-table td li span {
 	background: #5c5c5c;
 	color: #ffffff;
+	display: inline-block;
 	margin: 0 0 0 5px;
-	padding: 1px 3px 1px 3px;
+	padding: 1px 5px 1px 5px;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;

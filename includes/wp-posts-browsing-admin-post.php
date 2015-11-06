@@ -36,10 +36,11 @@ class Posts_Browsing_History_Admin_Post {
 
 		/** Set Default Parameter for Array */
 		$options = array(
-			"id"            => "",
-			"template_name" => "",
-			"template"      => "",
-			"storage_life"  => 7
+			"id"                => "",
+			"template_name"     => "",
+			"template"          => '<figure><img src="##image##"></figure>' . PHP_EOL . '<span>##date##</span>' . PHP_EOL . '<span><a href="##link##">##title##</a></span>',
+			"template_no_image" => "",
+			"storage_life"      => 7
 		);
 
 		/** Key Set */
@@ -102,12 +103,16 @@ class Posts_Browsing_History_Admin_Post {
 		$html .= esc_html__( 'Please set as "##item##" the items to be displayed.', $this->text_domain );
 		$html .= '</p>';
 		$html .= '<ul>';
-		$html .= '<li>' . esc_html__( 'The date', $this->text_domain )        . '<span>##date##</span></li>';
-		$html .= '<li>' . esc_html__( 'Post title', $this->text_domain )      . '<span>##title##</span></li>';
-		$html .= '<li>' . esc_html__( 'Posted overview', $this->text_domain ) . '<span>##summary##</span></li>';
-		$html .= '<li>' . esc_html__( 'Featured image', $this->text_domain )  . '<span>##image##</span></li>';
+		$html .= '<li>&dash;&nbsp;' . esc_html__( 'The date', $this->text_domain )        . '<span>##date##</span></li>';
+		$html .= '<li>&dash;&nbsp;' . esc_html__( 'Post title', $this->text_domain )      . '<span>##title##</span></li>';
+		$html .= '<li>&dash;&nbsp;' . esc_html__( 'Posted overview', $this->text_domain ) . '<span>##summary##</span></li>';
+		$html .= '<li>&dash;&nbsp;' . esc_html__( 'Featured image', $this->text_domain )  . '<span>##image##</span></li>';
+		$html .= '<li>&dash;&nbsp;' . esc_html__( 'Post link', $this->text_domain )       . '<span>##link##</span></li>';
 		$html .= '</ul>';
-		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $options['template'] . '</textarea>';
+		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
+		$html .= '</td></tr>';
+		$html .= '<tr><th><label for="template_no_image">' . esc_html__( 'No Image Path', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="' . esc_attr( $options['template_no_image'] ) . '">';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="storage_life">' . esc_html__( 'Storage Life', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="number" name="storage_life" id="storage_life" required value="' . esc_attr( $options['storage_life'] ) . '">';

@@ -165,10 +165,9 @@ class Posts_Browsing_History {
 
 					/** Cookie data add and Array reverse. */
 					$args[] = ( string ) $post->ID;
-					$args = array_reverse( $args );
 
 					if ( count( $args ) > 10 ) {
-						array_pop( $args );
+						array_shift( $args );
 					}
 
 					setcookie( $cookie_name, implode( ',', $args ), time() + 60 * 60 * 24 * $row->storage_life, '/', $_SERVER['SERVER_NAME'] );
