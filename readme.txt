@@ -1,4 +1,4 @@
-=== Posts Browsing History Widget & Short Code Add. ===
+=== Posts Display Widget Add. ===
 Contributors: miiitaka
 Tags: post, posts, widget, history, cookies, category, tag
 Requires at least: 4.3.1

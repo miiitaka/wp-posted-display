@@ -1,4 +1,4 @@
-# wp-posts-browsing-history
+# wp-posted-display
 Plug-in Posted Display Widget Add.
 
 Plug-in Posted Display Widget Add.
