@@ -1,12 +1,12 @@
 <?php
 /**
- * Post Browsing Admin List
+ * Posted Display Admin List
  *
  * @author  Kazuya Takami
  * @since   1.0.0
- * @see     wp-post-browsing-admin-db.php
+ * @see     wp-posted-display-admin-db.php
  */
-class Posts_Browsing_History_Admin_List {
+class Posted_Display_Admin_List {
 
 	/**
 	 * Variable definition.
@@ -24,12 +24,12 @@ class Posts_Browsing_History_Admin_List {
 	function __construct( $text_domain ) {
 		$this->text_domain = $text_domain;
 
-		$db = new Posts_Browsing_History_Admin_Db();
+		$db = new Posted_Display_Admin_Db();
 		$mode = "";
 
 		if ( isset( $_GET['mode'] ) && $_GET['mode'] === 'delete' ) {
-			if ( isset( $_GET['posts_browsing_id'] ) && is_numeric( $_GET['posts_browsing_id'] ) ) {
-				$db->delete_options( $_GET['posts_browsing_id'] );
+			if ( isset( $_GET['posted_display_id'] ) && is_numeric( $_GET['posted_display_id'] ) ) {
+				$db->delete_options( $_GET['posted_display_id'] );
 				$mode = "delete";
 			}
 		}
@@ -41,16 +41,16 @@ class Posts_Browsing_History_Admin_List {
 	 * LIST Page HTML Render.
 	 *
 	 * @since   1.0.0
-	 * @param   Posts_Browsing_History_Admin_Db $db
+	 * @param   Posted_Display_Admin_Db $db
 	 * @param   String $mode
 	 */
-	private function page_render( Posts_Browsing_History_Admin_Db $db, $mode = "" ) {
-		$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posts-browsing-admin-post.php';
+	private function page_render( Posted_Display_Admin_Db $db, $mode = "" ) {
+		$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posted-display-admin-post.php';
 		$self_url = $_SERVER['PHP_SELF'] . '?' . esc_html( $_SERVER['QUERY_STRING'] );
 
 		$html  = '';
 		$html .= '<div class="wrap">';
-		$html .= '<h1>' . esc_html__( 'Posts Browsing History Settings List', $this->text_domain );
+		$html .= '<h1>' . esc_html__( 'Posted Display Settings List', $this->text_domain );
 		$html .= '<a href="' . $post_url . '" class="page-title-action">' . esc_html__( 'Add New', $this->text_domain ) . '</a>';
 		$html .= '</h1>';
 		echo $html;
@@ -62,8 +62,12 @@ class Posts_Browsing_History_Admin_List {
 		$html  = '<hr>';
 		$html .= '<table class="wp-list-table widefat fixed striped posts">';
 		$html .= '<tr>';
+		$html .= '<th scope="row">' . esc_html__( 'ID',            $this->text_domain ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Type',          $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">' . esc_html__( 'Template Name', $this->text_domain ) . '</th>';
-		$html .= '<th scope="row">' . esc_html__( 'Storage Life',  $this->text_domain ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Save Term',     $this->text_domain ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Save Item',     $this->text_domain ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Output Data',   $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">' . esc_html__( 'Register Date', $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">' . esc_html__( 'Update Date',   $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">&nbsp;</th>';
@@ -77,17 +81,21 @@ class Posts_Browsing_History_Admin_List {
 			foreach ( $results as $row ) {
 				$html  = '';
 				$html .= '<tr>';
+				$html .= '<td>' . esc_html( $row->id )   . '</td>';
+				$html .= '<td>' . esc_html( $row->type ) . '</td>';
 				$html .= '<td>';
-				$html .= '<a href="' . $post_url . '&posts_browsing_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
+				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
 				$html .= '</td>';
-				$html .= '<td>' . esc_html( $row->storage_life )  . '</td>';
+				$html .= '<td>' . esc_html( $row->save_term )     . '</td>';
+				$html .= '<td>' . esc_html( $row->save_item )     . '</td>';
+				$html .= '<td>' . esc_html( $row->output_data )   . '</td>';
 				$html .= '<td>' . esc_html( $row->register_date ) . '</td>';
 				$html .= '<td>' . esc_html( $row->update_date )   . '</td>';
 				$html .= '<td>';
-				$html .= '<a href="' . $post_url . '&posts_browsing_id=' . esc_html( $row->id ) . '">';
+				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Edit', $this->text_domain );
 				$html .= '</a>&nbsp;&nbsp;&nbsp;&nbsp;';
-				$html .= '<a href="' . $self_url . '&mode=delete&posts_browsing_id=' . esc_html( $row->id ) . '">';
+				$html .= '<a href="' . $self_url . '&mode=delete&posted_display_id=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Delete', $this->text_domain );
 				$html .= '</a>';
 				$html .= '</td>';
@@ -95,7 +103,7 @@ class Posts_Browsing_History_Admin_List {
 				echo $html;
 			}
 		} else {
-			echo '<td colspan="3">' . esc_html__( 'Without registration.', $this->text_domain ) . '</td>';
+			echo '<td colspan="9">' . esc_html__( 'Without registration.', $this->text_domain ) . '</td>';
 		}
 
 		$html  = '</table>';

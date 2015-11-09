@@ -18,7 +18,7 @@ class Posts_Browsing_History_Uninstall {
 	 *
 	 * @since 1.0.0
 	 */
-	private $text_domain = 'wp-posts-browsing-history';
+	private $text_domain = 'wp-posted-display';
 
 	/**
 	 * Constructor Define.
@@ -26,8 +26,8 @@ class Posts_Browsing_History_Uninstall {
 	 * @since 1.0.0
 	 */
 	function __construct() {
-		$this->drop_table();
 		$this->delete_cookie();
+		$this->drop_table();
 	}
 
 	/**
@@ -46,7 +46,7 @@ class Posts_Browsing_History_Uninstall {
 	 */
 	private function drop_table() {
 		global $wpdb;
-		$table_name = $wpdb->prefix . "posts_browsing_history";
+		$table_name = $wpdb->prefix . "posted_display";
 		$wpdb->query( "DROP TABLE IF EXISTS " . $table_name );
 	}
 }

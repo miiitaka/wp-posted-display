@@ -1,18 +1,18 @@
 <?php
 /*
-Plugin Name: Posts Browsing History
-Plugin URI: https://github.com/miiitaka/wp-posts-browsing-history
-Description: Posts Browsing History Widget & Short Code Add.
+Plugin Name: Posted display in the widget and the short code
+Plugin URI: https://github.com/miiitaka/wp-posted-display
+Description: Posted display in the widget and the short code
 Version: 1.0.0
 Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
-Text Domain: wp-posts-browsing-history
+Text Domain: wp-posted-display
 Domain Path: /languages
 */
-require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-db.php' );
+require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-db.php' );
 
-new Posts_Browsing_History();
+new Posted_Display();
 
 /**
  * Basic Class
@@ -21,14 +21,14 @@ new Posts_Browsing_History();
  * @since   1.0.0
  * @version 1.0.0
  */
-class Posts_Browsing_History {
+class Posted_Display {
 
 	/**
 	 * Variable definition.
 	 *
 	 * @since 1.0.0
 	 */
-	private $text_domain = 'wp-posts-browsing-history';
+	private $text_domain = 'wp-posted-display';
 
 	/**
 	 * Constructor Define.
@@ -36,7 +36,7 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function __construct () {
-		$db = new Posts_Browsing_History_Admin_Db( $this->text_domain );
+		$db = new Posted_Display_Admin_Db( $this->text_domain );
 		$db->create_table();
 
 		add_action( 'widgets_init', array( $this, 'widget_init' ) );
@@ -55,7 +55,7 @@ class Posts_Browsing_History {
 	 * @since   1.0.0
 	 */
 	public function admin_init() {
-		wp_register_style( 'wp-posts-browsing-history-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
+		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
 	/**
@@ -64,8 +64,8 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function widget_init () {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-widget.php' );
-		register_widget( 'Posts_Browsing_History_Widget' );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-widget.php' );
+		register_widget( 'Posted_Display_Widget' );
 	}
 
 	/**
@@ -75,8 +75,8 @@ class Posts_Browsing_History {
 	 */
 	public function admin_menu() {
 		add_menu_page(
-			esc_html__( 'Browsing History Settings', $this->text_domain ),
-			esc_html__( 'Browsing History Settings', $this->text_domain ),
+			esc_html__( 'Posted Display Settings', $this->text_domain ),
+			esc_html__( 'Posted Display Settings', $this->text_domain ),
 			'manage_options',
 			plugin_basename( __FILE__ ),
 			array( $this, 'list_page_render' )
@@ -91,10 +91,10 @@ class Posts_Browsing_History {
 		);
 		$page = add_submenu_page(
 			__FILE__,
-			esc_html__( 'Posts Browsing History', $this->text_domain ),
+			esc_html__( 'Posted Display', $this->text_domain ),
 			esc_html__( 'Add New', $this->text_domain ),
 			'manage_options',
-			plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-post.php',
+			plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-post.php',
 			array( $this, 'post_page_render' )
 		);
 
@@ -108,7 +108,7 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function add_style() {
-		wp_enqueue_style( 'wp-posts-browsing-history-admin-style' );
+		wp_enqueue_style( 'wp-posted-display-admin-style' );
 	}
 
 	/**
@@ -117,8 +117,8 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function list_page_render() {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-list.php' );
-		new Posts_Browsing_History_Admin_List( $this->text_domain );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-list.php' );
+		new Posted_Display_Admin_List( $this->text_domain );
 	}
 
 	/**
@@ -127,8 +127,8 @@ class Posts_Browsing_History {
 	 * @since 1.0.0
 	 */
 	public function post_page_render() {
-		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posts-browsing-admin-post.php' );
-		new Posts_Browsing_History_Admin_Post( $this->text_domain );
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-post.php' );
+		new Posted_Display_Admin_Post( $this->text_domain );
 	}
 
 	/**
@@ -138,7 +138,7 @@ class Posts_Browsing_History {
 	 */
 	public function get_header () {
 		/** DB Connect */
-		$db = new Posts_Browsing_History_Admin_Db();
+		$db = new Posted_Display_Admin_Db();
 
 		/** DB table get list */
 		$results = $db->get_list_options();
@@ -166,11 +166,11 @@ class Posts_Browsing_History {
 					/** Cookie data add and Array reverse. */
 					$args[] = ( string ) $post->ID;
 
-					if ( count( $args ) > 10 ) {
+					if ( count( $args ) > $row->save_item ) {
 						array_shift( $args );
 					}
 
-					setcookie( $cookie_name, implode( ',', $args ), time() + 60 * 60 * 24 * $row->storage_life, '/', $_SERVER['SERVER_NAME'] );
+					setcookie( $cookie_name, implode( ',', $args ), time() + 60 * 60 * 24 * $row->save_term, '/', $_SERVER['SERVER_NAME'] );
 				}
 			}
 		}

@@ -5,7 +5,7 @@
  * @author  Kazuya Takami
  * @since   1.0.0
  */
-class Posts_Browsing_History_Admin_Db {
+class Posted_Display_Admin_Db {
 
 	/**
 	 * Variable definition.
@@ -21,7 +21,7 @@ class Posts_Browsing_History_Admin_Db {
 	 */
 	public function __construct() {
 		global $wpdb;
-		$this->table_name = $wpdb->prefix . 'posts_browsing_history';
+		$this->table_name = $wpdb->prefix . 'posted_display';
 	}
 
 	/**
@@ -40,10 +40,13 @@ class Posts_Browsing_History_Admin_Db {
 
 			$query  = " CREATE TABLE " . $this->table_name;
 			$query .= " (id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY";
+			$query .= ",type tinytext NOT NULL";
 			$query .= ",template_name tinytext NOT NULL";
 			$query .= ",template text NOT NULL";
 			$query .= ",template_no_image text";
-			$query .= ",storage_life int NOT NULL";
+			$query .= ",save_term int DEFAULT 7";
+			$query .= ",save_item int DEFAULT 10";
+			$query .= ",output_data tinytext";
 			$query .= ",register_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
 			$query .= ",update_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
 			$query .= ",UNIQUE KEY id (id)) " . $charset_collate;
@@ -58,7 +61,7 @@ class Posts_Browsing_History_Admin_Db {
 	 *
 	 * @since  1.0.0
 	 * @param  integer $id
-	 * @return array   $results
+	 * @return array   $args
 	 */
 	public function get_options( $id ) {
 		global $wpdb;
@@ -67,16 +70,8 @@ class Posts_Browsing_History_Admin_Db {
 		$data     = array( $id );
 		$prepared = $wpdb->prepare( $query, $data );
 		$args     = $wpdb->get_row( $prepared );
-		$results  = array();
 
-		if ( $args ) {
-			$results['id']                = $args->id;
-			$results['template_name']     = $args->template_name;
-			$results['template']          = $args->template;
-			$results['template_no_image'] = $args->template_no_image;
-			$results['storage_life']      = $args->storage_life;
-		}
-		return (array) $results;
+		return (array) $args;
 	}
 
 
@@ -106,9 +101,12 @@ class Posts_Browsing_History_Admin_Db {
 
 		$data = array(
 			'template_name'     => strip_tags( $post['template_name'] ),
+			'type'              => strip_tags( $post['type'] ),
 			'template'          => preg_replace('!<script.*?>.*?</script.*?>!is', '', $post['template'] ),
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
-			'storage_life'      => $post['storage_life'],
+			'save_term'         => $post['save_term'],
+			'save_item'         => $post['save_item'],
+			'output_data'       => strip_tags( $post['output_data'] ),
 			'register_date'     => date( "Y-m-d H:i:s" ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
@@ -116,12 +114,16 @@ class Posts_Browsing_History_Admin_Db {
 			'%s',
 			'%s',
 			'%s',
+			'%s',
 			'%d',
+			'%d',
+			'%s',
 			'%s',
 			'%s'
 		);
 
 		$wpdb->insert( $this->table_name, $data, $prepared );
+		return (int) $wpdb->insert_id;
 	}
 
 	/**
@@ -135,9 +137,12 @@ class Posts_Browsing_History_Admin_Db {
 
 		$data = array(
 			'template_name'     => strip_tags( $post['template_name'] ),
+			'type'              => strip_tags( $post['type'] ),
 			'template'          => preg_replace('!<script.*?>.*?</script.*?>!is', '', $post['template'] ),
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
-			'storage_life'      => $post['storage_life'],
+			'save_term'         => $post['save_term'],
+			'save_item'         => $post['save_item'],
+			'output_data'       => strip_tags( $post['output_data'] ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
 		$key = array( 'id' => $post['id'] );
@@ -145,7 +150,10 @@ class Posts_Browsing_History_Admin_Db {
 			'%s',
 			'%s',
 			'%s',
+			'%s',
 			'%d',
+			'%d',
+			'%s',
 			'%s'
 		);
 		$key_prepared = array( '%d' );
