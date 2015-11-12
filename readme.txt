@@ -1,22 +1,22 @@
 === Posts Display Widget Add. ===
 Contributors: miiitaka
-Tags: post, posts, widget, history, cookies, category, tag, shortcode
+Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.3.1
 Stable tag: 1.0.0
 
-Plug-in Posted Display Widget & ShortCode Add.
+Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
 == Description ==
 
-Plug-in Posted Display Widget & ShortCode Add.
+Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
 * Save your browsing history of the posts to Cookie, you can view the information in the widget and the short code.
 * You can create a widget and a short code that can display the posts in any.
 * You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 
-投稿記事情報をウィジェットやショートコードで表示させるプラグインです。
+投稿記事情報をウィジェットやショートコードで表示させるプラグインです。閲覧履歴をCookieに保存して表示することもできます。
 
 * 投稿記事の閲覧履歴をCookieに保存して、ウィジェットとショートコードで情報を表示できます。
 * 投稿記事を任意で表示できるウィジェットとショートコードを作成できます。
