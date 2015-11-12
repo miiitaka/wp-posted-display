@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Posted display in the widget
+Plugin Name: Posted Display Master
 Plugin URI: https://github.com/miiitaka/wp-posted-display
-Description: Posted display in the widget
+Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 Version: 1.0.0
 Author: Kazuya Takami
 Author URI: http://programp.com/
