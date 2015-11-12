@@ -69,24 +69,28 @@ class Posted_Display_Admin_Db {
 		$query    = "SELECT * FROM " . $this->table_name . " WHERE id = %d";
 		$data     = array( $id );
 		$prepared = $wpdb->prepare( $query, $data );
-		$args     = $wpdb->get_row( $prepared );
 
-		return (array) $args;
+		return (array) $wpdb->get_row( $prepared );
 	}
-
 
 	/**
 	 * Get All Data.
 	 *
 	 * @since  1.0.0
-	 * @return array $results
+	 * @param  string $type
+	 * @return array  $results
 	 */
-	public function get_list_options() {
+	public function get_list_options( $type = null ) {
 		global $wpdb;
 
-		$query = "SELECT * FROM " . $this->table_name . " ORDER BY update_date DESC";
-
-		return (array) $wpdb->get_results( $query );
+		if ( $type === 'Cookie' ) {
+			$query    = "SELECT * FROM " . $this->table_name . " WHERE type = %s ORDER BY update_date DESC";
+			$data     = array( $type );
+			$prepared = $wpdb->prepare( $query, $data );
+		} else {
+			$prepared = "SELECT * FROM " . $this->table_name . " ORDER BY update_date DESC";
+		}
+		return (array) $wpdb->get_results( $prepared );
 	}
 
 	/**
@@ -145,7 +149,7 @@ class Posted_Display_Admin_Db {
 			'output_data'       => strip_tags( $post['output_data'] ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
-		$key = array( 'id' => $post['id'] );
+		$key = array( 'id' => esc_html( $post['id'] ) );
 		$prepared = array(
 			'%s',
 			'%s',
@@ -170,7 +174,7 @@ class Posted_Display_Admin_Db {
 	public function delete_options( $id ) {
 		global $wpdb;
 
-		$key = array( 'id' => $id );
+		$key = array( 'id' => esc_html( $id ) );
 		$key_prepared = array( '%d' );
 
 		$wpdb->delete( $this->table_name, $key, $key_prepared );

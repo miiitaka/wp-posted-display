@@ -40,7 +40,7 @@ class Posted_Display_Admin_Post {
 			"id"                => "",
 			"type"              => "",
 			"template_name"     => "",
-			"template"          => '<figure><img src="##image##"></figure>' . PHP_EOL . '<span>##date##</span>' . PHP_EOL . '<span><a href="##link##">##title##</a></span>',
+			"template"          => '<img src="##image##">' . PHP_EOL . '<span>##date##</span>' . PHP_EOL . '<span><a href="##link##">##title##</a></span>',
 			"template_no_image" => "",
 			"save_term"         => 7,
 			"save_item"         => 10,
@@ -129,15 +129,22 @@ class Posted_Display_Admin_Post {
 		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template_no_image">' . esc_html__( 'No Image Path', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<p>' . esc_html__( 'It specifies the posts of Alternative Image path that does not set the featured image.', $this->text_domain ) . '</p>';
 		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="' . esc_attr( $options['template_no_image'] ) . '">';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="save_term">' . esc_html__( 'Save Term', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="number" name="save_term" id="save_term" required class="small-text" min="1" max="30" value="' . esc_attr( $options['save_term'] ) . '">' . esc_html__( 'day', $this->text_domain );
+		$html .= '<small>(' . esc_html__( 'Type Cookie only' ) . ')</small>';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="save_item">' . esc_html__( 'Save Item', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="number" name="save_item" id="save_item" required class="small-text" min="1" max="30" value="' . esc_attr( $options['save_item'] ) . '">' . esc_html__( 'item', $this->text_domain );
+		$html .= '<small>(' . esc_html__( 'Type Cookie only' ) . ')</small>';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="output_data">' . esc_html__( 'Output Data', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<p>';
+		$html .= esc_html__( 'Type I use in the case of a non-cookie.', $this->text_domain ) . '<br>';
+		$html .= esc_html__( 'The specified in a comma-separated posts ID, category ID, a tag ID, respectively.', $this->text_domain );
+		$html .= '</p>';
 		$html .= '<input type="text" name="output_data" id="output_data" class="regular-text" value="' . esc_attr( $options['output_data'] ) . '">';
 		$html .= '</td></tr>';
 		$html .= '</table>';

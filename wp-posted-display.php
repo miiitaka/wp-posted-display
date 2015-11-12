@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Posted display in the widget and the short code
+Plugin Name: Posted display in the widget
 Plugin URI: https://github.com/miiitaka/wp-posted-display
-Description: Posted display in the widget and the short code
+Description: Posted display in the widget
 Version: 1.0.0
 Author: Kazuya Takami
 Author URI: http://programp.com/
@@ -40,22 +40,15 @@ class Posted_Display {
 		$db->create_table();
 
 		add_action( 'widgets_init', array( $this, 'widget_init' ) );
+		add_shortcode( $this->text_domain, array( $this, 'short_code_init' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			add_action( 'admin_head-wp-posted-display/uninstall.php', array( $this, 'all_delete_cookie' ) );
 		} else {
 			add_action( 'get_header', array( $this, 'get_header' ) );
 		}
-	}
-
-	/**
-	 * admin init.
-	 *
-	 * @since   1.0.0
-	 */
-	public function admin_init() {
-		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
 	/**
@@ -66,6 +59,28 @@ class Posted_Display {
 	public function widget_init () {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-widget.php' );
 		register_widget( 'Posted_Display_Widget' );
+	}
+
+	/**
+	 * ShortCode Register.
+	 *
+	 * @since  1.0.0
+	 * @param  string $args short code params
+	 * @return string
+	 */
+	public function short_code_init ( $args ) {
+		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-short-code.php' );
+		$obj = new Posted_Display_ShortCode( $args );
+		return $obj->short_code_display( $args );
+	}
+
+	/**
+	 * admin init.
+	 *
+	 * @since   1.0.0
+	 */
+	public function admin_init() {
+		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
 	/**
@@ -81,7 +96,7 @@ class Posted_Display {
 			plugin_basename( __FILE__ ),
 			array( $this, 'list_page_render' )
 		);
-		add_submenu_page(
+		$list_page = add_submenu_page(
 			__FILE__,
 			esc_html__( 'All Settings', $this->text_domain ),
 			esc_html__( 'All Settings', $this->text_domain ),
@@ -89,7 +104,7 @@ class Posted_Display {
 			plugin_basename( __FILE__ ),
 			array( $this, 'list_page_render' )
 		);
-		$page = add_submenu_page(
+		$post_page = add_submenu_page(
 			__FILE__,
 			esc_html__( 'Posted Display', $this->text_domain ),
 			esc_html__( 'Add New', $this->text_domain ),
@@ -98,8 +113,10 @@ class Posted_Display {
 			array( $this, 'post_page_render' )
 		);
 
-		/** Using registered $page handle to hook stylesheet loading */
-		add_action( 'admin_print_styles-' . $page, array( $this, 'add_style' ) );
+		add_action( 'admin_head-' . $post_page, array( $this, 'post_delete_cookie' ) );
+		add_action( 'admin_head-' . $list_page, array( $this, 'list_delete_cookie' ) );
+		add_action( 'admin_print_styles-' . $post_page, array( $this, 'add_style' ) );
+		add_action( 'admin_print_styles-' . $list_page, array( $this, 'add_style' ) );
 	}
 
 	/**
@@ -141,7 +158,7 @@ class Posted_Display {
 		$db = new Posted_Display_Admin_Db();
 
 		/** DB table get list */
-		$results = $db->get_list_options();
+		$results = $db->get_list_options( 'Cookie' );
 
 		foreach ( $results as $row ) {
 			$cookie_name = $this->text_domain . '-' . esc_html( $row->id );
@@ -170,9 +187,63 @@ class Posted_Display {
 						array_shift( $args );
 					}
 
-					setcookie( $cookie_name, implode( ',', $args ), time() + 60 * 60 * 24 * $row->save_term, '/', $_SERVER['SERVER_NAME'] );
+					setcookie( $cookie_name, implode( ',', $args ), time() + 86400 * $row->save_term, '/', $_SERVER['SERVER_NAME'] );
 				}
 			}
+		}
+	}
+
+	/**
+	 * Delete Cookie information If you change the type from the Edit.
+	 *
+	 * @since 1.0.0
+	 */
+	public function post_delete_cookie() {
+		if ( isset( $_POST['id'] ) && is_numeric( $_POST['id'] ) ) {
+			$db = new Posted_Display_Admin_Db();
+
+			$options = $db->get_options( $_POST['id'] );
+			if ( $options['type'] === 'Cookie' && $_POST['type'] !== 'Cookie' ) {
+				$cookie_name = $this->text_domain . '-' . esc_html( $_POST['id'] );
+				setcookie( $cookie_name, '', time() - 3600, '/', $_SERVER['SERVER_NAME'] );
+			}
+		}
+	}
+
+	/**
+	 * Delete Cookie information If you have deleted from the list.
+	 *
+	 * @since 1.0.0
+	 */
+	public function list_delete_cookie() {
+		if ( isset( $_GET['posted_display_id'] ) && is_numeric( $_GET['posted_display_id'] ) ) {
+			if ( isset( $_GET['mode'] ) && $_GET['mode'] === 'delete' ) {
+				$db = new Posted_Display_Admin_Db();
+
+				$options = $db->get_options( $_GET['posted_display_id'] );
+				if ( $options['type'] === 'Cookie' ) {
+					$cookie_name = $this->text_domain . '-' . esc_html($_GET['posted_display_id'] );
+					setcookie( $cookie_name, '', time() - 3600, '/', $_SERVER['SERVER_NAME'] );
+				}
+			}
+		}
+	}
+
+	/**
+	 * Remove all the cookie information when uninstalling
+	 *
+	 * @since 1.0.0
+	 */
+	public function uninstall_delete_cookie() {
+		/** DB Connect */
+		$db = new Posted_Display_Admin_Db();
+
+		/** DB table get list */
+		$results = $db->get_list_options( 'Cookie' );
+
+		foreach ( $results as $row ) {
+			$cookie_name = $this->text_domain . '-' . esc_html( $row->id );
+			setcookie( $cookie_name, '', time() - 3600, '/', $_SERVER['SERVER_NAME'] );
 		}
 	}
 }

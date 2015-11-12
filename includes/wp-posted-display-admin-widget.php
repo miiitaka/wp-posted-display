@@ -99,7 +99,7 @@ class Posted_Display_Widget extends WP_Widget {
 			$new_instance['posts'] = 5;
 		}
 
-		return $new_instance;
+		return (array) $new_instance;
 	}
 
 	/**
@@ -111,16 +111,12 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  array $instance
 	 */
 	public function widget( $args, $instance ) {
-		$cookie_name = $this->text_domain;
-		if ( isset( $instance['template'] ) ) {
-			$cookie_name = '-' . esc_html( $instance['template'] );
-		}
-
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
 		$results = $db->get_options( esc_html( $instance['template'] ) );
 
 		if ( $results ) {
+			$cookie_name = $this->text_domain . '-' . esc_html( $instance['template'] );
 			$query_args = $this->set_query( $results, esc_html( $instance['posts'] ), $cookie_name );
 
 			wp_reset_query();
@@ -149,14 +145,7 @@ class Posted_Display_Widget extends WP_Widget {
 						}
 					}
 					echo '<li>' . PHP_EOL;
-					$this->set_template(
-						$results['template'],
-						esc_html( get_the_title() ),
-						esc_html( get_the_excerpt() ),
-						$images[0],
-						esc_html( get_the_time( get_option( 'date_format' ) ) ),
-						esc_url( get_the_permalink() )
-					);
+					echo $this->set_template( $results['template'], get_the_title(), get_the_excerpt(), $images[0], get_the_time( get_option( 'date_format' ) ), get_the_permalink() );
 					echo '</li>' . PHP_EOL;
 				}
 
@@ -168,14 +157,14 @@ class Posted_Display_Widget extends WP_Widget {
 	}
 
 	/**
-	 * Widget Display.
+	 * Query Settings.
 	 *
 	 * @since  1.0.0
 	 * @access private
-	 * @param  array  $results
-	 * @param  int    $posts
-	 * @param  string $cookie_name
-	 * @return array  $args
+	 * @param  array   $results
+	 * @param  int     $posts
+	 * @param  string  $cookie_name
+	 * @return array   $args
 	 */
 	private function set_query( $results, $posts, $cookie_name ) {
 		/** Common Items Set */
@@ -187,11 +176,15 @@ class Posted_Display_Widget extends WP_Widget {
 
 		switch ( $results['type'] ) {
 			case "Cookie":
-				$args += array(
-					"post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
-					"orderby"  => "post__in",
-					"order"    => "DESC"
-				);
+				if ( isset( $_COOKIE[$cookie_name] ) ) {
+					$args += array(
+						"post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
+						"orderby"  => "post__in",
+						"order"    => "DESC"
+					);
+				} else {
+					$args = array();
+				}
 				break;
 			case "Any posts":
 				$args += array(
@@ -216,11 +209,11 @@ class Posted_Display_Widget extends WP_Widget {
 				break;
 		}
 
-		return $args;
+		return (array) $args;
 	}
 
 	/**
-	 * Widget Display.
+	 * Template replace.
 	 *
 	 * @since  1.0.0
 	 * @access private
@@ -230,18 +223,19 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  string $image
 	 * @param  string $date
 	 * @param  string $link
+	 * @return string $template
 	 */
 	private function set_template( $template, $title, $excerpt, $image, $date, $link ) {
-		$template = str_replace( '##title##',   $title,   $template );
-		$template = str_replace( '##summary##', $excerpt, $template );
-		$template = str_replace( '##image##',   $image,   $template );
-		$template = str_replace( '##date##',    $date,    $template );
-		$template = str_replace( '##link##',    $link,    $template );
-		$template = str_replace( '\\',          '',       $template );
+		$template = str_replace( '##title##',   esc_html( $title ),   $template );
+		$template = str_replace( '##summary##', esc_html( $excerpt ), $template );
+		$template = str_replace( '##image##',   esc_html( $image ),   $template );
+		$template = str_replace( '##date##',    esc_html( $date ),    $template );
+		$template = str_replace( '##link##',    esc_url( $link ),     $template );
+		$template = str_replace( '\\', '', $template );
 
 		/** Escape */
 		$template = preg_replace('!<script.*?>.*?</script.*?>!is', '', $template );
 		$template = preg_replace('!onerror=".*?"!is', '', $template );
-		echo $template;
+		return (string) $template;
 	}
 }

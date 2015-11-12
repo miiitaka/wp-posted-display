@@ -65,11 +65,7 @@ class Posted_Display_Admin_List {
 		$html .= '<th scope="row">' . esc_html__( 'ID',            $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">' . esc_html__( 'Type',          $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">' . esc_html__( 'Template Name', $this->text_domain ) . '</th>';
-		$html .= '<th scope="row">' . esc_html__( 'Save Term',     $this->text_domain ) . '</th>';
-		$html .= '<th scope="row">' . esc_html__( 'Save Item',     $this->text_domain ) . '</th>';
-		$html .= '<th scope="row">' . esc_html__( 'Output Data',   $this->text_domain ) . '</th>';
-		$html .= '<th scope="row">' . esc_html__( 'Register Date', $this->text_domain ) . '</th>';
-		$html .= '<th scope="row">' . esc_html__( 'Update Date',   $this->text_domain ) . '</th>';
+		$html .= '<th scope="row">' . esc_html__( 'Short Code',    $this->text_domain ) . '</th>';
 		$html .= '<th scope="row">&nbsp;</th>';
 		$html .= '</tr>';
 		echo $html;
@@ -86,11 +82,7 @@ class Posted_Display_Admin_List {
 				$html .= '<td>';
 				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
 				$html .= '</td>';
-				$html .= '<td>' . esc_html( $row->save_term )     . '</td>';
-				$html .= '<td>' . esc_html( $row->save_item )     . '</td>';
-				$html .= '<td>' . esc_html( $row->output_data )   . '</td>';
-				$html .= '<td>' . esc_html( $row->register_date ) . '</td>';
-				$html .= '<td>' . esc_html( $row->update_date )   . '</td>';
+				$html .= '<td><input type="text" onfocus="this.select();" readonly="readonly" value="[wp-posted-display id=&quot;' . esc_html( $row->id ) . '&quot; posts=&quot;5&quot;]" class="large-text code"></td>';
 				$html .= '<td>';
 				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Edit', $this->text_domain );
@@ -103,7 +95,7 @@ class Posted_Display_Admin_List {
 				echo $html;
 			}
 		} else {
-			echo '<td colspan="9">' . esc_html__( 'Without registration.', $this->text_domain ) . '</td>';
+			echo '<td colspan="5">' . esc_html__( 'Without registration.', $this->text_domain ) . '</td>';
 		}
 
 		$html  = '</table>';

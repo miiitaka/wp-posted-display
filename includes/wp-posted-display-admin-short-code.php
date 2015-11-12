@@ -1,12 +1,12 @@
 <?php
 /**
- * Admin ShortCode Register
+ * Admin ShortCode Settings
  *
  * @author  Kazuya Takami
  * @version 1.0.0
  * @since   1.0.0
  */
-class Posted_Display_ShortCode extends WP_Widget {
+class Posted_Display_ShortCode {
 
 	/**
 	 * Variable definition.
@@ -16,48 +16,34 @@ class Posted_Display_ShortCode extends WP_Widget {
 	private $text_domain = 'wp-posted-display';
 
 	/**
-	 * Constructor Define.
+	 * ShortCode Display.
 	 *
 	 * @since  1.0.0
 	 * @access public
+	 * @param  array  $args
+	 * @return string $html
 	 */
-	public function __construct() {
-
-	}
-
-	/**
-	 * Widget Display.
-	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array $args
-	 * @param  array $instance
-	 */
-	public function widget( $args, $instance ) {
-		$cookie_name = $this->text_domain;
-		if ( isset( $instance['template'] ) ) {
-			$cookie_name = '-' . esc_html( $instance['template'] );
-		}
+	public function short_code_display( $args ) {
+		extract( shortcode_atts( array (
+			'id'    => "",
+			'posts' => "5"
+		), $args ) );
 
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
-		$results = $db->get_options( esc_html( $instance['template'] ) );
+		$results = $db->get_options( esc_html( (int) $id ) );
+		$html = '';
 
 		if ( $results ) {
-			$query_args = $this->set_query( $results, esc_html( $instance['posts'] ), $cookie_name );
+			$cookie_name = $this->text_domain . '-' . esc_html( (int) $id );
+			$query_args = $this->set_query( $results, esc_html( (int) $posts ), $cookie_name );
 
 			wp_reset_query();
 			$query = new WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
-				/** Display widget header. */
-				echo $args['before_widget'] . PHP_EOL;
-				echo $args['before_title'] . PHP_EOL;
-				echo esc_html( $instance['title'] ) . PHP_EOL;
-				echo $args['after_title'] . PHP_EOL;
-
-				/** Display widget body. */
-				echo '<ul>' . PHP_EOL;
+				/** Display ShortCode body. */
+				$html = '<ul>' . PHP_EOL;
 
 				while ( $query->have_posts() ) {
 					$query->the_post();
@@ -71,34 +57,27 @@ class Posted_Display_ShortCode extends WP_Widget {
 							$images[0] = '';
 						}
 					}
-					echo '<li>' . PHP_EOL;
-					$this->set_template(
-						$results['template'],
-						esc_html( get_the_title() ),
-						esc_html( get_the_excerpt() ),
-						$images[0],
-						esc_html( get_the_time( get_option( 'date_format' ) ) ),
-						esc_url( get_the_permalink() )
-					);
-					echo '</li>' . PHP_EOL;
+					$html .= '<li>' . PHP_EOL;
+					$html .= $this->set_template( $results['template'], get_the_title(), get_the_excerpt(), $images[0], get_the_time( get_option( 'date_format' ) ), get_the_permalink() );
+					$html .= '</li>' . PHP_EOL;
 				}
 
-				echo '</ul>';
-				echo $args['after_widget'];
+				$html .= '</ul>';
 			}
 			wp_reset_query();
 		}
+		return $html;
 	}
 
 	/**
-	 * Widget Display.
+	 * Query Settings.
 	 *
 	 * @since  1.0.0
 	 * @access private
-	 * @param  array  $results
-	 * @param  int    $posts
-	 * @param  string $cookie_name
-	 * @return array  $args
+	 * @param  array   $results
+	 * @param  int     $posts
+	 * @param  string  $cookie_name
+	 * @return array   $args
 	 */
 	private function set_query( $results, $posts, $cookie_name ) {
 		/** Common Items Set */
@@ -110,11 +89,15 @@ class Posted_Display_ShortCode extends WP_Widget {
 
 		switch ( $results['type'] ) {
 			case "Cookie":
-				$args += array(
-					"post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
-					"orderby"  => "post__in",
-					"order"    => "DESC"
-				);
+				if ( isset( $_COOKIE[$cookie_name] ) ) {
+					$args += array(
+						"post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
+						"orderby"  => "post__in",
+						"order"    => "DESC"
+					);
+				} else {
+					$args = array();
+				}
 				break;
 			case "Any posts":
 				$args += array(
@@ -139,11 +122,11 @@ class Posted_Display_ShortCode extends WP_Widget {
 				break;
 		}
 
-		return $args;
+		return (array) $args;
 	}
 
 	/**
-	 * Widget Display.
+	 * Template replace.
 	 *
 	 * @since  1.0.0
 	 * @access private
@@ -153,18 +136,19 @@ class Posted_Display_ShortCode extends WP_Widget {
 	 * @param  string $image
 	 * @param  string $date
 	 * @param  string $link
+	 * @return string $template
 	 */
 	private function set_template( $template, $title, $excerpt, $image, $date, $link ) {
-		$template = str_replace( '##title##',   $title,   $template );
-		$template = str_replace( '##summary##', $excerpt, $template );
-		$template = str_replace( '##image##',   $image,   $template );
-		$template = str_replace( '##date##',    $date,    $template );
-		$template = str_replace( '##link##',    $link,    $template );
-		$template = str_replace( '\\',          '',       $template );
+		$template = str_replace( '##title##',   esc_html( $title ),   $template );
+		$template = str_replace( '##summary##', esc_html( $excerpt ), $template );
+		$template = str_replace( '##image##',   esc_html( $image ),   $template );
+		$template = str_replace( '##date##',    esc_html( $date ),    $template );
+		$template = str_replace( '##link##',    esc_url( $link ),     $template );
+		$template = str_replace( '\\', '', $template );
 
 		/** Escape */
 		$template = preg_replace('!<script.*?>.*?</script.*?>!is', '', $template );
 		$template = preg_replace('!onerror=".*?"!is', '', $template );
-		echo $template;
+		return (string) $template;
 	}
 }
