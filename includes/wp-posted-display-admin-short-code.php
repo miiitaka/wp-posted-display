@@ -26,8 +26,15 @@ class Posted_Display_ShortCode {
 	public function short_code_display( $args ) {
 		extract( shortcode_atts( array (
 			'id'    => "",
-			'posts' => "5"
+			'posts' => "5",
+			'sort'  => 0
 		), $args ) );
+
+		$instance = array(
+			'id'    => $id,
+			'posts' => $posts,
+			'sort'  => $sort
+		);
 
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
@@ -36,7 +43,7 @@ class Posted_Display_ShortCode {
 
 		if ( $results ) {
 			$cookie_name = $this->text_domain . '-' . esc_html( (int) $id );
-			$query_args = $this->set_query( $results, esc_html( (int) $posts ), $cookie_name );
+			$query_args = $this->set_query( $results, $instance, $cookie_name );
 
 			wp_reset_query();
 			$query = new WP_Query( $query_args );
@@ -74,58 +81,64 @@ class Posted_Display_ShortCode {
 	 *
 	 * @since  1.0.0
 	 * @access private
-	 * @param  array   $results
-	 * @param  int     $posts
-	 * @param  string  $cookie_name
-	 * @return array   $args
+	 * @param  array  $results
+	 * @param  array  $instance
+	 * @param  string $cookie_name
+	 * @return array  $args
 	 */
-	private function set_query( $results, $posts, $cookie_name ) {
+	private function set_query( $results, $instance, $cookie_name ) {
 		/** Common Items Set */
 		$args = array(
-			"post_status"         => "publish",
-			"posts_per_page"      => $posts,
-			"ignore_sticky_posts" => 1
+				"post_status"         => "publish",
+				"posts_per_page"      => esc_html( $instance['posts'] ),
+				"ignore_sticky_posts" => 1
 		);
+
+		switch ( $instance['sort'] ) {
+			case 0:
+				$args += array(
+						"orderby"  => "post__in",
+						"order"    => "ASC"
+				);
+				break;
+			case 1:
+				$args += array(
+						"orderby"  => "date",
+						"order"    => "DESC"
+				);
+				break;
+			case 2:
+				$args += array(
+						"orderby"  => "date",
+						"order"    => "ASC"
+				);
+				break;
+			case 3:
+				$args += array(
+						"orderby"  => "rand"
+				);
+				break;
+		}
 
 		switch ( $results['type'] ) {
 			case "Cookie":
 				if ( isset( $_COOKIE[$cookie_name] ) ) {
-					$args += array(
-						"post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
-						"orderby"  => "post__in",
-						"order"    => "DESC"
-					);
+					$args += array( "post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ) );
 				} else {
 					$args = array();
 				}
 				break;
-			case "Any posts":
-				$args += array(
-					"post__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby"  => "post__in",
-					"order"    => "ASC"
-				);
+			case "Posts":
+				$args += array( "post__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 			case "Categories":
-				$args += array(
-					"category__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby"      => "date",
-					"order"        => "DESC"
-				);
+				$args += array( "category__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 			case "Tags":
-				$args += array(
-					"tag__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby" => "date",
-					"order"   => "DESC"
-				);
+				$args += array( "tag__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 			case "Users":
-				$args += array(
-					"author__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby"    => "date",
-					"order"      => "DESC"
-				);
+				$args += array( "author__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 		}
 

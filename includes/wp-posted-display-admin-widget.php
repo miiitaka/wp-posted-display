@@ -14,6 +14,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @since 1.0.0
 	 */
 	private $text_domain = 'wp-posted-display';
+	private $sort_array  = array( 'Input order', 'Date descending order', 'Date ascending order', 'Random' );
 
 	/**
 	 * Constructor Define.
@@ -47,6 +48,9 @@ class Posted_Display_Widget extends WP_Widget {
 			if ( !isset( $instance['template'] ) ) {
 				$instance['template'] = "";
 			}
+			if ( !isset( $instance['sort'] ) ) {
+				$instance['sort'] = 0;
+			}
 			if ( !isset( $instance['posts'] ) ) {
 				$instance['posts'] = 5;
 			}
@@ -70,10 +74,23 @@ class Posted_Display_Widget extends WP_Widget {
 			}
 			echo '</select></p>';
 
+			$id = $this->get_field_id( 'sort' );
+			$name = $this->get_field_name( 'sort' );
+			echo '<p><label for="' . $id . '">' . esc_html__( 'Sorted by', $this->text_domain ) . ':</label><br>';
+			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
+			foreach ( $this->sort_array as $key => $row ) {
+				if ( $key == $instance['sort'] ) {
+					printf( '<option value="%d" selected="selected">%s</option>', $key, esc_html( $row ) );
+				} else {
+					printf( '<option value="%d">%s</option>', $key, esc_html( $row ) );
+				}
+			}
+			echo '</select></p>';
+
 			$id = $this->get_field_id( 'posts' );
 			$name = $this->get_field_name( 'posts' );
-			echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->text_domain ) . ':</label>';
-			printf( '<input type="text" id="%s" name="%s" value="%s" class="small-text">', $id, $name, esc_attr( $instance['posts'] ) );
+			echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->text_domain ) . ':&nbsp;</label>';
+			printf( '<input type="number" id="%s" name="%s" value="%s" class="small-text">', $id, $name, esc_attr( $instance['posts'] ) );
 			echo '</p>';
 		} else {
 			$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posts-browsing-admin-post.php';
@@ -117,7 +134,7 @@ class Posted_Display_Widget extends WP_Widget {
 
 		if ( $results ) {
 			$cookie_name = $this->text_domain . '-' . esc_html( $instance['template'] );
-			$query_args = $this->set_query( $results, esc_html( $instance['posts'] ), $cookie_name );
+			$query_args = $this->set_query( $results, $instance, $cookie_name );
 
 			wp_reset_query();
 			$query = new WP_Query( $query_args );
@@ -161,58 +178,64 @@ class Posted_Display_Widget extends WP_Widget {
 	 *
 	 * @since  1.0.0
 	 * @access private
-	 * @param  array   $results
-	 * @param  int     $posts
-	 * @param  string  $cookie_name
-	 * @return array   $args
+	 * @param  array  $results
+	 * @param  array  $instance
+	 * @param  string $cookie_name
+	 * @return array  $args
 	 */
-	private function set_query( $results, $posts, $cookie_name ) {
+	private function set_query( $results, $instance, $cookie_name ) {
 		/** Common Items Set */
 		$args = array(
 			"post_status"         => "publish",
-			"posts_per_page"      => $posts,
+			"posts_per_page"      => esc_html( $instance['posts'] ),
 			"ignore_sticky_posts" => 1
 		);
+
+		switch ( $instance['sort'] ) {
+			case 0:
+				$args += array(
+					"orderby"  => "post__in",
+					"order"    => "ASC"
+				);
+				break;
+			case 1:
+				$args += array(
+					"orderby"  => "date",
+					"order"    => "DESC"
+				);
+				break;
+			case 2:
+				$args += array(
+					"orderby"  => "date",
+					"order"    => "ASC"
+				);
+				break;
+			case 3:
+				$args += array(
+					"orderby"  => "rand"
+				);
+				break;
+		}
 
 		switch ( $results['type'] ) {
 			case "Cookie":
 				if ( isset( $_COOKIE[$cookie_name] ) ) {
-					$args += array(
-						"post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ),
-						"orderby"  => "post__in",
-						"order"    => "DESC"
-					);
+					$args += array( "post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ) );
 				} else {
 					$args = array();
 				}
 				break;
 			case "Posts":
-				$args += array(
-					"post__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby"  => "post__in",
-					"order"    => "ASC"
-				);
+				$args += array( "post__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 			case "Categories":
-				$args += array(
-					"category__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby"      => "date",
-					"order"        => "DESC"
-				);
+				$args += array( "category__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 			case "Tags":
-				$args += array(
-					"tag__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby" => "date",
-					"order"   => "DESC"
-				);
+				$args += array( "tag__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 			case "Users":
-				$args += array(
-					"author__in" => explode( ',', esc_html( $results['output_data']) ),
-					"orderby"    => "date",
-					"order"      => "DESC"
-				);
+				$args += array( "author__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
 		}
 

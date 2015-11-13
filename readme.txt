@@ -41,7 +41,13 @@ You can specify the maximum number to be displayed by changing the value of the 
 投稿ページや固定ページでショートコードを使用できます。登録したテンプレート一覧でショートコードを取得できるので、コピーして使用して下さい。
 postsの値を変更することで表示する最大件数を指定できます。
 
-`[wp-posted-display id="1" posts="5"]`
+`[wp-posted-display id="1" posts="5" sort="0"]`
+
+= ShortCode Params Sorted by =
+* sort="0": Input order
+* sort="1": Date descending order
+* sort="2": Date ascending order
+* sort="3": Random
 
 == Changelog ==
 

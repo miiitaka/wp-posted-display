@@ -82,7 +82,7 @@ class Posted_Display_Admin_List {
 				$html .= '<td>';
 				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
 				$html .= '</td>';
-				$html .= '<td><input type="text" onfocus="this.select();" readonly="readonly" value="[wp-posted-display id=&quot;' . esc_html( $row->id ) . '&quot; posts=&quot;5&quot;]" class="large-text code"></td>';
+				$html .= '<td><input type="text" onfocus="this.select();" readonly="readonly" value="[wp-posted-display id=&quot;' . esc_html( $row->id ) . '&quot; posts=&quot;5&quot; sort=&quot;0&quot;]" class="large-text code"></td>';
 				$html .= '<td>';
 				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Edit', $this->text_domain );
