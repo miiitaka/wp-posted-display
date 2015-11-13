@@ -27,7 +27,7 @@ class Posted_Display_Admin_Post {
 		/**
 		 * Update Status
 		 *
-		 * "ok"     : Successful update
+		 * "ok" : Successful update
 		 */
 		$status = "";
 
@@ -101,15 +101,14 @@ class Posted_Display_Admin_Post {
 		$html  = '<table class="wp-posted-display-admin-table">';
 		$html .= '<caption>' . esc_html__( 'Common settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="template_name">' . esc_html__( 'Template Name', $this->text_domain ) . ':</label></th><td>';
-		$html .= '<input type="text" name="template_name" id="template_name" class="regular-text" required value="' . esc_attr( $options['template_name'] ) . '">';
+		$html .= '<input type="text" name="template_name" id="template_name" class="regular-text" required autofocus value="';
+		$html .= esc_attr( $options['template_name'] ) . '">';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="type">' . esc_html__( 'Type', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<select name="type" id="type">';
 		foreach ( $this->type_args as $value ) {
 			$html .= '<option value="' . $value . '"';
-			if ( $options['type'] === $value ) {
-				$html .= ' selected=selected';
-			}
+			$html .= ( $options['type'] === $value ) ? ' selected=selected' : '';
 			$html .= '>' . $value;
 		}
 		$html .= '</select>';
@@ -131,7 +130,8 @@ class Posted_Display_Admin_Post {
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template_no_image">' . esc_html__( 'No Image Path', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>' . esc_html__( 'It specifies the posts of Alternative Image path that does not set the featured image.', $this->text_domain ) . '</p>';
-		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="' . esc_attr( $options['template_no_image'] ) . '">';
+		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="';
+		$html .= esc_attr( $options['template_no_image'] ) . '">';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
@@ -140,22 +140,25 @@ class Posted_Display_Admin_Post {
 		$html  = '<table class="wp-posted-display-admin-table">';
 		$html .= '<caption>' . esc_html__( 'Type: Cookie settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="save_term">' . esc_html__( 'Save Term', $this->text_domain ) . ':</label></th><td>';
-		$html .= '<input type="number" name="save_term" id="save_term" required class="small-text" min="1" max="30" value="' . esc_attr( $options['save_term'] ) . '">' . esc_html__( 'day', $this->text_domain );
+		$html .= '<input type="number" name="save_term" id="save_term" required class="small-text" min="1" max="30" value="';
+		$html .= esc_attr( $options['save_term'] ) . '">' . esc_html__( 'day', $this->text_domain );
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="save_item">' . esc_html__( 'Save Item', $this->text_domain ) . ':</label></th><td>';
-		$html .= '<input type="number" name="save_item" id="save_item" required class="small-text" min="1" max="30" value="' . esc_attr( $options['save_item'] ) . '">' . esc_html__( 'item', $this->text_domain );
+		$html .= '<input type="number" name="save_item" id="save_item" required class="small-text" min="1" max="30" value="';
+		$html .= esc_attr( $options['save_item'] ) . '">' . esc_html__( 'item', $this->text_domain );
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
 
-		/** Type: Cookie settings */
+		/** Type: Posts, Categories, Tags, Users settings */
 		$html  = '<table class="wp-posted-display-admin-table">';
-		$html .= '<caption>' . esc_html__( 'Type: Posts, Categories, Tags & Users settings', $this->text_domain ) . '</caption>';
+		$html .= '<caption>' . esc_html__( 'Type: Posts, Categories, Tags, Users settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="output_data">' . esc_html__( 'Output Data', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>';
 		$html .= esc_html__( 'The specified in a comma-separated posts ID, category ID, tag ID, user ID respectively.', $this->text_domain );
 		$html .= '</p>';
-		$html .= '<input type="text" name="output_data" id="output_data" class="regular-text" value="' . esc_attr( $options['output_data'] ) . '">';
+		$html .= '<input type="text" name="output_data" id="output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
+		$html .= esc_attr( $options['output_data'] ) . '">';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
