@@ -120,6 +120,13 @@ class Posted_Display_ShortCode {
 					"order"   => "DESC"
 				);
 				break;
+			case "Users":
+				$args += array(
+					"author__in" => explode( ',', esc_html( $results['output_data']) ),
+					"orderby"    => "date",
+					"order"      => "DESC"
+				);
+				break;
 		}
 
 		return (array) $args;
