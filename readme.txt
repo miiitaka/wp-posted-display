@@ -49,6 +49,11 @@ postsの値を変更することで表示する最大件数を指定できます
 * sort="2": Date ascending order
 * sort="3": Random
 
+* sort="0": 入力順
+* sort="1": 日付（降順）
+* sort="2": 日付（昇順）
+* sort="3": ランダム
+
 == Changelog ==
 
 = 1.0.0 =

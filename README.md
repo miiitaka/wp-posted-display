@@ -24,7 +24,7 @@ You can specify the maximum number to be displayed by changing the value of the 
 postsの値を変更することで表示する最大件数を指定できます。
 
 ```
-[wp-posted-display id="1" posts="5"]
+[wp-posted-display id="1" posts="5" sort="0"]
 ```
 
 ### ShortCode Params Sorted by
@@ -32,3 +32,8 @@ postsの値を変更することで表示する最大件数を指定できます
 * sort="1": Date descending order
 * sort="2": Date ascending order
 * sort="3": Random
+
+* sort="0": 入力順
+* sort="1": 日付（降順）
+* sort="2": 日付（昇順）
+* sort="3": ランダム
