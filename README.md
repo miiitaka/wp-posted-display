@@ -26,3 +26,9 @@ postsの値を変更することで表示する最大件数を指定できます
 ```
 [wp-posted-display id="1" posts="5"]
 ```
+
+### ShortCode Params Sorted by
+* sort="0": Input order
+* sort="1": Date descending order
+* sort="2": Date ascending order
+* sort="3": Random
