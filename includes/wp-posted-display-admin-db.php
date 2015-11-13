@@ -184,7 +184,7 @@ class Posted_Display_Admin_Db {
 
 		if ( $options ) {
 			foreach ( $options as $key => $option ) {
-				if ( isset( $option['template'] ) && $option['template'] == $id) {
+				if ( isset( $option['template'] ) && $option['template'] == $id ) {
 					unset( $options[$key] );
 				}
 			}
