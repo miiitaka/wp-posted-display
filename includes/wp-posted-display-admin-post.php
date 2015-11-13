@@ -28,7 +28,6 @@ class Posted_Display_Admin_Post {
 		 * Update Status
 		 *
 		 * "ok"     : Successful update
-		 * "output" : Output No Check
 		 */
 		$status = "";
 
