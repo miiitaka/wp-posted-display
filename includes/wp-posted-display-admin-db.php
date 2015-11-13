@@ -178,5 +178,17 @@ class Posted_Display_Admin_Db {
 		$key_prepared = array( '%d' );
 
 		$wpdb->delete( $this->table_name, $key, $key_prepared );
+
+		/** Widget delete. */
+		$options = get_option( 'widget_posted_display_widget' );
+
+		if ( $options ) {
+			foreach ( $options as $key => $option ) {
+				if ( isset( $option['template'] ) && $option['template'] == $id) {
+					unset( $options[$key] );
+				}
+			}
+			update_option( 'widget_posted_display_widget', $options );
+		}
 	}
 }

@@ -2,7 +2,7 @@
 if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
-new Posts_Browsing_History_Uninstall();
+new Posted_Display_Uninstall();
 
 /**
  * Plugin Uninstall
@@ -11,7 +11,7 @@ new Posts_Browsing_History_Uninstall();
  * @version 1.0.0
  * @since   1.0.0
  */
-class Posts_Browsing_History_Uninstall {
+class Posted_Display_Uninstall {
 
 	/**
 	 * Constructor Define.
@@ -20,6 +20,7 @@ class Posts_Browsing_History_Uninstall {
 	 */
 	function __construct() {
 		$this->drop_table();
+		delete_option( 'widget_posted_display_widget' );
 	}
 
 	/**
