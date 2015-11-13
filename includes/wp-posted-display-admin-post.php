@@ -173,7 +173,7 @@ class Posted_Display_Admin_Post {
 	 */
 	private function information_render() {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
-		$html .= '<p>Posts Browsing History Information Update.</p>';
+		$html .= '<p>Posted Display Information Update.</p>';
 		$html .= '<button type="button" class="notice-dismiss">';
 		$html .= '<span class="screen-reader-text">Dismiss this notice.</span>';
 		$html .= '</button>';
