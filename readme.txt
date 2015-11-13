@@ -15,6 +15,7 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * You can create a widget and a short code that can display the posts in any.
 * You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
+* You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
 
 投稿記事情報をウィジェットやショートコードで表示させるプラグインです。閲覧履歴をCookieに保存して表示することもできます。
 
@@ -22,6 +23,7 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * 投稿記事を任意で表示できるウィジェットとショートコードを作成できます。
 * 任意のカテゴリーIDに属する記事をウィジェットとショートコードで情報を表示できます。（複数指定可）
 * 任意のタグIDに属する記事をウィジェットとショートコードで情報を表示できます。（複数指定可）
+* 任意のユーザーIDに属する記事をウィジェットとショートコードで情報を表示できます。（複数指定可）
 
 == Installation ==
 

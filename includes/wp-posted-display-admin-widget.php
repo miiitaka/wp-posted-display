@@ -186,7 +186,7 @@ class Posted_Display_Widget extends WP_Widget {
 					$args = array();
 				}
 				break;
-			case "Any posts":
+			case "Posts":
 				$args += array(
 					"post__in" => explode( ',', esc_html( $results['output_data']) ),
 					"orderby"  => "post__in",
@@ -205,6 +205,13 @@ class Posted_Display_Widget extends WP_Widget {
 					"tag__in" => explode( ',', esc_html( $results['output_data']) ),
 					"orderby" => "date",
 					"order"   => "DESC"
+				);
+				break;
+			case "Users":
+				$args += array(
+					"author__in" => explode( ',', esc_html( $results['output_data']) ),
+					"orderby"    => "date",
+					"order"      => "DESC"
 				);
 				break;
 		}

@@ -31,11 +31,11 @@
 .wp-posted-display-admin-table td li::before {
 	content: "-";
 }
-.wp-posted-display-admin-table td li span {
-	background: #5c5c5c;
+.wp-posted-display-admin-table td p span {
+	background: #00a0d2;
 	color: #ffffff;
 	display: inline-block;
-	margin: 0 5px 0 5px;
+	margin: 0 5px 5px 0;
 	padding: 1px 5px 1px 5px;
 	border-radius: 5px;
 	-webkit-border-radius: 5px;

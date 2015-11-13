@@ -13,7 +13,7 @@ class Posted_Display_Admin_Post {
 	 * @since 1.0.0
 	 */
 	private $text_domain;
-	private $type_args = array( 'Cookie', 'Any posts', 'Categories', 'Tags' );
+	private $type_args = array( 'Cookie', 'Posts', 'Categories', 'Tags', 'Users' );
 
 	/**
 	 * Constructor Define.
@@ -96,7 +96,11 @@ class Posted_Display_Admin_Post {
 		$html  = '<hr>';
 		$html .= '<form method="post" action="">';
 		$html .= '<input type="hidden" name="id" value="' . esc_attr( $options['id'] ) . '">';
-		$html .= '<table class="wp-posted-display-admin-table">';
+		echo $html;
+
+		/** Common settings */
+		$html  = '<table class="wp-posted-display-admin-table">';
+		$html .= '<caption>' . esc_html__( 'Common settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="template_name">' . esc_html__( 'Template Name', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="text" name="template_name" id="template_name" class="regular-text" required value="' . esc_attr( $options['template_name'] ) . '">';
 		$html .= '</td></tr>';
@@ -110,40 +114,47 @@ class Posted_Display_Admin_Post {
 			$html .= '>' . $value;
 		}
 		$html .= '</select>';
-		echo $html;
-
-		$html  = '</td></tr>';
+		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template">' . esc_html__( 'Template', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>';
 		$html .= esc_html__( 'Child elements of the li element is markup.', $this->text_domain ) . '&nbsp;';
 		$html .= esc_html__( 'Date, post title, post summary, you can view the featured image.', $this->text_domain ) . '<br>';
 		$html .= esc_html__( 'Please set as "##item##" the items to be displayed.', $this->text_domain );
 		$html .= '</p>';
-		$html .= '<ul>';
-		$html .= '<li><span>##date##</span>'    . esc_html__( 'Posted date', $this->text_domain ) . '</li>';
-		$html .= '<li><span>##title##</span>'   . esc_html__( 'Posted title', $this->text_domain ) . '</li>';
-		$html .= '<li><span>##summary##</span>' . esc_html__( 'Posted overview', $this->text_domain ) . '</li>';
-		$html .= '<li><span>##image##</span>'   . esc_html__( 'Posted featured image', $this->text_domain ) . '</li>';
-		$html .= '<li><span>##link##</span>'    . esc_html__( 'Posted link', $this->text_domain ) . '</li>';
-		$html .= '</ul>';
+		$html .= '<p>';
+		$html .= '<span>##date##</span>';
+		$html .= '<span>##title##</span>';
+		$html .= '<span>##summary##</span>';
+		$html .= '<span>##image##</span>';
+		$html .= '<span>##link##</span>';
+		$html .= '</p>';
 		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template_no_image">' . esc_html__( 'No Image Path', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>' . esc_html__( 'It specifies the posts of Alternative Image path that does not set the featured image.', $this->text_domain ) . '</p>';
 		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="' . esc_attr( $options['template_no_image'] ) . '">';
 		$html .= '</td></tr>';
+		$html .= '</table>';
+		echo $html;
+
+		/** Type: Cookie settings */
+		$html  = '<table class="wp-posted-display-admin-table">';
+		$html .= '<caption>' . esc_html__( 'Type: Cookie settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="save_term">' . esc_html__( 'Save Term', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="number" name="save_term" id="save_term" required class="small-text" min="1" max="30" value="' . esc_attr( $options['save_term'] ) . '">' . esc_html__( 'day', $this->text_domain );
-		$html .= '<small>(' . esc_html__( 'Type Cookie only' ) . ')</small>';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="save_item">' . esc_html__( 'Save Item', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="number" name="save_item" id="save_item" required class="small-text" min="1" max="30" value="' . esc_attr( $options['save_item'] ) . '">' . esc_html__( 'item', $this->text_domain );
-		$html .= '<small>(' . esc_html__( 'Type Cookie only' ) . ')</small>';
 		$html .= '</td></tr>';
+		$html .= '</table>';
+		echo $html;
+
+		/** Type: Cookie settings */
+		$html  = '<table class="wp-posted-display-admin-table">';
+		$html .= '<caption>' . esc_html__( 'Type: Posts, Categories, Tags & Users settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="output_data">' . esc_html__( 'Output Data', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>';
-		$html .= esc_html__( 'Type I use in the case of a non-cookie.', $this->text_domain ) . '<br>';
-		$html .= esc_html__( 'The specified in a comma-separated posts ID, category ID, a tag ID, respectively.', $this->text_domain );
+		$html .= esc_html__( 'The specified in a comma-separated posts ID, category ID, tag ID, user ID respectively.', $this->text_domain );
 		$html .= '</p>';
 		$html .= '<input type="text" name="output_data" id="output_data" class="regular-text" value="' . esc_attr( $options['output_data'] ) . '">';
 		$html .= '</td></tr>';
