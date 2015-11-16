@@ -1,9 +1,9 @@
-=== Posts Display Widget Add. ===
+=== WordPress Posted Display ===
 Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.3.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -49,7 +49,7 @@ postsの値を変更することで表示する最大件数を指定できます
 * sort="2": Date ascending order
 * sort="3": Random
 
-
+= ShortCode Params Sorted by =
 * sort="0": 入力順
 * sort="1": 日付（降順）
 * sort="2": 日付（昇順）
@@ -57,7 +57,7 @@ postsの値を変更することで表示する最大件数を指定できます
 
 == Changelog ==
 
-= 1.0.0 =
+= 1.0.1 =
 * The first release.
 
 == Contact ==
