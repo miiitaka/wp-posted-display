@@ -1,0 +1,172 @@
+# Copyright (C) 2015 WordPress Posted Display
+# This file is distributed under the same license as the WordPress Posted Display package.
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Posted Display 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-posted-"
+"display\n"
+"POT-Creation-Date: 2015-11-16 02:27:32+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2015-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: includes/wp-posted-display-admin-list.php:53
+msgid "Posted Display Settings List"
+msgstr "Posted Display 設定一覧"
+
+#: includes/wp-posted-display-admin-list.php:54 wp-posted-display.php:123
+msgid "Add New"
+msgstr "新規追加"
+
+#: includes/wp-posted-display-admin-list.php:65
+msgid "ID"
+msgstr ""
+
+#: includes/wp-posted-display-admin-list.php:66
+#: includes/wp-posted-display-admin-post.php:107
+msgid "Type"
+msgstr "タイプ"
+
+#: includes/wp-posted-display-admin-list.php:67
+#: includes/wp-posted-display-admin-post.php:103
+msgid "Template Name"
+msgstr "テンプレート名"
+
+#: includes/wp-posted-display-admin-list.php:68
+msgid "Short Code"
+msgstr "ショートコード"
+
+#: includes/wp-posted-display-admin-list.php:88
+msgid "Edit"
+msgstr "編集"
+
+#: includes/wp-posted-display-admin-list.php:91
+msgid "Delete"
+msgstr "削除"
+
+#: includes/wp-posted-display-admin-list.php:98
+msgid "Without registration."
+msgstr "登録されていません。"
+
+#: includes/wp-posted-display-admin-post.php:84 wp-posted-display.php:106
+#: wp-posted-display.php:107
+msgid "Posted Display Settings"
+msgstr "Posted Display 設定"
+
+#: includes/wp-posted-display-admin-post.php:102
+msgid "Common settings"
+msgstr "共通設定"
+
+#: includes/wp-posted-display-admin-post.php:116
+#: includes/wp-posted-display-admin-widget.php:66
+msgid "Template"
+msgstr "テンプレート"
+
+#: includes/wp-posted-display-admin-post.php:118
+msgid "Child elements of the li element is markup."
+msgstr "li要素の子要素をマークアップして下さい。"
+
+#: includes/wp-posted-display-admin-post.php:119
+msgid "Date, post title, post summary, you can view the featured image."
+msgstr "日付、投稿タイトル、投稿概要、アイキャッチ画像を表示できます。"
+
+#: includes/wp-posted-display-admin-post.php:120
+msgid "Please set as \"##item##\" the items to be displayed."
+msgstr "\"##アイテム名##\"で各項目が表示されるように設定してください。"
+
+#: includes/wp-posted-display-admin-post.php:131
+msgid "No Image Path"
+msgstr "画像なしパス"
+
+#: includes/wp-posted-display-admin-post.php:132
+msgid ""
+"It specifies the posts of Alternative Image path that does not set the "
+"featured image."
+msgstr "アイキャッチ画像が設定されていない場合の代替画像パスを指定します。"
+
+#: includes/wp-posted-display-admin-post.php:141
+msgid "Type: Cookie settings"
+msgstr "タイプ：クッキー設定"
+
+#: includes/wp-posted-display-admin-post.php:142
+msgid "Save Term"
+msgstr "保存期間"
+
+#: includes/wp-posted-display-admin-post.php:144
+msgid "day"
+msgstr "日"
+
+#: includes/wp-posted-display-admin-post.php:146
+msgid "Save Item"
+msgstr "保存数"
+
+#: includes/wp-posted-display-admin-post.php:148
+msgid "item"
+msgstr "個"
+
+#: includes/wp-posted-display-admin-post.php:155
+msgid "Type: Posts, Categories, Tags, Users settings"
+msgstr "タイプ：投稿、カテゴリ、タグ、ユーザー設定"
+
+#: includes/wp-posted-display-admin-post.php:156
+msgid "Output Data"
+msgstr "出力データ"
+
+#: includes/wp-posted-display-admin-post.php:158
+msgid ""
+"The specified in a comma-separated posts ID, category ID, tag ID, user ID "
+"respectively."
+msgstr "記事ID、カテゴリID、タグID、ユーザーIDをカンマ区切りで指定して下さい。"
+
+#: includes/wp-posted-display-admin-widget.php:26
+msgid "Posted Display Widget"
+msgstr ""
+
+#: includes/wp-posted-display-admin-widget.php:27 wp-posted-display.php:122
+msgid "Posted Display"
+msgstr ""
+
+#: includes/wp-posted-display-admin-widget.php:60
+msgid "Title"
+msgstr "タイトル"
+
+#: includes/wp-posted-display-admin-widget.php:79
+msgid "Sorted by"
+msgstr "並び順"
+
+#: includes/wp-posted-display-admin-widget.php:92
+msgid "Number of posts to show"
+msgstr "表示数"
+
+#: includes/wp-posted-display-admin-widget.php:97
+msgid "Please register of template."
+msgstr "テンプレートの登録を行って下さい。"
+
+#: wp-posted-display.php:114 wp-posted-display.php:115
+msgid "All Settings"
+msgstr "設定一覧"
+
+#. Plugin Name of the plugin/theme
+msgid "WordPress Posted Display"
+msgstr ""
+
+#. Plugin URI of the plugin/theme
+msgid "https://github.com/miiitaka/wp-posted-display"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid ""
+"Plug-in Posted Display Widget & ShortCode Add. You can also save and display "
+"your browsing history to Cookie."
+msgstr "投稿記事情報をウィジェットやショートコードで表示させるプラグインです。閲覧履歴をCookieに保存して表示することもできます。"
+
+#. Author of the plugin/theme
+msgid "Kazuya Takami"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://programp.com/"
+msgstr ""
