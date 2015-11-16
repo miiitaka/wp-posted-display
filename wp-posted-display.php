@@ -39,16 +39,29 @@ class Posted_Display {
 		$db = new Posted_Display_Admin_Db( $this->text_domain );
 		$db->create_table();
 
-		add_action( 'widgets_init', array( $this, 'widget_init' ) );
+		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
+		add_action( 'widgets_init',   array( $this, 'widget_init' ) );
 		add_shortcode( $this->text_domain, array( $this, 'short_code_init' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
-			add_action( 'admin_head-wp-posted-display/uninstall.php', array( $this, 'all_delete_cookie' ) );
 		} else {
 			add_action( 'get_header', array( $this, 'get_header' ) );
 		}
+	}
+
+	/**
+	 * i18n.
+	 *
+	 * @since   1.0.0
+	 */
+	public function plugins_loaded() {
+		load_plugin_textdomain(
+				$this->text_domain,
+				false,
+				dirname( plugin_basename( __FILE__ ) ) . '/languages'
+		);
 	}
 
 	/**
