@@ -1,4 +1,6 @@
-# Description
+# WordPress Posted Display
+https://wordpress.org/plugins/wp-posted-display/
+
 Plug-in Posted Display Widget & ShortCode Add.  
 You can also save and display your browsing history to Cookie.
 
@@ -28,13 +30,7 @@ postsの値を変更することで表示する最大件数を指定できます
 ```
 
 ### ShortCode Params Sorted by
-* sort="0": Input order
-* sort="1": Date descending order
-* sort="2": Date ascending order
-* sort="3": Random
-
-
-* sort="0": 入力順
-* sort="1": 日付（降順）
-* sort="2": 日付（昇順）
-* sort="3": ランダム
+* sort="0": Input order（入力順）
+* sort="1": Date descending order（日付（降順））
+* sort="2": Date ascending order（日付（昇順））
+* sort="3": Random（ランダム）
