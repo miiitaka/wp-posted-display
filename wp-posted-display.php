@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 1.0.1
+Version: 1.0.2
 Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
@@ -19,7 +19,7 @@ new Posted_Display();
  *
  * @author  Kazuya Takami
  * @since   1.0.0
- * @version 1.0.0
+ * @version 1.0.2
  */
 class Posted_Display {
 
@@ -33,15 +33,14 @@ class Posted_Display {
 	/**
 	 * Constructor Define.
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
+	 * @version 1.0.2
 	 */
 	public function __construct () {
-		$db = new Posted_Display_Admin_Db( $this->text_domain );
-		$db->create_table();
-
+		register_activation_hook( __FILE__, array( $this, 'create_table' ) );
+		add_shortcode( $this->text_domain, array( $this, 'short_code_init' ) );
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
 		add_action( 'widgets_init',   array( $this, 'widget_init' ) );
-		add_shortcode( $this->text_domain, array( $this, 'short_code_init' ) );
 
 		if ( is_admin() ) {
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
@@ -52,16 +51,22 @@ class Posted_Display {
 	}
 
 	/**
+	 * Create table.
+	 *
+	 * @since 1.0.2
+	 */
+	public function create_table() {
+		$db = new Posted_Display_Admin_Db( $this->text_domain );
+		$db->create_table();
+	}
+
+	/**
 	 * i18n.
 	 *
 	 * @since   1.0.0
 	 */
 	public function plugins_loaded() {
-		load_plugin_textdomain(
-				$this->text_domain,
-				false,
-				dirname( plugin_basename( __FILE__ ) ) . '/languages'
-		);
+		load_plugin_textdomain( $this->text_domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 
 	/**
@@ -235,7 +240,7 @@ class Posted_Display {
 
 				$options = $db->get_options( $_GET['posted_display_id'] );
 				if ( $options['type'] === 'Cookie' ) {
-					$cookie_name = $this->text_domain . '-' . esc_html($_GET['posted_display_id'] );
+					$cookie_name = $this->text_domain . '-' . esc_html( $_GET['posted_display_id'] );
 					setcookie( $cookie_name, '', time() - 3600, '/', $_SERVER['SERVER_NAME'] );
 				}
 			}
