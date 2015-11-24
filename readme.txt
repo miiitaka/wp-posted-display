@@ -57,7 +57,10 @@ postsの値を変更することで表示する最大件数を指定できます
 
 == Changelog ==
 
-= 1.0.1 =
+= 1.0.2 (2015-11-18) =
+* Fixed : Fixed a minor bug.
+
+= 1.0.1 (2015-11-16) =
 * The first release.
 
 == Contact ==
