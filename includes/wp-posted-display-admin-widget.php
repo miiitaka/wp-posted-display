@@ -135,8 +135,6 @@ class Posted_Display_Widget extends WP_Widget {
 		if ( $results ) {
 			$cookie_name = $this->text_domain . '-' . esc_html( $instance['template'] );
 			$query_args = $this->set_query( $results, $instance, $cookie_name );
-
-			wp_reset_query();
 			$query = new WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
@@ -165,11 +163,11 @@ class Posted_Display_Widget extends WP_Widget {
 					echo $this->set_template( $results['template'], get_the_title(), get_the_excerpt(), $images[0], get_the_time( get_option( 'date_format' ) ), get_the_permalink() );
 					echo '</li>' . PHP_EOL;
 				}
+				wp_reset_postdata();
 
 				echo '</ul>';
 				echo $args['after_widget'];
 			}
-			wp_reset_query();
 		}
 	}
 
