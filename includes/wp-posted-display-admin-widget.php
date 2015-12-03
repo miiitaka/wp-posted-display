@@ -22,7 +22,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @since  1.0.0
 	 * @access public
 	 */
-	public function __construct() {
+	public function __construct () {
 		$widget_options = array( 'description' => esc_html__( 'Posted Display Widget', $this->text_domain ) );
 		parent::__construct( false, esc_html__( 'Posted Display', $this->text_domain ), $widget_options );
 	}
@@ -35,7 +35,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  array $instance
 	 * @return string Parent::Default return is 'noform'
 	 */
-	public function form( $instance ) {
+	public function form ( $instance ) {
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
 
@@ -107,7 +107,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  array $old_instance
 	 * @return array Parent::Settings to save or bool false to cancel saving.
 	 */
-	public function update( $new_instance, $old_instance ) {
+	public function update ( $new_instance, $old_instance ) {
 		if ( isset( $new_instance['posts'] ) ) {
 			if ( !is_numeric( $new_instance['posts'] ) ) {
 				$new_instance['posts'] = 5;
@@ -127,7 +127,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  array $args
 	 * @param  array $instance
 	 */
-	public function widget( $args, $instance ) {
+	public function widget ( $args, $instance ) {
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
 		$results = $db->get_options( esc_html( $instance['template'] ) );
@@ -181,7 +181,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  string $cookie_name
 	 * @return array  $args
 	 */
-	private function set_query( $results, $instance, $cookie_name ) {
+	private function set_query ( $results, $instance, $cookie_name ) {
 		/** Common Items Set */
 		$args = array(
 			"post_status"         => "publish",
@@ -253,7 +253,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @param  string $link
 	 * @return string $template
 	 */
-	private function set_template( $template, $title, $excerpt, $image, $date, $link ) {
+	private function set_template ( $template, $title, $excerpt, $image, $date, $link ) {
 		$template = str_replace( '##title##',   esc_html( $title ),   $template );
 		$template = str_replace( '##summary##', esc_html( $excerpt ), $template );
 		$template = str_replace( '##image##',   esc_html( $image ),   $template );

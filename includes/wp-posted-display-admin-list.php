@@ -21,7 +21,7 @@ class Posted_Display_Admin_List {
 	 * @since   1.0.0
 	 * @param   String $text_domain
 	 */
-	function __construct( $text_domain ) {
+	public function __construct ( $text_domain ) {
 		$this->text_domain = $text_domain;
 
 		$db = new Posted_Display_Admin_Db();
@@ -44,7 +44,7 @@ class Posted_Display_Admin_List {
 	 * @param   Posted_Display_Admin_Db $db
 	 * @param   String $mode
 	 */
-	private function page_render( Posted_Display_Admin_Db $db, $mode = "" ) {
+	private function page_render ( Posted_Display_Admin_Db $db, $mode = "" ) {
 		$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posted-display-admin-post.php';
 		$self_url = $_SERVER['PHP_SELF'] . '?' . esc_html( $_SERVER['QUERY_STRING'] );
 
@@ -108,7 +108,7 @@ class Posted_Display_Admin_List {
 	 *
 	 * @since 1.0.0
 	 */
-	private function information_render() {
+	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
 		$html .= '<p>Deletion succeeds.</p>';
 		$html .= '<button type="button" class="notice-dismiss">';

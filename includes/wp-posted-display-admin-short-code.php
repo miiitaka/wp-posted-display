@@ -23,7 +23,7 @@ class Posted_Display_ShortCode {
 	 * @param  array  $args
 	 * @return string $html
 	 */
-	public function short_code_display( $args ) {
+	public function short_code_display ( $args ) {
 		extract( shortcode_atts( array (
 			'id'    => "",
 			'posts' => "5",
@@ -84,7 +84,7 @@ class Posted_Display_ShortCode {
 	 * @param  string $cookie_name
 	 * @return array  $args
 	 */
-	private function set_query( $results, $instance, $cookie_name ) {
+	private function set_query ( $results, $instance, $cookie_name ) {
 		/** Common Items Set */
 		$args = array(
 				"post_status"         => "publish",
@@ -156,7 +156,7 @@ class Posted_Display_ShortCode {
 	 * @param  string $link
 	 * @return string $template
 	 */
-	private function set_template( $template, $title, $excerpt, $image, $date, $link ) {
+	private function set_template ( $template, $title, $excerpt, $image, $date, $link ) {
 		$template = str_replace( '##title##',   esc_html( $title ),   $template );
 		$template = str_replace( '##summary##', esc_html( $excerpt ), $template );
 		$template = str_replace( '##image##',   esc_html( $image ),   $template );
