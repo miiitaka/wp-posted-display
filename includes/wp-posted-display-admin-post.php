@@ -21,7 +21,7 @@ class Posted_Display_Admin_Post {
 	 * @since 1.0.0
 	 * @param String $text_domain
 	 */
-	public function __construct( $text_domain ) {
+	public function __construct ( $text_domain ) {
 		$this->text_domain = $text_domain;
 
 		/**
@@ -78,7 +78,7 @@ class Posted_Display_Admin_Post {
 	 * @param array  $options
 	 * @param string $status
 	 */
-	private function page_render( array $options, $status ) {
+	private function page_render ( array $options, $status ) {
 		$html  = '';
 		$html .= '<div class="wrap">';
 		$html .= '<h1>' . esc_html__( 'Posted Display Settings', $this->text_domain ) . '</h1>';
@@ -174,7 +174,7 @@ class Posted_Display_Admin_Post {
 	 *
 	 * @since 1.0.0
 	 */
-	private function information_render() {
+	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
 		$html .= '<p>Posted Display Information Update.</p>';
 		$html .= '<button type="button" class="notice-dismiss">';

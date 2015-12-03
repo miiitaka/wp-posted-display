@@ -19,7 +19,7 @@ class Posted_Display_Admin_Db {
 	 *
 	 * @since 1.0.0
 	 */
-	public function __construct() {
+	public function __construct () {
 		global $wpdb;
 		$this->table_name = $wpdb->prefix . 'posted_display';
 	}
@@ -29,7 +29,7 @@ class Posted_Display_Admin_Db {
 	 *
 	 * @since 1.0.0
 	 */
-	public function create_table() {
+	public function create_table () {
 		global $wpdb;
 
 		$prepared     = $wpdb->prepare( "SHOW TABLES LIKE %s", $this->table_name );
@@ -63,7 +63,7 @@ class Posted_Display_Admin_Db {
 	 * @param  integer $id
 	 * @return array   $args
 	 */
-	public function get_options( $id ) {
+	public function get_options ( $id ) {
 		global $wpdb;
 
 		$query    = "SELECT * FROM " . $this->table_name . " WHERE id = %d";
@@ -80,7 +80,7 @@ class Posted_Display_Admin_Db {
 	 * @param  string $type
 	 * @return array  $results
 	 */
-	public function get_list_options( $type = null ) {
+	public function get_list_options ( $type = null ) {
 		global $wpdb;
 
 		if ( $type === 'Cookie' ) {
@@ -100,7 +100,7 @@ class Posted_Display_Admin_Db {
 	 * @param  array $post($_POST)
 	 * @return integer $id
 	 */
-	public function insert_options( array $post ) {
+	public function insert_options ( array $post ) {
 		global $wpdb;
 
 		$data = array(
@@ -136,7 +136,7 @@ class Posted_Display_Admin_Db {
 	 * @since 1.0.0
 	 * @param array $post($_POST)
 	 */
-	public function update_options( array $post ) {
+	public function update_options ( array $post ) {
 		global $wpdb;
 
 		$data = array(
@@ -171,7 +171,7 @@ class Posted_Display_Admin_Db {
 	 * @since 1.0.0
 	 * @param integer $id
 	 */
-	public function delete_options( $id ) {
+	public function delete_options ( $id ) {
 		global $wpdb;
 
 		$key = array( 'id' => esc_html( $id ) );

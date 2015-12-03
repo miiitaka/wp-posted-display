@@ -37,6 +37,9 @@ postsの値を変更することで表示する最大件数を指定できます
 
 ## Change Log
 
+### 1.0.3 (2015-12-03)
+- Fixed : Fixed a minor bug.
+
 ### 1.0.2 (2015-11-18)
 - Fixed : Fixed a minor bug.
 
