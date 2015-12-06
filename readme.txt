@@ -3,7 +3,7 @@ Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.3.1
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -39,6 +39,9 @@ You can specify the maximum number to be displayed by changing the value of the 
 * sort="3": Random
 
 == Changelog ==
+
+= 1.0.4 (2015-12-06) =
+* Renovation : The common functions.
 
 = 1.0.3 (2015-12-03) =
 * Fixed : Fixed a minor bug.

@@ -191,4 +191,84 @@ class Posted_Display_Admin_Db {
 			update_option( 'widget_posted_display_widget', $options );
 		}
 	}
+
+
+	/**
+	 * Query Settings.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.4
+	 * @access  public
+	 * @param   array  $results
+	 * @param   array  $instance
+	 * @param   string $cookie_name
+	 * @return  array  $args
+	 */
+	public function set_query ( $results, $instance, $cookie_name ) {
+		/** Common Items Set */
+		$args = array(
+			"post_status"         => "publish",
+			"posts_per_page"      => esc_html( $instance['posts'] ),
+			"ignore_sticky_posts" => 1
+		);
+
+		switch ( $instance['sort'] ) {
+			case 0: $args += array( "orderby" => "post__in", "order" => "ASC" ); break;
+			case 1: $args += array( "orderby" => "date", "order" => "DESC" ); break;
+			case 2: $args += array( "orderby" => "date", "order" => "ASC" ); break;
+			case 3: $args += array( "orderby" => "rand" ); break;
+		}
+
+		switch ( $results['type'] ) {
+			case "Cookie":
+				if ( isset( $_COOKIE[$cookie_name] ) ) {
+					$args += array( "post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ) );
+				} else {
+					$args = array();
+				}
+				break;
+			case "Posts":
+				$args += array( "post__in" => explode( ',', esc_html( $results['output_data']) ) );
+				break;
+			case "Categories":
+				$args += array( "category__in" => explode( ',', esc_html( $results['output_data']) ) );
+				break;
+			case "Tags":
+				$args += array( "tag__in" => explode( ',', esc_html( $results['output_data']) ) );
+				break;
+			case "Users":
+				$args += array( "author__in" => explode( ',', esc_html( $results['output_data']) ) );
+				break;
+		}
+
+		return (array) $args;
+	}
+
+	/**
+	 * Template replace.
+	 *
+	 * @since   1.0.0
+	 * @version 1.0.4
+	 * @access  public
+	 * @param   string $template
+	 * @param   string $title
+	 * @param   string $excerpt
+	 * @param   string $image
+	 * @param   string $date
+	 * @param   string $link
+	 * @return  string $template
+	 */
+	public function set_template ( $template, $title, $excerpt, $image, $date, $link ) {
+		$template = str_replace( '##title##',   esc_html( $title ),   $template );
+		$template = str_replace( '##summary##', esc_html( $excerpt ), $template );
+		$template = str_replace( '##image##',   esc_html( $image ),   $template );
+		$template = str_replace( '##date##',    esc_html( $date ),    $template );
+		$template = str_replace( '##link##',    esc_url( $link ),     $template );
+		$template = str_replace( '\\', '', $template );
+
+		/** Escape */
+		$template = preg_replace('!<script.*?>.*?</script.*?>!is', '', $template );
+		$template = preg_replace('!onerror=".*?"!is', '', $template );
+		return (string) $template;
+	}
 }
