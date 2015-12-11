@@ -248,7 +248,7 @@ class Posted_Display_Admin_Db {
 	 * Template replace.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.4
+	 * @version 1.0.6
 	 * @access  public
 	 * @param   string $template
 	 * @param   string $title
@@ -256,14 +256,18 @@ class Posted_Display_Admin_Db {
 	 * @param   string $image
 	 * @param   string $date
 	 * @param   string $link
+	 * @param   string $tag
+	 * @param   string $category
 	 * @return  string $template
 	 */
-	public function set_template ( $template, $title, $excerpt, $image, $date, $link ) {
+	public function set_template ( $template, $title, $excerpt, $image, $date, $link, $tag, $category ) {
 		$template = str_replace( '##title##',   esc_html( $title ),   $template );
 		$template = str_replace( '##summary##', esc_html( $excerpt ), $template );
 		$template = str_replace( '##image##',   esc_html( $image ),   $template );
 		$template = str_replace( '##date##',    esc_html( $date ),    $template );
 		$template = str_replace( '##link##',    esc_url( $link ),     $template );
+		$template = str_replace( '##tag##',     $tag,                 $template );
+		$template = str_replace( '##category##',$category,            $template );
 		$template = str_replace( '\\', '', $template );
 
 		/** Escape */

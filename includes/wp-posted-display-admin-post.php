@@ -74,9 +74,10 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @since 1.0.0
-	 * @param array  $options
-	 * @param string $status
+	 * @since   1.0.0
+	 * @version 1.0.6
+	 * @param   array  $options
+	 * @param   string $status
 	 */
 	private function page_render ( array $options, $status ) {
 		$html  = '';
@@ -125,6 +126,8 @@ class Posted_Display_Admin_Post {
 		$html .= '<span>##summary##</span>';
 		$html .= '<span>##image##</span>';
 		$html .= '<span>##link##</span>';
+		$html .= '<span>##tag##</span>';
+		$html .= '<span>##category##</span>';
 		$html .= '</p>';
 		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
 		$html .= '</td></tr>';
