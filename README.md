@@ -37,6 +37,12 @@ postsの値を変更することで表示する最大件数を指定できます
 
 ## Change Log
 
+### 1.0.6 (2015-12-11)
+- Added : Adding a template item a "tag" and "category".
+
+### 1.0.5 (2015-12-09)
+- Check : WordPress version 4.4 operation check.
+
 ### 1.0.4 (2015-12-06)
 - Renovation : The common functions.
 

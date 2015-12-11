@@ -19,7 +19,7 @@ class Posted_Display_ShortCode {
 	 * ShortCode Display.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.4
+	 * @version 1.0.6
 	 * @access  public
 	 * @param   array  $args
 	 * @return  string $html
@@ -66,7 +66,9 @@ class Posted_Display_ShortCode {
 							get_the_excerpt(),
 							$images[0],
 							get_the_time( get_option( 'date_format' ) ),
-							get_the_permalink()
+							get_the_permalink(),
+							get_the_tag_list( '', '', '' ),
+							get_the_category_list( '', '', get_the_ID() )
 					);
 					$html .= '</li>' . PHP_EOL;
 				}
