@@ -116,8 +116,8 @@ class Posted_Display_Admin_Post {
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template">' . esc_html__( 'Template', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>';
-		$html .= esc_html__( 'Child elements of the li element is markup.', $this->text_domain ) . '&nbsp;';
-		$html .= esc_html__( 'Date, post title, post summary, you can view the featured image.', $this->text_domain ) . '<br>';
+		$html .= esc_html__( 'Child elements of the li element is markup.', $this->text_domain ) . '<br>';
+		$html .= esc_html__( 'Date, post title, post summary, tags, categories, you can view the featured image.', $this->text_domain ) . '<br>';
 		$html .= esc_html__( 'Please set as "##item##" the items to be displayed.', $this->text_domain );
 		$html .= '</p>';
 		$html .= '<p>';
