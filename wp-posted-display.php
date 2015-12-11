@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 1.0.2
+Version: 1.0.6
 Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
@@ -55,7 +55,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.2
 	 */
-	public function create_table() {
+	public function create_table () {
 		$db = new Posted_Display_Admin_Db( $this->text_domain );
 		$db->create_table();
 	}
@@ -65,7 +65,7 @@ class Posted_Display {
 	 *
 	 * @since   1.0.0
 	 */
-	public function plugins_loaded() {
+	public function plugins_loaded () {
 		load_plugin_textdomain( $this->text_domain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	}
 
@@ -97,7 +97,7 @@ class Posted_Display {
 	 *
 	 * @since   1.0.0
 	 */
-	public function admin_init() {
+	public function admin_init () {
 		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
 	}
 
@@ -106,7 +106,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function admin_menu() {
+	public function admin_menu () {
 		add_menu_page(
 			esc_html__( 'Posted Display Settings', $this->text_domain ),
 			esc_html__( 'Posted Display Settings', $this->text_domain ),
@@ -142,7 +142,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function add_style() {
+	public function add_style () {
 		wp_enqueue_style( 'wp-posted-display-admin-style' );
 	}
 
@@ -151,7 +151,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function list_page_render() {
+	public function list_page_render () {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-list.php' );
 		new Posted_Display_Admin_List( $this->text_domain );
 	}
@@ -161,7 +161,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function post_page_render() {
+	public function post_page_render () {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-post.php' );
 		new Posted_Display_Admin_Post( $this->text_domain );
 	}
@@ -216,7 +216,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function post_delete_cookie() {
+	public function post_delete_cookie () {
 		if ( isset( $_POST['id'] ) && is_numeric( $_POST['id'] ) ) {
 			$db = new Posted_Display_Admin_Db();
 
@@ -233,7 +233,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function list_delete_cookie() {
+	public function list_delete_cookie () {
 		if ( isset( $_GET['posted_display_id'] ) && is_numeric( $_GET['posted_display_id'] ) ) {
 			if ( isset( $_GET['mode'] ) && $_GET['mode'] === 'delete' ) {
 				$db = new Posted_Display_Admin_Db();
@@ -252,7 +252,7 @@ class Posted_Display {
 	 *
 	 * @since 1.0.0
 	 */
-	public function uninstall_delete_cookie() {
+	public function uninstall_delete_cookie () {
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
 

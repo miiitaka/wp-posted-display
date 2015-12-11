@@ -21,7 +21,7 @@ class Posted_Display_Admin_Post {
 	 * @since 1.0.0
 	 * @param String $text_domain
 	 */
-	public function __construct( $text_domain ) {
+	public function __construct ( $text_domain ) {
 		$this->text_domain = $text_domain;
 
 		/**
@@ -74,11 +74,12 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @since 1.0.0
-	 * @param array  $options
-	 * @param string $status
+	 * @since   1.0.0
+	 * @version 1.0.6
+	 * @param   array  $options
+	 * @param   string $status
 	 */
-	private function page_render( array $options, $status ) {
+	private function page_render ( array $options, $status ) {
 		$html  = '';
 		$html .= '<div class="wrap">';
 		$html .= '<h1>' . esc_html__( 'Posted Display Settings', $this->text_domain ) . '</h1>';
@@ -115,8 +116,8 @@ class Posted_Display_Admin_Post {
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template">' . esc_html__( 'Template', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>';
-		$html .= esc_html__( 'Child elements of the li element is markup.', $this->text_domain ) . '&nbsp;';
-		$html .= esc_html__( 'Date, post title, post summary, you can view the featured image.', $this->text_domain ) . '<br>';
+		$html .= esc_html__( 'Child elements of the li element is markup.', $this->text_domain ) . '<br>';
+		$html .= esc_html__( 'Date, post title, post summary, tags, categories, you can view the featured image.', $this->text_domain ) . '<br>';
 		$html .= esc_html__( 'Please set as "##item##" the items to be displayed.', $this->text_domain );
 		$html .= '</p>';
 		$html .= '<p>';
@@ -125,6 +126,8 @@ class Posted_Display_Admin_Post {
 		$html .= '<span>##summary##</span>';
 		$html .= '<span>##image##</span>';
 		$html .= '<span>##link##</span>';
+		$html .= '<span>##tag##</span>';
+		$html .= '<span>##category##</span>';
 		$html .= '</p>';
 		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
 		$html .= '</td></tr>';
@@ -174,7 +177,7 @@ class Posted_Display_Admin_Post {
 	 *
 	 * @since 1.0.0
 	 */
-	private function information_render() {
+	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
 		$html .= '<p>Posted Display Information Update.</p>';
 		$html .= '<button type="button" class="notice-dismiss">';

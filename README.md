@@ -34,3 +34,23 @@ postsの値を変更することで表示する最大件数を指定できます
 * sort="1": Date descending order（日付（降順））
 * sort="2": Date ascending order（日付（昇順））
 * sort="3": Random（ランダム）
+
+## Change Log
+
+### 1.0.6 (2015-12-11)
+- Added : Adding a template item a "tag" and "category".
+
+### 1.0.5 (2015-12-09)
+- Check : WordPress version 4.4 operation check.
+
+### 1.0.4 (2015-12-06)
+- Renovation : The common functions.
+
+### 1.0.3 (2015-12-03)
+- Fixed : Fixed a minor bug.
+
+### 1.0.2 (2015-11-18)
+- Fixed : Fixed a minor bug.
+
+### 1.0.1 (2015-11-16)
+- The first release.
