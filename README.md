@@ -37,6 +37,10 @@ postsの値を変更することで表示する最大件数を指定できます
 
 ## Change Log
 
+### 1.0.7 (2015-12-17)
+- Added : Plugin images.
+- Fixed : Typo miss.
+
 ### 1.0.6 (2015-12-11)
 - Added : Adding a template item a "tag" and "category".
 
