@@ -41,11 +41,9 @@ You can specify the maximum number to be displayed by changing the value of the 
 == Changelog ==
 
 = 1.0.6 (2015-12-11) =
-
 * Added : Adding a template item a "tag" and "category".
 
 = 1.0.5 (2015-12-09) =
-
 * Check : WordPress version 4.4 operation check.
 
 = 1.0.4 (2015-12-06) =
