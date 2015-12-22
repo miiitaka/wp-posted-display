@@ -104,7 +104,7 @@ class Posted_Display {
 	/**
 	 * Add Menu to the Admin Screen.
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 */
 	public function admin_menu () {
 		add_menu_page(
@@ -125,7 +125,7 @@ class Posted_Display {
 		$post_page = add_submenu_page(
 			__FILE__,
 			esc_html__( 'Posted Display', $this->text_domain ),
-			esc_html__( 'Add New', $this->text_domain ),
+			esc_html__( 'Add New',        $this->text_domain ),
 			'manage_options',
 			plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-post.php',
 			array( $this, 'post_page_render' )
