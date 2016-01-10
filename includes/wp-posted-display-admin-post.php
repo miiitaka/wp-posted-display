@@ -117,7 +117,7 @@ class Posted_Display_Admin_Post {
 		$html .= '<tr><th><label for="template">' . esc_html__( 'Template', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<p>';
 		$html .= esc_html__( 'Child elements of the li element is markup.', $this->text_domain ) . '<br>';
-		$html .= esc_html__( 'Date, post title, post summary, tags, categories, you can view the featured image.', $this->text_domain ) . '<br>';
+		$html .= esc_html__( 'Date, post title, post summary, tags, categories, author name, you can view the featured image.', $this->text_domain ) . '<br>';
 		$html .= esc_html__( 'Please set as "##item##" the items to be displayed.', $this->text_domain );
 		$html .= '</p>';
 		$html .= '<p>';
@@ -128,6 +128,7 @@ class Posted_Display_Admin_Post {
 		$html .= '<span>##link##</span>';
 		$html .= '<span>##tag##</span>';
 		$html .= '<span>##category##</span>';
+		$html .= '<span>##author_name##</span>';
 		$html .= '</p>';
 		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
 		$html .= '</td></tr>';
