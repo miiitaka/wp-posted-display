@@ -3,7 +3,7 @@
  * Admin Widget Register
  *
  * @author  Kazuya Takami
- * @version 1.0.0
+ * @version 1.0.8
  * @since   1.0.0
  */
 class Posted_Display_Widget extends WP_Widget {
@@ -123,7 +123,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * Widget Display.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.6
+	 * @version 1.0.8
 	 * @access  public
 	 * @param   array $args
 	 * @param   array $instance
@@ -165,7 +165,8 @@ class Posted_Display_Widget extends WP_Widget {
 						get_the_time( get_option( 'date_format' ) ),
 						get_the_permalink(),
 						get_the_tag_list( '', '', '' ),
-						get_the_category_list( '', '', get_the_ID() )
+						get_the_category_list( '', '', get_the_ID() ),
+						get_the_author()
 					);
 					echo '</li>' . PHP_EOL;
 				}

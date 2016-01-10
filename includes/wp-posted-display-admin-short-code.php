@@ -3,7 +3,7 @@
  * Admin ShortCode Settings
  *
  * @author  Kazuya Takami
- * @version 1.0.0
+ * @version 1.0.8
  * @since   1.0.0
  */
 class Posted_Display_ShortCode {
@@ -19,7 +19,7 @@ class Posted_Display_ShortCode {
 	 * ShortCode Display.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.6
+	 * @version 1.0.8
 	 * @access  public
 	 * @param   array  $args
 	 * @return  string $html
@@ -61,14 +61,15 @@ class Posted_Display_ShortCode {
 					}
 					$html .= '<li>' . PHP_EOL;
 					$html .= $db->set_template(
-							$results['template'],
-							get_the_title(),
-							get_the_excerpt(),
-							$images[0],
-							get_the_time( get_option( 'date_format' ) ),
-							get_the_permalink(),
-							get_the_tag_list( '', '', '' ),
-							get_the_category_list( '', '', get_the_ID() )
+						$results['template'],
+						get_the_title(),
+						get_the_excerpt(),
+						$images[0],
+						get_the_time( get_option( 'date_format' ) ),
+						get_the_permalink(),
+						get_the_tag_list( '', '', '' ),
+						get_the_category_list( '', '', get_the_ID() ),
+						get_the_author()
 					);
 					$html .= '</li>' . PHP_EOL;
 				}
