@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 1.0.6
+Version: 1.0.9
 Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
@@ -104,7 +104,7 @@ class Posted_Display {
 	/**
 	 * Add Menu to the Admin Screen.
 	 *
-	 * @since 1.0.0
+	 * @since   1.0.0
 	 */
 	public function admin_menu () {
 		add_menu_page(
@@ -125,7 +125,7 @@ class Posted_Display {
 		$post_page = add_submenu_page(
 			__FILE__,
 			esc_html__( 'Posted Display', $this->text_domain ),
-			esc_html__( 'Add New', $this->text_domain ),
+			esc_html__( 'Add New',        $this->text_domain ),
 			'manage_options',
 			plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-post.php',
 			array( $this, 'post_page_render' )
