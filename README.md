@@ -37,6 +37,12 @@ postsの値を変更することで表示する最大件数を指定できます
 
 ## Change Log
 
+### 1.0.10 (2016-02-03)
+- Check : WordPress version 4.4.2 operation check.
+
+### 1.0.9 (2016-01-10)
+- Fixed : Update typo miss.
+
 ### 1.0.8 (2016-01-10)
 - Added : Adding a template item a "author name".
 - Check : WordPress version 4.4.1 operation check.
