@@ -2,8 +2,8 @@
 Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
-Tested up to: 4.4.1
-Stable tag: 1.0.9
+Tested up to: 4.4.2
+Stable tag: 1.0.10
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -16,14 +16,6 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
-
-== Installation ==
-
-* A plug-in installation screen is displayed in the WordPress admin panel.
-* It installs in `wp-content/plugins`.
-* The plug-in is activated.
-* Register the widget template.
-* Add a widget, you specify the registered template.
 
 **In a post page or fixed page**
 
@@ -38,7 +30,18 @@ You can specify the maximum number to be displayed by changing the value of the 
 * sort="2": Date ascending order
 * sort="3": Random
 
+== Installation ==
+
+* A plug-in installation screen is displayed in the WordPress admin panel.
+* It installs in `wp-content/plugins`.
+* The plug-in is activated.
+* Register the widget template.
+* Add a widget, you specify the registered template.
+
 == Changelog ==
+
+= 1.0.10 (2016-02-03) =
+* Check : WordPress version 4.4.2 operation check.
 
 = 1.0.9 (2016-01-10) =
 * Fixed : Update typo miss.
