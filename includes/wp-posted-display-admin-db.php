@@ -253,7 +253,7 @@ class Posted_Display_Admin_Db {
 	 * @since   1.0.0
 	 * @version 1.1.0
 	 * @access  private
-	 * @param   array  $post($_POST)
+	 * @param   array  $post
 	 * @return  string $return_output_data
 	 */
 	private function set_output_data ( $post ) {
