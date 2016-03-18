@@ -103,6 +103,8 @@ class Posted_Display_Admin_Db {
 	public function insert_options ( array $post ) {
 		global $wpdb;
 
+		$output_data = $this->set_output_data( $post );
+
 		$data = array(
 			'template_name'     => strip_tags( $post['template_name'] ),
 			'type'              => strip_tags( $post['type'] ),
@@ -110,7 +112,7 @@ class Posted_Display_Admin_Db {
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
 			'save_term'         => $post['save_term'],
 			'save_item'         => $post['save_item'],
-			'output_data'       => strip_tags( $post['output_data'] ),
+			'output_data'       => strip_tags( $output_data ),
 			'register_date'     => date( "Y-m-d H:i:s" ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
@@ -139,6 +141,8 @@ class Posted_Display_Admin_Db {
 	public function update_options ( array $post ) {
 		global $wpdb;
 
+		$output_data = $this->set_output_data( $post );
+
 		$data = array(
 			'template_name'     => strip_tags( $post['template_name'] ),
 			'type'              => strip_tags( $post['type'] ),
@@ -146,7 +150,7 @@ class Posted_Display_Admin_Db {
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
 			'save_term'         => $post['save_term'],
 			'save_item'         => $post['save_item'],
-			'output_data'       => strip_tags( $post['output_data'] ),
+			'output_data'       => strip_tags( $output_data ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
 		$key = array( 'id' => esc_html( $post['id'] ) );
@@ -191,7 +195,6 @@ class Posted_Display_Admin_Db {
 			update_option( 'widget_posted_display_widget', $options );
 		}
 	}
-
 
 	/**
 	 * Query Settings.
@@ -242,6 +245,36 @@ class Posted_Display_Admin_Db {
 		}
 
 		return (array) $args;
+	}
+
+	/**
+	 * Query Settings.
+	 *
+	 * @since   1.0.0
+	 * @version 1.1.0
+	 * @access  private
+	 * @param   array  $post($_POST)
+	 * @return  string $return_output_data
+	 */
+	private function set_output_data ( $post ) {
+		$return_output_data = "";
+		switch ( $post['type'] ) {
+			case "Cookie":
+				break;
+			case "Posts":
+				$return_output_data = $post['posts_output_data'];
+				break;
+			case "Categories":
+				$return_output_data = $post['categories_output_data'];
+				break;
+			case "Tags":
+				$return_output_data = $post['tags_output_data'];
+				break;
+			case "Users":
+				$return_output_data = $post['users_output_data'];
+				break;
+		}
+		return (string) $return_output_data;
 	}
 
 	/**

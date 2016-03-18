@@ -19,7 +19,7 @@ new Posted_Display();
  *
  * @author  Kazuya Takami
  * @since   1.0.0
- * @version 1.0.2
+ * @version 1.1.0
  */
 class Posted_Display {
 
@@ -34,7 +34,7 @@ class Posted_Display {
 	 * Constructor Define.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.2
+	 * @version 1.1.0
 	 */
 	public function __construct () {
 		register_activation_hook( __FILE__, array( $this, 'create_table' ) );
@@ -105,6 +105,7 @@ class Posted_Display {
 	 * Add Menu to the Admin Screen.
 	 *
 	 * @since   1.0.0
+	 * @version 1.1.0
 	 */
 	public function admin_menu () {
 		add_menu_page(
@@ -131,10 +132,21 @@ class Posted_Display {
 			array( $this, 'post_page_render' )
 		);
 
-		add_action( 'admin_head-' . $post_page, array( $this, 'post_delete_cookie' ) );
-		add_action( 'admin_head-' . $list_page, array( $this, 'list_delete_cookie' ) );
-		add_action( 'admin_print_styles-' . $post_page, array( $this, 'add_style' ) );
-		add_action( 'admin_print_styles-' . $list_page, array( $this, 'add_style' ) );
+		add_action( 'admin_head-'          . $post_page, array( $this, 'post_delete_cookie' ) );
+		add_action( 'admin_head-'          . $list_page, array( $this, 'list_delete_cookie' ) );
+		add_action( 'admin_print_styles-'  . $post_page, array( $this, 'add_style' ) );
+		add_action( 'admin_print_styles-'  . $list_page, array( $this, 'add_style' ) );
+		add_action( 'admin_print_scripts-' . $post_page, array( $this, 'admin_scripts') );
+	}
+
+	/**
+	 * admin_scripts
+	 *
+	 * @since   1.1.0
+	 * @version 1.1.0
+	 */
+	public function admin_scripts () {
+		wp_enqueue_script( 'wp-posted-display-admin-main-js', plugins_url( 'js/main.js', __FILE__ ), array('jquery'), '1.0' );
 	}
 
 	/**
