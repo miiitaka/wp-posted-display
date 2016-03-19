@@ -134,9 +134,9 @@ class Posted_Display_Admin_Post {
 		$html .= '<textarea name="template" id="template" rows="10" cols="50" class="large-text code">' . $template = str_replace( '\\', '', $options['template'] ) . '</textarea>';
 		$html .= '</td></tr>';
 		$html .= '<tr><th><label for="template_no_image">' . esc_html__( 'No Image Path', $this->text_domain ) . ':</label></th><td>';
-		$html .= '<p>' . esc_html__( 'It specifies the posts of Alternative Image path that does not set the featured image.', $this->text_domain ) . '</p>';
 		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="';
 		$html .= esc_attr( $options['template_no_image'] ) . '">';
+		$html .= '<p>' . esc_html__( 'It specifies the posts of Alternative Image path that does not set the featured image.', $this->text_domain ) . '</p>';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
@@ -192,7 +192,7 @@ class Posted_Display_Admin_Post {
 		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-users">';
 		$html .= '<caption>' . esc_html__( 'Type: User settings', $this->text_domain ) . '</caption>';
 		$html .= '<tr><th><label for="users_output_data">' . esc_html__( 'Output User ID', $this->text_domain ) . ':</label></th><td>';
-		$html .= '<input type="text" name="tags_output_data" id="tags_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
+		$html .= '<input type="text" name="users_output_data" id="users_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
 		$html .= ( $options['type'] === 'Users') ? esc_attr( $options['output_data'] ) : '';
 		$html .= '">';
 		$html .= '</td></tr>';

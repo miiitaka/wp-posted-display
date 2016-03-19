@@ -262,16 +262,16 @@ class Posted_Display_Admin_Db {
 			case "Cookie":
 				break;
 			case "Posts":
-				$return_output_data = $post['posts_output_data'];
+				$return_output_data = isset( $post['posts_output_data'] ) ? $post['posts_output_data'] : "";
 				break;
 			case "Categories":
-				$return_output_data = $post['categories_output_data'];
+				$return_output_data = isset( $post['categories_output_data'] ) ? $post['categories_output_data'] : "";
 				break;
 			case "Tags":
-				$return_output_data = $post['tags_output_data'];
+				$return_output_data = isset( $post['tags_output_data'] ) ? $post['tags_output_data'] : "";
 				break;
 			case "Users":
-				$return_output_data = $post['users_output_data'];
+				$return_output_data = isset( $post['users_output_data'] ) ? $post['users_output_data'] : "";
 				break;
 		}
 		return (string) $return_output_data;
