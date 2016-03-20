@@ -37,6 +37,10 @@ postsの値を変更することで表示する最大件数を指定できます
 
 ## Change Log
 
+### 1.1.0 (2016-03-20)
+- Added : Template item can be inserted in the click in textarea.
+- Updated : Code Refactor.
+
 ### 1.0.10 (2016-02-03)
 - Check : WordPress version 4.4.2 operation check.
 

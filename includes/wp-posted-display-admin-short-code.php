@@ -60,17 +60,19 @@ class Posted_Display_ShortCode {
 						$images[0] = isset( $results['template_no_image'] ) ? $results['template_no_image'] : '';
 					}
 					$html .= '<li>' . PHP_EOL;
-					$html .= $db->set_template(
-						$results['template'],
-						get_the_title(),
-						get_the_excerpt(),
-						$images[0],
-						get_the_time( get_option( 'date_format' ) ),
-						get_the_permalink(),
-						get_the_tag_list( '', '', '' ),
-						get_the_category_list( '', '', get_the_ID() ),
-						get_the_author()
-					);
+
+					$items = [
+						"title"       => get_the_title(),
+						"excerpt"     => get_the_excerpt(),
+						"image"       => $images[0],
+						"date"        => get_the_time( get_option( 'date_format' ) ),
+						"link"        => get_the_permalink(),
+						"tag"         => get_the_tag_list( '', '', '' ),
+						"category"    => get_the_category_list( '', '', get_the_ID() ),
+						"author_name" => get_the_author()
+					];
+
+					echo $db->set_template( $results['template'], $items );
 					$html .= '</li>' . PHP_EOL;
 				}
 				wp_reset_postdata();

@@ -3,7 +3,7 @@ Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.4.2
-Stable tag: 1.0.10
+Stable tag: 1.1.0
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -39,6 +39,10 @@ You can specify the maximum number to be displayed by changing the value of the 
 * Add a widget, you specify the registered template.
 
 == Changelog ==
+
+= 1.1.0 (2016-03-20) =
+* Added : Template item can be inserted in the click in textarea.
+* Updated : Code Refactor.
 
 = 1.0.10 (2016-02-03) =
 * Check : WordPress version 4.4.2 operation check.
