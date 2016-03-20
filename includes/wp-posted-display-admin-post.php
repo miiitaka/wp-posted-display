@@ -121,7 +121,7 @@ class Posted_Display_Admin_Post {
 		$html .= esc_html__( 'Date, post title, post summary, tags, categories, author name, you can view the featured image.', $this->text_domain ) . '<br>';
 		$html .= esc_html__( 'Please set as "##item##" the items to be displayed.', $this->text_domain );
 		$html .= '</p>';
-		$html .= '<p>';
+		$html .= '<p id="template_item">';
 		$html .= '<span>##date##</span>';
 		$html .= '<span>##title##</span>';
 		$html .= '<span>##summary##</span>';

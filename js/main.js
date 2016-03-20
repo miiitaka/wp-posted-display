@@ -31,5 +31,30 @@
         }
       }
     });
+
+    /*
+     * Textarea insert items
+     *
+     * @since 1.1.0
+     * @param string $item
+     * @see   includes/wp-posted-display-admin-post.php
+     */
+    function insertItems (item) {
+      var obj = $("#template");
+
+      obj.focus();
+
+      var
+        data = obj.val(),
+        cursor = obj.get(0).selectionStart,
+        np = cursor + item.length;
+
+      obj.val(data.substr(0, cursor) + item + data.substr(cursor));
+      obj.get(0).setSelectionRange(np, np);
+    }
+    $("#template_item").on("click", "span", function (e) {
+      e.preventDefault();
+      insertItems($(this).text());
+    });
   });
 })(jQuery);

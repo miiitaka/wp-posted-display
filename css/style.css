@@ -49,3 +49,6 @@
 #wp-posted-display-type-categories { display: none; }
 #wp-posted-display-type-tags { display: none; }
 #wp-posted-display-type-users { display: none; }
+#template_item span:hover {
+	cursor: pointer;
+}
