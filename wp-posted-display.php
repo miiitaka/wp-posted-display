@@ -98,7 +98,7 @@ class Posted_Display {
 	 * @since   1.0.0
 	 */
 	public function admin_init () {
-		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.css', __FILE__ ) );
+		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.min.css', __FILE__ ) );
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Posted_Display {
 	 * @version 1.1.0
 	 */
 	public function admin_scripts () {
-		wp_enqueue_script( 'wp-posted-display-admin-main-js', plugins_url( 'js/main.js', __FILE__ ), array('jquery'), '1.0' );
+		wp_enqueue_script( 'wp-posted-display-admin-main-js', plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), '1.0' );
 	}
 
 	/**
