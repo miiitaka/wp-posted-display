@@ -40,6 +40,10 @@ You can specify the maximum number to be displayed by changing the value of the 
 
 == Changelog ==
 
+= 1.1.0 (2016-03-20) =
+* Added : Template item can be inserted in the click in textarea.
+* Updated : Code Refactor.
+
 = 1.0.10 (2016-02-03) =
 * Check : WordPress version 4.4.2 operation check.
 

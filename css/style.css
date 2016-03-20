@@ -44,3 +44,11 @@
 .wp-posted-display-admin-table small {
 	margin: 0 0 0 10px;
 }
+#wp-posted-display-type-cookie { display: none; }
+#wp-posted-display-type-posts { display: none; }
+#wp-posted-display-type-categories { display: none; }
+#wp-posted-display-type-tags { display: none; }
+#wp-posted-display-type-users { display: none; }
+#template_item span:hover {
+	cursor: pointer;
+}
