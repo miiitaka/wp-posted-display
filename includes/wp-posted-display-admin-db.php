@@ -284,25 +284,30 @@ class Posted_Display_Admin_Db {
 	 * @version 1.0.8
 	 * @access  public
 	 * @param   string $template
-	 * @param   string $title
-	 * @param   string $excerpt
-	 * @param   string $image
-	 * @param   string $date
-	 * @param   string $link
-	 * @param   string $tag
-	 * @param   string $category
-	 * @param   string $author_name
+	 * @param   array  $items
 	 * @return  string $template
+	 * 
+	 * @note Array Format
+	 * [
+	 *   "title"      : string,
+	 *   "excerpt"    : string,
+	 *   "image"      : string,
+	 *   "date"       : string,
+	 *   "link"       : string,
+	 *   "tag"        : string,
+	 *   "category"   : string,
+	 *   "author_name": string
+	 * ]
 	 */
-	public function set_template ( $template, $title, $excerpt, $image, $date, $link, $tag, $category, $author_name ) {
-		$template = str_replace( '##title##',       esc_html( $title ),       $template );
-		$template = str_replace( '##summary##',     esc_html( $excerpt ),     $template );
-		$template = str_replace( '##image##',       esc_html( $image ),       $template );
-		$template = str_replace( '##date##',        esc_html( $date ),        $template );
-		$template = str_replace( '##link##',        esc_url( $link ),         $template );
-		$template = str_replace( '##tag##',         $tag,                     $template );
-		$template = str_replace( '##category##',    $category,                $template );
-		$template = str_replace( '##author_name##', esc_html( $author_name ), $template );
+	public function set_template ( $template, $items ) {
+		$template = str_replace( '##title##',       esc_html( $items["title"] ),       $template );
+		$template = str_replace( '##summary##',     esc_html( $items["excerpt"] ),     $template );
+		$template = str_replace( '##image##',       esc_html( $items["image"] ),       $template );
+		$template = str_replace( '##date##',        esc_html( $items["date"] ),        $template );
+		$template = str_replace( '##link##',        esc_url( $items["link"]),          $template );
+		$template = str_replace( '##tag##',         esc_html( $items["tag"] ),         $template );
+		$template = str_replace( '##category##',    esc_html( $items["category"] ),    $template );
+		$template = str_replace( '##author_name##', esc_html( $items["author_name"] ), $template );
 		$template = str_replace( '\\', '', $template );
 
 		/** Escape */
