@@ -123,7 +123,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * Widget Display.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.8
+	 * @version 1.1.1
 	 * @access  public
 	 * @param   array $args
 	 * @param   array $instance
@@ -158,7 +158,7 @@ class Posted_Display_Widget extends WP_Widget {
 					}
 					echo '<li>' . PHP_EOL;
 
-					$items = [
+					$items = array(
 						"title"       => get_the_title(),
 						"excerpt"     => get_the_excerpt(),
 						"image"       => $images[0],
@@ -167,7 +167,7 @@ class Posted_Display_Widget extends WP_Widget {
 						"tag"         => get_the_tag_list( '', '', '' ),
 						"category"    => get_the_category_list( '', '', get_the_ID() ),
 						"author_name" => get_the_author()
-					];
+					);
 
 					echo $db->set_template( $results['template'], $items );
 					echo '</li>' . PHP_EOL;

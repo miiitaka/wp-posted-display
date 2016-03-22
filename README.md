@@ -37,6 +37,9 @@ postsの値を変更することで表示する最大件数を指定できます
 
 ## Change Log
 
+### 1.1.1 (2016-03-22)
+* Fixed : Modifications to the writing of the PHP5.3-based support of the array.
+
 ### 1.1.0 (2016-03-20)
 - Added : Template item can be inserted in the click in textarea.
 - Updated : Code Refactor.
