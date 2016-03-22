@@ -123,7 +123,7 @@ class Posted_Display_Widget extends WP_Widget {
 	 * Widget Display.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.8
+	 * @version 1.1.1
 	 * @access  public
 	 * @param   array $args
 	 * @param   array $instance
