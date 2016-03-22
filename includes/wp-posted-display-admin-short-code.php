@@ -61,7 +61,7 @@ class Posted_Display_ShortCode {
 					}
 					$html .= '<li>' . PHP_EOL;
 
-					$items = [
+					$items = array(
 						"title"       => get_the_title(),
 						"excerpt"     => get_the_excerpt(),
 						"image"       => $images[0],
@@ -70,7 +70,7 @@ class Posted_Display_ShortCode {
 						"tag"         => get_the_tag_list( '', '', '' ),
 						"category"    => get_the_category_list( '', '', get_the_ID() ),
 						"author_name" => get_the_author()
-					];
+					);
 
 					echo $db->set_template( $results['template'], $items );
 					$html .= '</li>' . PHP_EOL;
