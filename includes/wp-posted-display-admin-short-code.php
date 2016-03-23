@@ -3,7 +3,7 @@
  * Admin ShortCode Settings
  *
  * @author  Kazuya Takami
- * @version 1.0.8
+ * @version 1.1.2
  * @since   1.0.0
  */
 class Posted_Display_ShortCode {
@@ -19,7 +19,7 @@ class Posted_Display_ShortCode {
 	 * ShortCode Display.
 	 *
 	 * @since   1.0.0
-	 * @version 1.1.1
+	 * @version 1.1.2
 	 * @access  public
 	 * @param   array  $args
 	 * @return  string $html
@@ -72,7 +72,7 @@ class Posted_Display_ShortCode {
 						"author_name" => get_the_author()
 					);
 
-					echo $db->set_template( $results['template'], $items );
+					$html .= $db->set_template( $results['template'], $items );
 					$html .= '</li>' . PHP_EOL;
 				}
 				wp_reset_postdata();

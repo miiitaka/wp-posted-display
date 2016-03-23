@@ -3,7 +3,7 @@ Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.4.2
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -22,7 +22,14 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 You can use the short code in the post page or fixed page. It is possible to get a short code with the registered template list, use Copy.
 You can specify the maximum number to be displayed by changing the value of the posts.
 
-`[wp-posted-display id="1" posts="5" sort="0"]`
+[ Example ]
+`
+<?php
+if ( shortcode_exists( 'wp-posted-display' ) ) {
+	echo do_shortcode( '[wp-posted-display id="1" posts="5" sort="0"]' );
+}
+?>
+`
 
 = ShortCode Params Sorted by =
 * sort="0": Input order
@@ -39,6 +46,9 @@ You can specify the maximum number to be displayed by changing the value of the 
 * Add a widget, you specify the registered template.
 
 == Changelog ==
+
+= 1.1.2 (2016-03-23) =
+* Fixed : Shortcode output bugfix.
 
 = 1.1.1 (2016-03-22) =
 * Fixed : Modifications to the writing of the PHP5.3-based support of the array.

@@ -26,7 +26,11 @@ You can specify the maximum number to be displayed by changing the value of the 
 postsの値を変更することで表示する最大件数を指定できます。
 
 ```
-[wp-posted-display id="1" posts="5" sort="0"]
+<?php
+if ( shortcode_exists( 'wp-posted-display' ) ) {
+	echo do_shortcode( '[wp-posted-display id="1" posts="5" sort="0"]' );
+}
+?>
 ```
 
 ### ShortCode Params Sorted by
@@ -36,6 +40,9 @@ postsの値を変更することで表示する最大件数を指定できます
 * sort="3": Random（ランダム）
 
 ## Change Log
+
+### 1.1.2 (2016-03-23)
+- Fixed : Shortcode output bugfix.
 
 ### 1.1.1 (2016-03-22)
 * Fixed : Modifications to the writing of the PHP5.3-based support of the array.
