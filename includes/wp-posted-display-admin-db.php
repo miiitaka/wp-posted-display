@@ -3,6 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
+ * @version 1.1.2
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -281,7 +282,7 @@ class Posted_Display_Admin_Db {
 	 * Template replace.
 	 *
 	 * @since   1.0.0
-	 * @version 1.0.8
+	 * @version 1.1.1
 	 * @access  public
 	 * @param   string $template
 	 * @param   array  $items
