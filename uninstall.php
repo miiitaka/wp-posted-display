@@ -22,6 +22,7 @@ class Posted_Display_Uninstall {
 	public function __construct () {
 		$this->drop_table();
 		delete_option( 'widget_posted_display_widget' );
+		delete_option( 'wp_posted_display' );
 	}
 
 	/**
