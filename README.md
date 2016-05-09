@@ -41,11 +41,16 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 1.1.3 (2016-05-09)
+- Check : WordPress version 4.5.2 operation check.
+- Check : WordPress version 4.5.1 operation check.
+- Check : WordPress version 4.5.0 operation check.
+
 ### 1.1.2 (2016-03-23)
 - Fixed : Shortcode output bugfix.
 
 ### 1.1.1 (2016-03-22)
-* Fixed : Modifications to the writing of the PHP5.3-based support of the array.
+- Fixed : Modifications to the writing of the PHP5.3-based support of the array.
 
 ### 1.1.0 (2016-03-20)
 - Added : Template item can be inserted in the click in textarea.
