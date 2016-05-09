@@ -4,44 +4,25 @@
  *
  * @author  Kazuya Takami
  * @since   1.0.0
- * @version 1.2.0
+ * @version 1.1.0
  */
 class Posted_Display_Admin_Post {
 
 	/**
 	 * Variable definition.
 	 *
-	 * @since   1.0.0
-	 * @version 1.2.0
+	 * @since 1.0.0
 	 */
 	private $text_domain;
 	private $type_args = array( 'Cookie', 'Posts', 'Categories', 'Tags', 'Users' );
-	private $post_args = array();
 
 	/**
 	 * Constructor Define.
 	 *
-	 * @since   1.0.0
-	 * @version 1.2.0
-	 * @param   String $text_domain
+	 * @since 1.0.0
+	 * @param String $text_domain
 	 */
 	public function __construct ( $text_domain ) {
-		$args = array(
-			'public'   => true,
-			'_builtin' => false
-		);
-		$post_types = get_post_types( $args, 'objects' );
-		$this->post_args[] = array(
-			'label' => __( 'Posts', $text_domain ),
-			'value' => 'post'
-		);
-		foreach ( $post_types as $post_type ) {
-			$this->post_args[] = array(
-				'label' => esc_html( $post_type->label ),
-				'value' => esc_html( $post_type->name )
-			);
-		}
-
 		$this->text_domain = $text_domain;
 
 		/**
@@ -63,7 +44,6 @@ class Posted_Display_Admin_Post {
 			"template_no_image" => "",
 			"save_term"         => 7,
 			"save_item"         => 10,
-			"post_type"         => "",
 			"output_data"       => ""
 		);
 
@@ -96,7 +76,7 @@ class Posted_Display_Admin_Post {
 	 * Setting Page of the Admin Screen.
 	 *
 	 * @since   1.0.0
-	 * @version 1.2.0
+	 * @version 1.1.0
 	 * @param   array  $options
 	 * @param   string $status
 	 */
@@ -178,18 +158,6 @@ class Posted_Display_Admin_Post {
 		/** Type: Posts settings */
 		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-posts">';
 		$html .= '<caption>' . esc_html__( 'Type: Posts settings', $this->text_domain ) . '</caption>';
-		$html .= '<tr><th><label for="posts_output_type">' . esc_html__( 'Output Posts Type', $this->text_domain ) . ':</label></th><td>';
-		$html .= '<select name="post_type" id="post_type">';
-		foreach ( $this->post_args as $post_type ) {
-			if ( $post_type['value'] === $options['post_type'] ) {
-				$html .= '<option value="' . $post_type['value'] . '" selected="selected">';
-			} else {
-				$html .= '<option value="' . $post_type['value'] . '">';
-			}
-			$html .= $post_type["label"] . '</option>';
-		}
-		$html .= '</select>';
-
 		$html .= '<tr><th><label for="posts_output_data">' . esc_html__( 'Output Posts ID', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="text" name="posts_output_data" id="posts_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
 		$html .= ( $options['type'] === 'Posts') ? esc_attr( $options['output_data'] ) : '';

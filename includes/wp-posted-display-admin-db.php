@@ -28,76 +28,33 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Create Table.
 	 *
-	 * @since   1.0.0
-	 * @version 1.2.0
-	 * @param   string $text_domain
-	 * @param   string $version
+	 * @since 1.0.0
 	 */
-	public function create_table ( $text_domain, $version ) {
-		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-
+	public function create_table () {
 		global $wpdb;
 
-		$prepared        = $wpdb->prepare( "SHOW TABLES LIKE %s", $this->table_name );
-		$is_db_exists    = $wpdb->get_var( $prepared );
-		$charset_collate = $wpdb->get_charset_collate();
+		$prepared     = $wpdb->prepare( "SHOW TABLES LIKE %s", $this->table_name );
+		$is_db_exists = $wpdb->get_var( $prepared );
 
 		if ( is_null( $is_db_exists ) ) {
-			$this->create_table_execute($charset_collate, $text_domain, $version);
-		} else {
-			$options = get_option( $text_domain );
+			$charset_collate = $wpdb->get_charset_collate();
 
-			if ( !isset( $options['version'] ) || $options['version'] !== $version ) {
-				$lists = $this->get_list_options();
+			$query  = " CREATE TABLE " . $this->table_name;
+			$query .= " (id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY";
+			$query .= ",type tinytext NOT NULL";
+			$query .= ",template_name tinytext NOT NULL";
+			$query .= ",template text NOT NULL";
+			$query .= ",template_no_image text";
+			$query .= ",save_term int DEFAULT 7";
+			$query .= ",save_item int DEFAULT 10";
+			$query .= ",output_data tinytext";
+			$query .= ",register_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
+			$query .= ",update_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
+			$query .= ",UNIQUE KEY id (id)) " . $charset_collate;
 
-				$wpdb->query("DROP TABLE " . $this->table_name);
-				$this->create_table_execute($charset_collate, $text_domain, $version);
-
-				foreach ( $lists as $list ) {
-					$args = array(
-						'template_name'     => isset( $list['template_name'] ) ? $list['template_name'] : '',
-						'type'              => isset( $list['type'] ) ? $list['type'] : '',
-						'template'          => isset( $list['template'] ) ? $list['template'] : '',
-						'template_no_image' => isset( $list['template_no_image'] ) ? $list['template_no_image'] : '',
-						'save_term'         => isset( $list['save_term'] ) ? $list['save_term'] : null,
-						'save_item'         => isset( $list['save_item'] ) ? $list['save_item'] : null,
-						'post_type'         => isset( $list['post_type'] ) ? $list['post_type'] : '',
-						'output_data'       => isset( $list['output_data'] ) ? $list['output_data'] : ''
-					);
-					$this->insert_options( $args );
-				}
-			}
+			require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+			dbDelta( $query );
 		}
-	}
-
-	/**
-	 * Create table execute
-	 *
-	 * @since   1.2.0
-	 * @version 1.2.0
-	 * @param   string $charset_collate
-	 * @param   string $text_domain
-	 * @param   string $version
-	 */
-	private function create_table_execute ( $charset_collate, $text_domain, $version ) {
-		$query = " CREATE TABLE " . $this->table_name;
-		$query .= " (id mediumint(9) NOT NULL AUTO_INCREMENT PRIMARY KEY";
-		$query .= ",type tinytext NOT NULL";
-		$query .= ",template_name tinytext NOT NULL";
-		$query .= ",template text NOT NULL";
-		$query .= ",template_no_image text";
-		$query .= ",save_term int DEFAULT 7";
-		$query .= ",save_item int DEFAULT 10";
-		$query .= ",post_type tinytext";
-		$query .= ",output_data tinytext";
-		$query .= ",register_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
-		$query .= ",update_date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL";
-		$query .= ",UNIQUE KEY id (id)) " . $charset_collate;
-
-		dbDelta($query);
-
-		$options = array( 'version' => $version );
-		update_option( $text_domain, $options, 'yes' );
 	}
 
 	/**
@@ -140,10 +97,9 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Insert Data.
 	 *
-	 * @since   1.0.0
-	 * @version 1.2.0
-	 * @param   array $post($_POST)
-	 * @return  integer $id
+	 * @since  1.0.0
+	 * @param  array $post($_POST)
+	 * @return integer $id
 	 */
 	public function insert_options ( array $post ) {
 		global $wpdb;
@@ -157,7 +113,6 @@ class Posted_Display_Admin_Db {
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
 			'save_term'         => $post['save_term'],
 			'save_item'         => $post['save_item'],
-			'post_type'         => strip_tags( $post['post_type'] ),
 			'output_data'       => strip_tags( $output_data ),
 			'register_date'     => date( "Y-m-d H:i:s" ),
 			'update_date'       => date( "Y-m-d H:i:s" )
@@ -171,7 +126,6 @@ class Posted_Display_Admin_Db {
 			'%d',
 			'%s',
 			'%s',
-			'%s',
 			'%s'
 		);
 
@@ -182,9 +136,8 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Update Data.
 	 *
-	 * @since   1.0.0
-	 * @version 1.2.0
-	 * @param   array $post($_POST)
+	 * @since 1.0.0
+	 * @param array $post($_POST)
 	 */
 	public function update_options ( array $post ) {
 		global $wpdb;
@@ -198,7 +151,6 @@ class Posted_Display_Admin_Db {
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
 			'save_term'         => $post['save_term'],
 			'save_item'         => $post['save_item'],
-			'post_type'         => strip_tags( $post['post_type'] ),
 			'output_data'       => strip_tags( $output_data ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
@@ -210,7 +162,6 @@ class Posted_Display_Admin_Db {
 			'%s',
 			'%d',
 			'%d',
-			'%s',
 			'%s',
 			'%s'
 		);

@@ -26,11 +26,9 @@ class Posted_Display {
 	/**
 	 * Variable definition.
 	 *
-	 * @since   1.0.0
-	 * @version 1.2.0
+	 * @since 1.0.0
 	 */
 	private $text_domain = 'wp-posted-display';
-	private $version     = '1.2.0';
 
 	/**
 	 * Constructor Define.
@@ -55,12 +53,11 @@ class Posted_Display {
 	/**
 	 * Create table.
 	 *
-	 * @since   1.0.2
-	 * @version 1.2.0
+	 * @since 1.0.2
 	 */
 	public function create_table () {
 		$db = new Posted_Display_Admin_Db( $this->text_domain );
-		$db->create_table( $this->text_domain, $this->version );
+		$db->create_table();
 	}
 
 	/**
