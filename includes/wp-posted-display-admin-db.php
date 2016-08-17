@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 1.1.2
+ * @version 1.2.1
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
