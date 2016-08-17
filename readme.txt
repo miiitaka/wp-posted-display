@@ -53,7 +53,7 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 == Changelog ==
 
-= 1.2.0 (2016-08-17) =
+= 1.2.1 (2016-08-17) =
 * Check : WordPress version 4.6.0 operation check.
 * Fixed : setcookie() Warning Error.
 * Added : ScreenShots.

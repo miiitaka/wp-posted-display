@@ -154,7 +154,7 @@ class Posted_Display_Admin_Db {
 			'output_data'       => strip_tags( $output_data ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
-		$key = array( 'id' => esc_html( $post['id'] ) );
+		$key = array( 'id' => esc_html( $post['posted_display_id'] ) );
 		$prepared = array(
 			'%s',
 			'%s',
