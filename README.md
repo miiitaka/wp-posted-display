@@ -41,6 +41,11 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 1.2.0 (2016-08-17)
+- Check : WordPress version 4.6.0 operation check.
+- Fixed : setcookie() Warning Error.
+- Added : ScreenShots.
+
 ### 1.1.4 (2016-06-25)
 - Check : WordPress version 4.5.3 operation check.
 

@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 1.1.4
+Version: 1.2.0
 Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
@@ -18,8 +18,8 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
+ * @version 1.2.0
  * @since   1.0.0
- * @version 1.1.0
  */
 class Posted_Display {
 
@@ -33,8 +33,8 @@ class Posted_Display {
 	/**
 	 * Constructor Define.
 	 *
+	 * @version 1.2.0
 	 * @since   1.0.0
-	 * @version 1.1.0
 	 */
 	public function __construct () {
 		register_activation_hook( __FILE__, array( $this, 'create_table' ) );
@@ -43,6 +43,8 @@ class Posted_Display {
 		add_action( 'widgets_init',   array( $this, 'widget_init' ) );
 
 		if ( is_admin() ) {
+			add_action( 'admin_init', array( $this, 'post_delete_cookie' ) );
+			add_action( 'admin_init', array( $this, 'list_delete_cookie' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
 		} else {
@@ -104,8 +106,8 @@ class Posted_Display {
 	/**
 	 * Add Menu to the Admin Screen.
 	 *
+	 * @version 1.2.0
 	 * @since   1.0.0
-	 * @version 1.1.0
 	 */
 	public function admin_menu () {
 		add_menu_page(
@@ -132,8 +134,6 @@ class Posted_Display {
 			array( $this, 'post_page_render' )
 		);
 
-		add_action( 'admin_head-'          . $post_page, array( $this, 'post_delete_cookie' ) );
-		add_action( 'admin_head-'          . $list_page, array( $this, 'list_delete_cookie' ) );
 		add_action( 'admin_print_styles-'  . $post_page, array( $this, 'add_style' ) );
 		add_action( 'admin_print_styles-'  . $list_page, array( $this, 'add_style' ) );
 		add_action( 'admin_print_scripts-' . $post_page, array( $this, 'admin_scripts') );
