@@ -3,8 +3,8 @@
  * Posted Display Admin Setting
  *
  * @author  Kazuya Takami
- * @since   1.0.0
  * @version 1.1.0
+ * @since   1.0.0
  */
 class Posted_Display_Admin_Post {
 
@@ -75,8 +75,8 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @since   1.0.0
 	 * @version 1.1.0
+	 * @since   1.0.0
 	 * @param   array  $options
 	 * @param   string $status
 	 */
