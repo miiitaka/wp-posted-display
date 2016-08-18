@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 1.2.0
+Version: 1.2.1
 Author: Kazuya Takami
 Author URI: http://programp.com/
 License: GPLv2 or later
@@ -18,7 +18,7 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 1.2.0
+ * @version 1.2.1
  * @since   1.0.0
  */
 class Posted_Display {
@@ -226,15 +226,16 @@ class Posted_Display {
 	/**
 	 * Delete Cookie information If you change the type from the Edit.
 	 *
-	 * @since 1.0.0
+	 * @version 1.2.1
+	 * @since   1.0.0
 	 */
 	public function post_delete_cookie () {
-		if ( isset( $_POST['id'] ) && is_numeric( $_POST['id'] ) ) {
+		if ( isset( $_POST['posted_display_id'] ) && is_numeric( $_POST['posted_display_id'] ) ) {
 			$db = new Posted_Display_Admin_Db();
 
-			$options = $db->get_options( $_POST['id'] );
-			if ( $options['type'] === 'Cookie' && $_POST['type'] !== 'Cookie' ) {
-				$cookie_name = $this->text_domain . '-' . esc_html( $_POST['id'] );
+			$options = $db->get_options( $_POST['posted_display_id'] );
+			if ( isset( $options['type'] ) && $options['type'] === 'Cookie' && $_POST['type'] !== 'Cookie' ) {
+				$cookie_name = $this->text_domain . '-' . esc_html( $_POST['posted_display_id'] );
 				setcookie( $cookie_name, '', time() - 3600, '/', $_SERVER['SERVER_NAME'] );
 			}
 		}
@@ -243,7 +244,8 @@ class Posted_Display {
 	/**
 	 * Delete Cookie information If you have deleted from the list.
 	 *
-	 * @since 1.0.0
+	 * @version 1.2.1
+	 * @since   1.0.0
 	 */
 	public function list_delete_cookie () {
 		if ( isset( $_GET['posted_display_id'] ) && is_numeric( $_GET['posted_display_id'] ) ) {
@@ -251,7 +253,7 @@ class Posted_Display {
 				$db = new Posted_Display_Admin_Db();
 
 				$options = $db->get_options( $_GET['posted_display_id'] );
-				if ( $options['type'] === 'Cookie' ) {
+				if ( isset( $options['type'] ) && $options['type'] === 'Cookie' ) {
 					$cookie_name = $this->text_domain . '-' . esc_html( $_GET['posted_display_id'] );
 					setcookie( $cookie_name, '', time() - 3600, '/', $_SERVER['SERVER_NAME'] );
 				}
