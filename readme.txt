@@ -3,7 +3,7 @@ Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.6.0
-Stable tag: 1.2.0
+Stable tag: 1.2.1
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -53,7 +53,7 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 == Changelog ==
 
-= 1.2.0 (2016-08-17) =
+= 1.2.1 (2016-08-17) =
 * Check : WordPress version 4.6.0 operation check.
 * Fixed : setcookie() Warning Error.
 * Added : ScreenShots.

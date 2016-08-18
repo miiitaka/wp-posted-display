@@ -3,7 +3,7 @@
  * Posted Display Admin Setting
  *
  * @author  Kazuya Takami
- * @version 1.1.0
+ * @version 1.2.1
  * @since   1.0.0
  */
 class Posted_Display_Admin_Post {
@@ -53,12 +53,12 @@ class Posted_Display_Admin_Post {
 		}
 
 		/** DataBase Update & Insert Mode */
-		if ( isset( $_POST['id'] ) && is_numeric( $_POST['id'] ) ) {
+		if ( isset( $_POST['posted_display_id'] ) && is_numeric( $_POST['posted_display_id'] ) ) {
 			$db->update_options( $_POST );
-			$options['id'] = $_POST['id'];
+			$options['id'] = $_POST['posted_display_id'];
 			$status = "ok";
 		} else {
-			if ( isset( $_POST['id'] ) && $_POST['id'] === '' ) {
+			if ( isset( $_POST['posted_display_id'] ) && $_POST['posted_display_id'] === '' ) {
 				$options['id'] = $db->insert_options( $_POST );
 				$status = "ok";
 			}
@@ -96,7 +96,7 @@ class Posted_Display_Admin_Post {
 
 		$html  = '<hr>';
 		$html .= '<form method="post" action="">';
-		$html .= '<input type="hidden" name="id" value="' . esc_attr( $options['id'] ) . '">';
+		$html .= '<input type="hidden" name="posted_display_id" value="' . esc_attr( $options['id'] ) . '">';
 		echo $html;
 
 		/** Common settings */
