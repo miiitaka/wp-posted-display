@@ -18,7 +18,7 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 1.2.1
+ * @version 1.2.2
  * @since   1.0.0
  */
 class Posted_Display {
@@ -26,9 +26,10 @@ class Posted_Display {
 	/**
 	 * Variable definition.
 	 *
-	 * @since 1.0.0
+	 * @since 1.2.2
 	 */
 	private $text_domain = 'wp-posted-display';
+	private $version     = '1.2.2';
 
 	/**
 	 * Constructor Define.
@@ -97,10 +98,11 @@ class Posted_Display {
 	/**
 	 * admin init.
 	 *
+	 * @version 1.2.2
 	 * @since   1.0.0
 	 */
 	public function admin_init () {
-		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.min.css', __FILE__ ) );
+		wp_register_style( 'wp-posted-display-admin-style', plugins_url( 'css/style.min.css', __FILE__ ), array(), $this->version );
 	}
 
 	/**
@@ -146,7 +148,7 @@ class Posted_Display {
 	 * @version 1.1.0
 	 */
 	public function admin_scripts () {
-		wp_enqueue_script( 'wp-posted-display-admin-main-js', plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), '1.0' );
+		wp_enqueue_script( 'wp-posted-display-admin-main-js', plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), $this->version );
 	}
 
 	/**
