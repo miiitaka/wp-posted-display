@@ -1,7 +1,7 @@
 # WordPress Posted Display
 https://wordpress.org/plugins/wp-posted-display/
 
-Plug-in Posted Display Widget & ShortCode Add.  
+Plug-in Posted Display Widget & ShortCode Add.
 You can also save and display your browsing history to Cookie.
 
 * Save your browsing history of the posts to Cookie, you can view the information in the widget and the short code.
@@ -40,6 +40,10 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 * sort="3": Random（ランダム）
 
 ## Change Log
+
+### 1.2.2 (2016-09-14)
+- Checked : WordPress version 4.6.1 operation check.
+- Updated : Code Refactor.
 
 ### 1.2.1 (2016-08-17)
 - Check : WordPress version 4.6.0 operation check.
