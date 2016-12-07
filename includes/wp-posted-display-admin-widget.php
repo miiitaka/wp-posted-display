@@ -93,7 +93,7 @@ class Posted_Display_Widget extends WP_Widget {
 			printf( '<input type="number" id="%s" name="%s" value="%s" class="small-text">', $id, $name, esc_attr( $instance['posts'] ) );
 			echo '</p>';
 		} else {
-			$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posts-browsing-admin-post.php';
+			$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posted-display-admin-post.php';
 			echo '<p><a href="' . $post_url . '">' . esc_html__( 'Please register of template.', $this->text_domain ) . '</a></p>';
 		}
 	}
