@@ -30,10 +30,11 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Widget Form Display.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array $instance
-	 * @return string Parent::Default return is 'noform'
+	 * @version 1.2.3
+	 * @since   1.0.0
+	 * @access  public
+	 * @param   array $instance
+	 * @return  string Parent::Default return is 'noform'
 	 */
 	public function form ( $instance ) {
 		/** DB Connect */
