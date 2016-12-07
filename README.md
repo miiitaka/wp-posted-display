@@ -41,6 +41,10 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 1.2.3 (2016-12-07)
+- Checked : WordPress version 4.7.0 operation check.
+- Fixed : No data widget link missing.
+
 ### 1.2.2 (2016-09-14)
 - Checked : WordPress version 4.6.1 operation check.
 - Updated : Code Refactor.
