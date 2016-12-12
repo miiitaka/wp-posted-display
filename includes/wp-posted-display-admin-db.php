@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 1.2.1
+ * @version 2.0.0
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -97,9 +97,10 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Insert Data.
 	 *
-	 * @since  1.0.0
-	 * @param  array $post($_POST)
-	 * @return integer $id
+	 * @version 2.0.0
+	 * @since   1.0.0
+	 * @param   array $post($_POST)
+	 * @return  integer $id
 	 */
 	public function insert_options ( array $post ) {
 		global $wpdb;
@@ -111,8 +112,8 @@ class Posted_Display_Admin_Db {
 			'type'              => strip_tags( $post['type'] ),
 			'template'          => preg_replace('!<script.*?>.*?</script.*?>!is', '', $post['template'] ),
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
-			'save_term'         => $post['save_term'],
-			'save_item'         => $post['save_item'],
+			'save_term'         => isset( $post['save_term'] ) ? $post['save_term'] : 7,
+			'save_item'         => isset( $post['save_item'] ) ? $post['save_item'] : 10,
 			'output_data'       => strip_tags( $output_data ),
 			'register_date'     => date( "Y-m-d H:i:s" ),
 			'update_date'       => date( "Y-m-d H:i:s" )
@@ -149,8 +150,8 @@ class Posted_Display_Admin_Db {
 			'type'              => strip_tags( $post['type'] ),
 			'template'          => preg_replace('!<script.*?>.*?</script.*?>!is', '', $post['template'] ),
 			'template_no_image' => strip_tags( $post['template_no_image'] ),
-			'save_term'         => $post['save_term'],
-			'save_item'         => $post['save_item'],
+			'save_term'         => isset( $post['save_term'] ) ? $post['save_term'] : 7,
+			'save_item'         => isset( $post['save_item'] ) ? $post['save_item'] : 10,
 			'output_data'       => strip_tags( $output_data ),
 			'update_date'       => date( "Y-m-d H:i:s" )
 		);
@@ -200,8 +201,8 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
+	 * @version 2.0.0
 	 * @since   1.0.0
-	 * @version 1.0.4
 	 * @access  public
 	 * @param   array  $results
 	 * @param   array  $instance
@@ -243,6 +244,14 @@ class Posted_Display_Admin_Db {
 			case "Users":
 				$args += array( "author__in" => explode( ',', esc_html( $results['output_data']) ) );
 				break;
+			default:
+				if ( $this->exist_custom_post( $results['type'] ) ) {
+					$args += array( "post_type" => $results['type'] );
+					if ( !empty( $results['output_data']) ) {
+						$args += array( "post__in"  => explode( ',', esc_html( $results['output_data']) ) );
+					}
+				}
+				break;
 		}
 
 		return (array) $args;
@@ -251,8 +260,8 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
+	 * @version 2.0.0
 	 * @since   1.0.0
-	 * @version 1.1.0
 	 * @access  private
 	 * @param   array  $post
 	 * @return  string $return_output_data
@@ -274,9 +283,38 @@ class Posted_Display_Admin_Db {
 			case "Users":
 				$return_output_data = isset( $post['users_output_data'] ) ? $post['users_output_data'] : "";
 				break;
+			default:
+				if ( $this->exist_custom_post( $post['type'] ) ) {
+					$return_output_data = isset( $post['posts_output_data'] ) ? $post['posts_output_data'] : "";
+				}
+				break;
 		}
 		return (string) $return_output_data;
 	}
+
+	/**
+	 * Custom post exist check.
+	 *
+	 * @version 2.0.0
+	 * @since   2.0.0
+	 * @param   string $type
+	 * @return  boolean
+	 */
+	private function exist_custom_post ( $type ) {
+		$args = array(
+			'public'   => true,
+			'_builtin' => false
+		);
+		$post_types = get_post_types( $args, 'objects' );
+
+		foreach ( $post_types as $post_type ) {
+			if ( $post_type->name === $type ) {
+				return __return_true();
+			}
+		}
+		return __return_false();
+	}
+
 
 	/**
 	 * Template replace.
