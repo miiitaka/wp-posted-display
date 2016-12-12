@@ -41,6 +41,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.0.0 (2016-12-12)
+- Added : Custom post widget templates.
+
 ### 1.2.3 (2016-12-07)
 - Checked : WordPress version 4.7.0 operation check.
 - Fixed : No data widget link missing.
