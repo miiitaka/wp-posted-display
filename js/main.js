@@ -1,13 +1,14 @@
 /* WordPress Posted Display */
 (function ($) {
-  'use strict';
+  "use strict";
 
   $(function () {
-    /*
+    /**
      * Type item switching
      *
-     * @since 1.1.0
-     * @see   includes/wp-posted-display-admin-post.php
+     * @version 2.0.0
+     * @since   1.1.0
+     * @see     includes/wp-posted-display-admin-post.php
      */
     var
       displayTypeId = $("#wp-posted-display-type"),
@@ -20,23 +21,28 @@
       };
 
     // Initial display
-    displayAreaId[displayTypeId.val()].css("display", "block");
-
+    // displayAreaId[displayTypeId.val()].css("display", "block");
     displayTypeId.on("change", function () {
+      var displayFlag = false;
       for (var key in displayAreaId) {
         if (key === $(this).val()) {
+          displayFlag = true;
           displayAreaId[key].css("display", "block");
         } else {
           displayAreaId[key].css("display", "none");
         }
       }
+      if ( !displayFlag ) {
+        displayAreaId["Posts"].css("display", "block");
+      }
     });
+    displayTypeId.trigger("change");
 
-    /*
+    /**
      * Textarea insert items
      *
      * @since 1.1.0
-     * @param string $item
+     * @param item
      * @see   includes/wp-posted-display-admin-post.php
      */
     function insertItems (item) {
