@@ -3,7 +3,7 @@
  * Posted Display Admin Setting
  *
  * @author  Kazuya Takami
- * @version 2.0.0
+ * @version 2.0.1
  * @since   1.0.0
  */
 class Posted_Display_Admin_Post {
@@ -38,7 +38,7 @@ class Posted_Display_Admin_Post {
 		/** Set Default Parameter for Array */
 		$options = array(
 			"id"                => "",
-			"type"              => "",
+			"type"              => "Cookie",
 			"template_name"     => "",
 			"template"          => '<img src="##image##">' . PHP_EOL . '<span>##date##</span>' . PHP_EOL . '<span><a href="##link##">##title##</a></span>',
 			"template_no_image" => "",
@@ -94,7 +94,7 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @version 1.1.0
+	 * @version 2.0.1
 	 * @since   1.0.0
 	 * @param   array  $options
 	 * @param   string $status
@@ -160,51 +160,55 @@ class Posted_Display_Admin_Post {
 		$html .= '</table>';
 		echo $html;
 
-		switch ( $options['type'] ) {
-			case "Cookie":
-				$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-cookie">';
-				$html .= '<caption>' . esc_html__( 'Type: Cookie settings', $this->text_domain ) . '</caption>';
-				$html .= '<tr><th><label for="save_term">' . esc_html__( 'Save Term', $this->text_domain ) . ':</label></th><td>';
-				$html .= '<input type="number" name="save_term" id="save_term" required class="small-text" min="1" max="30" value="';
-				$html .= esc_attr( $options['save_term'] ) . '">' . esc_html__( 'day', $this->text_domain );
-				$html .= '</td></tr>';
-				$html .= '<tr><th><label for="save_item">' . esc_html__( 'Save Item', $this->text_domain ) . ':</label></th><td>';
-				$html .= '<input type="number" name="save_item" id="save_item" required class="small-text" min="1" max="30" value="';
-				$html .= esc_attr( $options['save_item'] ) . '">' . esc_html__( 'item', $this->text_domain );
-				break;
-			case "Categories":
-				$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-categories">';
-				$html .= '<caption>' . esc_html__( 'Type: Category settings', $this->text_domain ) . '</caption>';
-				$html .= '<tr><th><label for="categories_output_data">' . esc_html__( 'Output Category ID', $this->text_domain ) . ':</label></th><td>';
-				$html .= '<input type="text" name="categories_output_data" id="categories_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
-				$html .= esc_attr( $options['output_data'] );
-				$html .= '">';
-				break;
-			case "Tags":
-				$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-tags">';
-				$html .= '<caption>' . esc_html__( 'Type: Tag settings', $this->text_domain ) . '</caption>';
-				$html .= '<tr><th><label for="tags_output_data">' . esc_html__( 'Output Tag ID', $this->text_domain ) . ':</label></th><td>';
-				$html .= '<input type="text" name="tags_output_data" id="tags_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
-				$html .= esc_attr( $options['output_data'] );
-				$html .= '">';
-				break;
-			case "Users":
-				$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-users">';
-				$html .= '<caption>' . esc_html__( 'Type: User settings', $this->text_domain ) . '</caption>';
-				$html .= '<tr><th><label for="users_output_data">' . esc_html__( 'Output User ID', $this->text_domain ) . ':</label></th><td>';
-				$html .= '<input type="text" name="users_output_data" id="users_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
-				$html .= ( $options['type'] === 'Users') ? esc_attr( $options['output_data'] ) : '';
-				$html .= '">';
-				break;
-			default:
-				$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-posts">';
-				$html .= '<caption>' . esc_html__( 'Type: Posts settings', $this->text_domain ) . '</caption>';
-				$html .= '<tr><th><label for="posts_output_data">' . esc_html__( 'Output Posts ID', $this->text_domain ) . ':</label></th><td>';
-				$html .= '<input type="text" name="posts_output_data" id="posts_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
-				$html .= esc_attr( $options['output_data'] );
-				$html .= '">';
-				break;
-		}
+		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-cookie">';
+		$html .= '<caption>' . esc_html__( 'Type: Cookie settings', $this->text_domain ) . '</caption>';
+		$html .= '<tr><th><label for="save_term">' . esc_html__( 'Save Term', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="number" name="save_term" id="save_term" required class="small-text" min="1" max="30" value="';
+		$html .= esc_attr( $options['save_term'] ) . '">' . esc_html__( 'day', $this->text_domain );
+		$html .= '</td></tr>';
+		$html .= '<tr><th><label for="save_item">' . esc_html__( 'Save Item', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="number" name="save_item" id="save_item" required class="small-text" min="1" max="30" value="';
+		$html .= esc_attr( $options['save_item'] ) . '">' . esc_html__( 'item', $this->text_domain );
+		$html .= '</td></tr>';
+		$html .= '</table>';
+		echo $html;
+
+		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-categories">';
+		$html .= '<caption>' . esc_html__( 'Type: Category settings', $this->text_domain ) . '</caption>';
+		$html .= '<tr><th><label for="categories_output_data">' . esc_html__( 'Output Category ID', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="text" name="categories_output_data" id="categories_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
+		$html .= esc_attr( $options['output_data'] );
+		$html .= '">';
+		$html .= '</td></tr>';
+		$html .= '</table>';
+		echo $html;
+
+		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-tags">';
+		$html .= '<caption>' . esc_html__( 'Type: Tag settings', $this->text_domain ) . '</caption>';
+		$html .= '<tr><th><label for="tags_output_data">' . esc_html__( 'Output Tag ID', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="text" name="tags_output_data" id="tags_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
+		$html .= esc_attr( $options['output_data'] );
+		$html .= '">';
+		$html .= '</td></tr>';
+		$html .= '</table>';
+		echo $html;
+
+		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-users">';
+		$html .= '<caption>' . esc_html__( 'Type: User settings', $this->text_domain ) . '</caption>';
+		$html .= '<tr><th><label for="users_output_data">' . esc_html__( 'Output User ID', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="text" name="users_output_data" id="users_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
+		$html .= ( $options['type'] === 'Users') ? esc_attr( $options['output_data'] ) : '';
+		$html .= '">';
+		$html .= '</td></tr>';
+		$html .= '</table>';
+		echo $html;
+
+		$html  = '<table class="wp-posted-display-admin-table" id="wp-posted-display-type-posts">';
+		$html .= '<caption>' . esc_html__( 'Type: Posts settings', $this->text_domain ) . '</caption>';
+		$html .= '<tr><th><label for="posts_output_data">' . esc_html__( 'Output Posts ID', $this->text_domain ) . ':</label></th><td>';
+		$html .= '<input type="text" name="posts_output_data" id="posts_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
+		$html .= esc_attr( $options['output_data'] );
+		$html .= '">';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
