@@ -10,20 +10,9 @@ You can also save and display your browsing history to Cookie.
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
 
-投稿記事情報をウィジェットやショートコードで表示させるプラグインです。閲覧履歴をCookieに保存して表示することもできます。
-
-* 投稿記事の閲覧履歴をCookieに保存して、ウィジェットとショートコードで情報を表示できます。
-* 投稿記事を任意で表示できるウィジェットとショートコードを作成できます。
-* 任意のカテゴリーIDに属する記事をウィジェットとショートコードで情報を表示できます。（複数指定可）
-* 任意のタグIDに属する記事をウィジェットとショートコードで情報を表示できます。（複数指定可）
-* 任意のユーザーIDに属する記事をウィジェットとショートコードで情報を表示できます。（複数指定可）
-
 ## ShortCode
 You can use the short code in the post page or fixed page. It is possible to get a short code with the registered template list, use Copy.  
 You can specify the maximum number to be displayed by changing the value of the posts.
-
-投稿ページや固定ページでショートコードを使用できます。登録したテンプレート一覧でショートコードを取得できるので、コピーして使用して下さい。  
-postsの値を変更することで表示する最大件数を指定できます。
 
 ```
 <?php
@@ -33,13 +22,16 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 ?>
 ```
 
-### ShortCode Params Sorted by
-* sort="0": Input order（入力順）
-* sort="1": Date descending order（日付（降順））
-* sort="2": Date ascending order（日付（昇順））
-* sort="3": Random（ランダム）
+### Short Code Params Sorted by
+* sort="0": Input order
+* sort="1": Date descending order
+* sort="2": Date ascending order
+* sort="3": Random
 
 ## Change Log
+
+### 2.0.1 (2017-01-02)
+- Fixed : Fixed minor defects and refurbished.
 
 ### 2.0.0 (2016-12-12)
 - Added : Custom post widget templates.
