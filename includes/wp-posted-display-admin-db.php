@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 2.0.0
+ * @version 2.0.1
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -201,7 +201,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
-	 * @version 2.0.0
+	 * @version 2.0.1
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $results
@@ -213,14 +213,15 @@ class Posted_Display_Admin_Db {
 		/** Common Items Set */
 		$args = array(
 			"post_status"         => "publish",
+			"no_found_rows"       => true,
 			"posts_per_page"      => esc_html( $instance['posts'] ),
-			"ignore_sticky_posts" => 1
+			"ignore_sticky_posts" => true
 		);
 
 		switch ( $instance['sort'] ) {
-			case 0: $args += array( "orderby" => "post__in", "order" => "ASC" ); break;
-			case 1: $args += array( "orderby" => "date", "order" => "DESC" ); break;
-			case 2: $args += array( "orderby" => "date", "order" => "ASC" ); break;
+			case 0: $args += array( "orderby" => "post__in", "order" => "ASC" );  break;
+			case 1: $args += array( "orderby" => "date",     "order" => "DESC" ); break;
+			case 2: $args += array( "orderby" => "date",     "order" => "ASC" );  break;
 			case 3: $args += array( "orderby" => "rand" ); break;
 		}
 
@@ -325,7 +326,7 @@ class Posted_Display_Admin_Db {
 	 * @param   string $template
 	 * @param   array  $items
 	 * @return  string $template
-	 * 
+	 *
 	 * @note Array Format
 	 * [
 	 *   "title"      : string,
