@@ -20,12 +20,10 @@
         "Users"     : $("#wp-posted-display-type-users")
       };
 
-    // Initial display
-    // displayAreaId[displayTypeId.val()].css("display", "block");
     displayTypeId.on("change", function () {
       var displayFlag = false;
       for (var key in displayAreaId) {
-        if (key === $(this).val()) {
+        if (key == $(this).val()) {
           displayFlag = true;
           displayAreaId[key].css("display", "block");
         } else {
