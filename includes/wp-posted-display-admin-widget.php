@@ -11,7 +11,8 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Variable definition.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private $text_domain = 'wp-posted-display';
 	private $sort_array  = array( 'Input order', 'Date descending order', 'Date ascending order', 'Random' );
@@ -19,8 +20,9 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Constructor Define.
 	 *
-	 * @since  1.0.0
-	 * @access public
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @access  public
 	 */
 	public function __construct () {
 		$widget_options = array( 'description' => esc_html__( 'Posted Display Widget', $this->text_domain ) );
@@ -102,11 +104,12 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Widget Form Update.
 	 *
-	 * @since  1.0.0
-	 * @access public
-	 * @param  array $new_instance
-	 * @param  array $old_instance
-	 * @return array Parent::Settings to save or bool false to cancel saving.
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @access  public
+	 * @param   array $new_instance
+	 * @param   array $old_instance
+	 * @return  array Parent::Settings to save or bool false to cancel saving.
 	 */
 	public function update ( $new_instance, $old_instance ) {
 		if ( isset( $new_instance['posts'] ) ) {
@@ -123,8 +126,8 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Widget Display.
 	 *
-	 * @since   1.0.0
 	 * @version 1.1.1
+	 * @since   1.0.0
 	 * @access  public
 	 * @param   array $args
 	 * @param   array $instance

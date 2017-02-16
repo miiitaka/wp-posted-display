@@ -3,6 +3,7 @@
  * Posted Display Admin List
  *
  * @author  Kazuya Takami
+ * @version 1.0.0
  * @since   1.0.0
  * @see     wp-posted-display-admin-db.php
  */
@@ -11,13 +12,15 @@ class Posted_Display_Admin_List {
 	/**
 	 * Variable definition.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private $text_domain;
 
 	/**
 	 * Constructor Define.
 	 *
+	 * @version 1.0.0
 	 * @since   1.0.0
 	 * @param   String $text_domain
 	 */
@@ -40,6 +43,7 @@ class Posted_Display_Admin_List {
 	/**
 	 * LIST Page HTML Render.
 	 *
+	 * @version 1.0.0
 	 * @since   1.0.0
 	 * @param   Posted_Display_Admin_Db $db
 	 * @param   String $mode
@@ -106,7 +110,8 @@ class Posted_Display_Admin_List {
 	/**
 	 * Information Message Render
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';

@@ -57,7 +57,8 @@ class Posted_Display {
 	/**
 	 * Create table.
 	 *
-	 * @since 1.0.2
+	 * @version 1.0.2
+	 * @since   1.0.2
 	 */
 	public function create_table () {
 		$db = new Posted_Display_Admin_Db( $this->text_domain );
@@ -67,6 +68,7 @@ class Posted_Display {
 	/**
 	 * i18n.
 	 *
+	 * @version 1.0.0
 	 * @since   1.0.0
 	 */
 	public function plugins_loaded () {
@@ -76,7 +78,8 @@ class Posted_Display {
 	/**
 	 * Widget Register.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function widget_init () {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-widget.php' );
@@ -86,6 +89,7 @@ class Posted_Display {
 	/**
 	 * ShortCode Register.
 	 *
+	 * version 1.0.0
 	 * @since  1.0.0
 	 * @param  string $args short code params
 	 * @return string
@@ -155,7 +159,8 @@ class Posted_Display {
 	/**
 	 * CSS admin add.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function add_style () {
 		wp_enqueue_style( 'wp-posted-display-admin-style' );
@@ -164,7 +169,8 @@ class Posted_Display {
 	/**
 	 * Admin List Page Template Require.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function list_page_render () {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-list.php' );
@@ -174,7 +180,8 @@ class Posted_Display {
 	/**
 	 * Admin Post Page Template Require.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function post_page_render () {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-post.php' );
@@ -184,7 +191,8 @@ class Posted_Display {
 	/**
 	 * Set Cookie.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function get_header () {
 		/** DB Connect */
@@ -267,7 +275,8 @@ class Posted_Display {
 	/**
 	 * Remove all the cookie information when uninstalling
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function uninstall_delete_cookie () {
 		/** DB Connect */

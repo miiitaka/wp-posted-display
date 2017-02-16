@@ -1,9 +1,4 @@
 <?php
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
-}
-new Posted_Display_Uninstall();
-
 /**
  * Plugin Uninstall
  *
@@ -11,6 +6,12 @@ new Posted_Display_Uninstall();
  * @version 1.0.3
  * @since   1.0.0
  */
+
+if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+	exit;
+}
+new Posted_Display_Uninstall();
+
 class Posted_Display_Uninstall {
 
 	/**
@@ -27,7 +28,8 @@ class Posted_Display_Uninstall {
 	/**
 	 * Drop Table.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private function drop_table () {
 		global $wpdb;
