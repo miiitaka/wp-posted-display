@@ -11,14 +11,16 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Variable definition.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private $table_name;
 
 	/**
 	 * Constructor Define.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function __construct () {
 		global $wpdb;
@@ -28,7 +30,8 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Create Table.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	public function create_table () {
 		global $wpdb;
@@ -60,9 +63,10 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Get Data.
 	 *
-	 * @since  1.0.0
-	 * @param  integer $id
-	 * @return array   $args
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @param   integer $id
+	 * @return  array   $args
 	 */
 	public function get_options ( $id ) {
 		global $wpdb;
@@ -77,9 +81,10 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Get All Data.
 	 *
-	 * @since  1.0.0
-	 * @param  string $type
-	 * @return array  $results
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @param   string $type
+	 * @return  array  $results
 	 */
 	public function get_list_options ( $type = null ) {
 		global $wpdb;
@@ -137,8 +142,9 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Update Data.
 	 *
-	 * @since 1.0.0
-	 * @param array $post($_POST)
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @param   array $post($_POST)
 	 */
 	public function update_options ( array $post ) {
 		global $wpdb;
@@ -174,8 +180,9 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Delete Data.
 	 *
-	 * @since 1.0.0
-	 * @param integer $id
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @param   integer $id
 	 */
 	public function delete_options ( $id ) {
 		global $wpdb;

@@ -11,7 +11,8 @@ class Posted_Display_ShortCode {
 	/**
 	 * Variable definition.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private $text_domain = 'wp-posted-display';
 

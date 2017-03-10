@@ -11,7 +11,8 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Variable definition.
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private $text_domain;
 	private $type_args = array( 'Cookie', 'Posts', 'Categories', 'Tags', 'Users' );
@@ -19,8 +20,9 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Constructor Define.
 	 *
-	 * @since 1.0.0
-	 * @param String $text_domain
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 * @param   String $text_domain
 	 */
 	public function __construct ( $text_domain ) {
 		$this->text_domain = $text_domain;
@@ -222,7 +224,8 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Information Message Render
 	 *
-	 * @since 1.0.0
+	 * @version 1.0.0
+	 * @since   1.0.0
 	 */
 	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
