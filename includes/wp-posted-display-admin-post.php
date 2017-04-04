@@ -3,7 +3,7 @@
  * Posted Display Admin Setting
  *
  * @author  Kazuya Takami
- * @version 2.0.1
+ * @version 2.0.5
  * @since   1.0.0
  */
 class Posted_Display_Admin_Post {
@@ -96,7 +96,7 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @version 2.0.1
+	 * @version 2.0.5
 	 * @since   1.0.0
 	 * @param   array  $options
 	 * @param   string $status
@@ -211,6 +211,7 @@ class Posted_Display_Admin_Post {
 		$html .= '<input type="text" name="posts_output_data" id="posts_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
 		$html .= esc_attr( $options['output_data'] );
 		$html .= '">';
+		$html .= '<p>' . esc_html__( 'Ignore post__in if you do not set it.', $this->text_domain ) . '</p>';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
