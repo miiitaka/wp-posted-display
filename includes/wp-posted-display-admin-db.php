@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 2.0.1
+ * @version 2.0.5
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -208,7 +208,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
-	 * @version 2.0.1
+	 * @version 2.0.5
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $results
@@ -241,7 +241,9 @@ class Posted_Display_Admin_Db {
 				}
 				break;
 			case "Posts":
-				$args += array( "post__in" => explode( ',', esc_html( $results['output_data']) ) );
+				if ( !empty( $results['output_data'] ) ) {
+					$args += array( "post__in" => explode( ',', esc_html( $results['output_data'] ) ) );
+				}
 				break;
 			case "Categories":
 				$args += array( "category__in" => explode( ',', esc_html( $results['output_data']) ) );
