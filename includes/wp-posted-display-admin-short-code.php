@@ -19,8 +19,8 @@ class Posted_Display_ShortCode {
 	/**
 	 * ShortCode Display.
 	 *
-	 * @since   1.0.0
 	 * @version 1.1.2
+	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $args
 	 * @return  string $html

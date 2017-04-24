@@ -30,6 +30,10 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.0.5 (2017-04-24)
+* Checked : WordPress version 4.7.4 operation check.
+* Updated : Ignore post__in if you do not set an ID.
+
 ### 2.0.4 (2017-03-10)
 - Checked : WordPress version 4.7.3 operation check.
 

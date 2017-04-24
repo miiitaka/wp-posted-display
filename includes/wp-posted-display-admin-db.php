@@ -329,8 +329,8 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Template replace.
 	 *
-	 * @since   1.0.0
 	 * @version 1.1.1
+	 * @since   1.0.0
 	 * @access  public
 	 * @param   string $template
 	 * @param   array  $items
