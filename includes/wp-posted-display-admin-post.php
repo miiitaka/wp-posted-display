@@ -96,7 +96,7 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @version 2.0.5
+	 * @version 2.0.6
 	 * @since   1.0.0
 	 * @param   array  $options
 	 * @param   string $status
@@ -157,6 +157,7 @@ class Posted_Display_Admin_Post {
 		$html .= '<tr><th><label for="template_no_image">' . esc_html__( 'No Image Path', $this->text_domain ) . ':</label></th><td>';
 		$html .= '<input type="text" name="template_no_image" id="template_no_image" class="regular-text" value="';
 		$html .= esc_attr( $options['template_no_image'] ) . '">';
+		$html .= '<button id="media-upload" class="schema-admin-media-button dashicons-before dashicons-admin-media"><span>Add Media</span></button>';
 		$html .= '<p>' . esc_html__( 'It specifies the posts of Alternative Image path that does not set the featured image.', $this->text_domain ) . '</p>';
 		$html .= '</td></tr>';
 		$html .= '</table>';
