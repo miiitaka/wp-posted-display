@@ -30,6 +30,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.0.7 (2017-06-17)
+1 Checked : WordPress version 4.8.0 operation check.
+
 ### 2.0.6 (2017-05-18)
 - Checked : WordPress version 4.7.5 operation check.
 - Added : Image selection with media uploader.
