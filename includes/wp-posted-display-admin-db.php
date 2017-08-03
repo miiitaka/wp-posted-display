@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 2.0.5
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -208,7 +208,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
-	 * @version 2.0.5
+	 * @version 2.1.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $results
@@ -235,7 +235,17 @@ class Posted_Display_Admin_Db {
 		switch ( $results['type'] ) {
 			case "Cookie":
 				if ( isset( $_COOKIE[$cookie_name] ) ) {
-					$args += array( "post__in" => array_reverse( explode( ',', esc_html( $_COOKIE[$cookie_name] ) ) ) );
+					$post_array = explode( ',', esc_html( $_COOKIE[$cookie_name] ) );
+					if ( is_single() ) {
+						global $post;
+						$key = array_search( $post->ID, $post_array );
+						if ( $key !== false ) {
+							array_splice( $post_array, $key, 1 );
+						}
+					}
+					if ( is_array( $post_array ) ) {
+						$args += array( "post__in" => array_reverse( $post_array ) );
+					}
 				} else {
 					$args = array();
 				}
