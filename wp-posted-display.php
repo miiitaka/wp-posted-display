@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 2.0.7
+Version: 2.1.0
 Author: Kazuya Takami
 Author URI: https://www.terakoya.work/
 License: GPLv2 or later
@@ -18,7 +18,7 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 2.0.7
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Posted_Display {
@@ -34,15 +34,15 @@ class Posted_Display {
 	/**
 	 * Variable definition.
 	 *
-	 * @version 2.0.7
+	 * @version 2.1.0
 	 * @since   2.0.7
 	 */
-	private $version = '2.0.7';
+	private $version = '2.1.0';
 
 	/**
 	 * Constructor Define.
 	 *
-	 * @version 1.2.0
+	 * @version 2.0.8
 	 * @since   1.0.0
 	 */
 	public function __construct () {
@@ -56,6 +56,7 @@ class Posted_Display {
 			add_action( 'admin_init', array( $this, 'list_delete_cookie' ) );
 			add_action( 'admin_init', array( $this, 'admin_init' ) );
 			add_action( 'admin_menu', array( $this, 'admin_menu' ) );
+			add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), array( $this, 'plugin_action_links' ) );
 		} else {
 			add_action( 'get_header', array( $this, 'get_header' ) );
 		}
@@ -151,6 +152,21 @@ class Posted_Display {
 		add_action( 'admin_print_styles-'  . $post_page, array( $this, 'add_style' ) );
 		add_action( 'admin_print_styles-'  . $list_page, array( $this, 'add_style' ) );
 		add_action( 'admin_print_scripts-' . $post_page, array( $this, 'admin_scripts') );
+	}
+
+	/**
+	 * Add Menu to the Admin Screen.
+	 *
+	 * @version 2.0.8
+	 * @since   2.0.8
+	 * @param   array  $links
+	 * @return  array  $links
+	 */
+	public function plugin_action_links( $links ) {
+		$url = admin_url( 'admin.php?page=' . $this->text_domain . '/' . $this->text_domain . '.php' );
+		$url = '<a href="' . esc_url( $url ) . '">' . __( 'Settings' ) . '</a>';
+		array_unshift( $links, $url );
+		return $links;
 	}
 
 	/**
