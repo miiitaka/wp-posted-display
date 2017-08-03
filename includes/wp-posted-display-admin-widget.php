@@ -3,7 +3,7 @@
  * Admin Widget Register
  *
  * @author  Kazuya Takami
- * @version 1.1.2
+ * @version 2.1.0
  * @since   1.0.0
  */
 class Posted_Display_Widget extends WP_Widget {
@@ -15,7 +15,31 @@ class Posted_Display_Widget extends WP_Widget {
 	 * @since   1.0.0
 	 */
 	private $text_domain = 'wp-posted-display';
-	private $sort_array  = array( 'Input order', 'Date descending order', 'Date ascending order', 'Random' );
+
+	/**
+	 * Variable definition.
+	 *
+	 * @version 1.0.0
+	 * @since   1.0.0
+	 */
+	private $sort_array = array(
+		'Input order',
+		'Date descending order',
+		'Date ascending order',
+		'Random'
+	);
+
+	/**
+	 * Variable definition.
+	 *
+	 * @version 2.1.0
+	 * @since   2.1.0
+	 */
+	private $target_array = array(
+		'all'    => 'All Users',
+		'login'  => 'Logged-in users',
+		'logout' => 'Logged-out users',
+	);
 
 	/**
 	 * Constructor Define.
@@ -57,6 +81,9 @@ class Posted_Display_Widget extends WP_Widget {
 			if ( !isset( $instance['posts'] ) ) {
 				$instance['posts'] = 5;
 			}
+			if ( !isset( $instance['target'] ) ) {
+				$instance['target'] = 'all';
+			}
 
 			$id   = $this->get_field_id( 'title' );
 			$name = $this->get_field_name( 'title' );
@@ -95,6 +122,19 @@ class Posted_Display_Widget extends WP_Widget {
 			echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->text_domain ) . ':&nbsp;</label>';
 			printf( '<input type="number" id="%s" name="%s" value="%s" class="small-text">', $id, $name, esc_attr( $instance['posts'] ) );
 			echo '</p>';
+
+			$id   = $this->get_field_id( 'target' );
+			$name = $this->get_field_name( 'target' );
+			echo '<p><label for="' . $id . '">' . esc_html__( 'Widget display target', $this->text_domain ) . ':</label><br>';
+			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
+			foreach ( $this->target_array as $key => $row ) {
+				if ( $key == $instance['target'] ) {
+					printf( '<option value="%s" selected="selected">%s</option>', $key, esc_html( $row ) );
+				} else {
+					printf( '<option value="%s">%s</option>', $key, esc_html( $row ) );
+				}
+			}
+			echo '</select></p>';
 		} else {
 			$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posted-display-admin-post.php';
 			echo '<p><a href="' . $post_url . '">' . esc_html__( 'Please register of template.', $this->text_domain ) . '</a></p>';
@@ -119,6 +159,10 @@ class Posted_Display_Widget extends WP_Widget {
 		} else {
 			$new_instance['posts'] = 5;
 		}
+		$instance['title']    = sanitize_text_field( $new_instance['title'] );
+		$instance['template'] = sanitize_text_field( $new_instance['template'] );
+		$instance['sort']     = sanitize_text_field( $new_instance['sort'] );
+		$instance['target']   = sanitize_text_field( $new_instance['target'] );
 
 		return (array) $new_instance;
 	}
@@ -126,13 +170,20 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Widget Display.
 	 *
-	 * @version 1.1.1
+	 * @version 2.1.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array $args
 	 * @param   array $instance
 	 */
 	public function widget ( $args, $instance ) {
+		if ( is_user_logged_in() && isset( $instance['target'] ) && $instance['target'] === 'logout' ) {
+			return;
+		}
+		if ( !is_user_logged_in() && isset( $instance['target'] ) && $instance['target'] === 'login' ) {
+			return;
+		}
+
 		/** DB Connect */
 		$db      = new Posted_Display_Admin_Db();
 		$results = $db->get_options( esc_html( $instance['template'] ) );
