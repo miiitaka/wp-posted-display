@@ -30,8 +30,13 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.1.0 (2017-08-03)
+- Checked : WordPress version 4.8.1 operation check.
+- Added : Set to hide when logging in.
+- Fixed : Do not display the same post in your browsing history.
+
 ### 2.0.7 (2017-06-17)
-1 Checked : WordPress version 4.8.0 operation check.
+- Checked : WordPress version 4.8.0 operation check.
 
 ### 2.0.6 (2017-05-18)
 - Checked : WordPress version 4.7.5 operation check.
