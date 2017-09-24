@@ -30,6 +30,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.1.1 (2017-09-24)
+- Checked : WordPress version 4.8.2 operation check.
+
 ### 2.1.0 (2017-08-03)
 - Checked : WordPress version 4.8.1 operation check.
 - Added : Set to hide when logging in.
