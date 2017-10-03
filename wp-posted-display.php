@@ -18,7 +18,7 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 2.1.1
+ * @version 2.1.2
  * @since   1.0.0
  */
 class Posted_Display {
@@ -65,11 +65,11 @@ class Posted_Display {
 	/**
 	 * Create table.
 	 *
-	 * @version 1.0.2
+	 * @version 2.1.2
 	 * @since   1.0.2
 	 */
 	public function create_table () {
-		$db = new Posted_Display_Admin_Db( $this->text_domain );
+		$db = new Posted_Display_Admin_Db();
 		$db->create_table();
 	}
 
