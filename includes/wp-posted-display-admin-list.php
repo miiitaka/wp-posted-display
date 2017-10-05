@@ -3,14 +3,14 @@
  * Posted Display Admin List
  *
  * @author  Kazuya Takami
- * @version 1.0.0
+ * @version 2.1.2
  * @since   1.0.0
  * @see     wp-posted-display-admin-db.php
  */
 class Posted_Display_Admin_List {
 
 	/**
-	 * Variable definition.
+	 * Variable definition Text Domain.
 	 *
 	 * @version 1.0.0
 	 * @since   1.0.0
@@ -18,9 +18,17 @@ class Posted_Display_Admin_List {
 	private $text_domain;
 
 	/**
+	 * Variable definition Key Name.
+	 *
+	 * @version 2.1.2
+	 * @since   2.1.2
+	 */
+	private $key_name = 'posted_display_id';
+
+	/**
 	 * Constructor Define.
 	 *
-	 * @version 1.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 * @param   String $text_domain
 	 */
@@ -31,8 +39,8 @@ class Posted_Display_Admin_List {
 		$mode = "";
 
 		if ( isset( $_GET['mode'] ) && $_GET['mode'] === 'delete' ) {
-			if ( isset( $_GET['posted_display_id'] ) && is_numeric( $_GET['posted_display_id'] ) ) {
-				$db->delete_options( $_GET['posted_display_id'] );
+			if ( isset( $_GET[$this->key_name] ) && is_numeric( $_GET[$this->key_name] ) ) {
+				$db->delete_options( $_GET[$this->key_name] );
 				$mode = "delete";
 			}
 		}
@@ -43,7 +51,7 @@ class Posted_Display_Admin_List {
 	/**
 	 * LIST Page HTML Render.
 	 *
-	 * @version 1.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 * @param   Posted_Display_Admin_Db $db
 	 * @param   String $mode
@@ -84,11 +92,11 @@ class Posted_Display_Admin_List {
 				$html .= '<td>' . esc_html( $row->id )   . '</td>';
 				$html .= '<td>' . esc_html( $row->type ) . '</td>';
 				$html .= '<td>';
-				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
+				$html .= '<a href="' . $post_url . '&' . $this->key_name . '=' . esc_html( $row->id ) . '">' . esc_html( $row->template_name ) . '</a>';
 				$html .= '</td>';
 				$html .= '<td><input type="text" onfocus="this.select();" readonly="readonly" value="[wp-posted-display id=&quot;' . esc_html( $row->id ) . '&quot; posts=&quot;5&quot; sort=&quot;0&quot;]" class="large-text code"></td>';
 				$html .= '<td>';
-				$html .= '<a href="' . $post_url . '&posted_display_id=' . esc_html( $row->id ) . '">';
+				$html .= '<a href="' . $post_url . '&' . $this->key_name . '=' . esc_html( $row->id ) . '">';
 				$html .= esc_html__( 'Edit', $this->text_domain );
 				$html .= '</a>&nbsp;&nbsp;&nbsp;&nbsp;';
 				$html .= '<a href="' . $self_url . '&mode=delete&posted_display_id=' . esc_html( $row->id ) . '">';
@@ -110,14 +118,14 @@ class Posted_Display_Admin_List {
 	/**
 	 * Information Message Render
 	 *
-	 * @version 1.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 */
 	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
 		$html .= '<p>Deletion succeeds.</p>';
 		$html .= '<button type="button" class="notice-dismiss">';
-		$html .= '<span class="screen-reader-text">Dismiss this notice.</span>';
+		$html .= '<span class="screen-reader-text">Deletion succeeds.</span>';
 		$html .= '</button>';
 		$html .= '</div>';
 
