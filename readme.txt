@@ -17,9 +17,9 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
 
-**In a post page or fixed page**
+**In a Posts or Pages**
 
-You can use the short code in the post page or fixed page. It is possible to get a short code with the registered template list, use Copy.
+You can use the short code in the Posts or Pages. It is possible to get a short code with the registered template list, use Copy.
 You can specify the maximum number to be displayed by changing the value of the posts.
 
 [ Example ]

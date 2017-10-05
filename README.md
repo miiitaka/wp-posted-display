@@ -11,7 +11,7 @@ You can also save and display your browsing history to Cookie.
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
 
 ## ShortCode
-You can use the short code in the post page or fixed page. It is possible to get a short code with the registered template list, use Copy.  
+You can use the short code in the Posts or Pages. It is possible to get a short code with the registered template list, use Copy.  
 You can specify the maximum number to be displayed by changing the value of the posts.
 
 ```
