@@ -228,7 +228,7 @@ class Posted_Display_Admin_Post {
 		$html .= '<input type="text" name="posts_output_data" id="posts_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
 		$html .= esc_attr( $options['output_data'] );
 		$html .= '">';
-		$html .= '<p>' . esc_html__( 'Ignore post__in if you do not set it.', $this->text_domain ) . '</p>';
+		$html .= '<p>' . esc_html__( 'Posts display new arrival order if you do not set it.', $this->text_domain ) . '</p>';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
