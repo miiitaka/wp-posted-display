@@ -30,6 +30,11 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.1.2 (2017-11-09)
+* Checked : WordPress version 4.8.3 operation check.
+* Updated : Translation update.
+* Fixed : Argument error when creating DB class (Notice).
+
 ### 2.1.1 (2017-09-24)
 - Checked : WordPress version 4.8.2 operation check.
 
