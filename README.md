@@ -23,17 +23,20 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 ```
 
 ### Short Code Params Sorted by
-* sort="0": Input order
-* sort="1": Date descending order
-* sort="2": Date ascending order
-* sort="3": Random
+- sort="0": Input order
+- sort="1": Date descending order
+- sort="2": Date ascending order
+- sort="3": Random
 
 ## Change Log
 
+### 2.1.3 (2017-11-29)
+- Checked : WordPress version 4.9.0 operation check.
+
 ### 2.1.2 (2017-11-09)
-* Checked : WordPress version 4.8.3 operation check.
-* Updated : Translation update.
-* Fixed : Argument error when creating DB class (Notice).
+- Checked : WordPress version 4.8.3 operation check.
+- Updated : Translation update.
+- Fixed : Argument error when creating DB class (Notice).
 
 ### 2.1.1 (2017-09-24)
 - Checked : WordPress version 4.8.2 operation check.
