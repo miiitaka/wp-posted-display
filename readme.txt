@@ -2,8 +2,8 @@
 Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
-Tested up to: 4.8.2
-Stable tag: 2.1.1
+Tested up to: 4.9.0
+Stable tag: 2.1.4
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -17,9 +17,9 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
 
-**In a post page or fixed page**
+**In a Posts or Pages**
 
-You can use the short code in the post page or fixed page. It is possible to get a short code with the registered template list, use Copy.
+You can use the short code in the Posts or Pages. It is possible to get a short code with the registered template list, use Copy.
 You can specify the maximum number to be displayed by changing the value of the posts.
 
 [ Example ]
@@ -52,6 +52,14 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 2. "Posted Display" has been added to the Widget. Display to select the template you created.
 
 == Changelog ==
+
+= 2.1.4 (2017-11-29) =
+* Checked : WordPress version 4.9.0 operation check.
+
+= 2.1.2 (2017-11-09) =
+* Checked : WordPress version 4.8.3 operation check.
+* Updated : Translation update.
+* Fixed : Argument error when creating DB class (Notice).
 
 = 2.1.1 (2017-09-24) =
 * Checked : WordPress version 4.8.2 operation check.

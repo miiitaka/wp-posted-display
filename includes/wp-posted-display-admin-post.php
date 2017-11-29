@@ -3,24 +3,40 @@
  * Posted Display Admin Setting
  *
  * @author  Kazuya Takami
- * @version 2.0.5
+ * @version 2.1.2
  * @since   1.0.0
+ * @see     wp-posted-display-admin-db.php
  */
 class Posted_Display_Admin_Post {
 
 	/**
-	 * Variable definition.
+	 * Variable definition Text Domain.
 	 *
 	 * @version 1.0.0
 	 * @since   1.0.0
 	 */
 	private $text_domain;
+
+	/**
+	 * Variable definition Type.
+	 *
+	 * @version 2.1.2
+	 * @since   1.0.0
+	 */
 	private $type_args = array( 'Cookie', 'Posts', 'Categories', 'Tags', 'Users' );
+
+	/**
+	 * Variable definition Key Name.
+	 *
+	 * @version 2.1.2
+	 * @since   2.1.2
+	 */
+	private $key_name = 'posted_display_id';
 
 	/**
 	 * Constructor Define.
 	 *
-	 * @version 1.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 * @param   String $text_domain
 	 */
@@ -50,17 +66,17 @@ class Posted_Display_Admin_Post {
 		);
 
 		/** Key Set */
-		if ( isset( $_GET['posted_display_id'] ) && is_numeric( $_GET['posted_display_id'] ) ) {
-			$options['id'] = esc_html( $_GET['posted_display_id'] );
+		if ( isset( $_GET[$this->key_name] ) && is_numeric( $_GET[$this->key_name] ) ) {
+			$options['id'] = esc_html( $_GET[$this->key_name] );
 		}
 
 		/** DataBase Update & Insert Mode */
-		if ( isset( $_POST['posted_display_id'] ) && is_numeric( $_POST['posted_display_id'] ) ) {
+		if ( isset( $_POST[$this->key_name] ) && is_numeric( $_POST[$this->key_name] ) ) {
 			$db->update_options( $_POST );
-			$options['id'] = $_POST['posted_display_id'];
+			$options['id'] = $_POST[$this->key_name];
 			$status = "ok";
 		} else {
-			if ( isset( $_POST['posted_display_id'] ) && $_POST['posted_display_id'] === '' ) {
+			if ( isset( $_POST[$this->key_name] ) && $_POST[$this->key_name] === '' ) {
 				$options['id'] = $db->insert_options( $_POST );
 				$status = "ok";
 			}
@@ -96,7 +112,7 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Setting Page of the Admin Screen.
 	 *
-	 * @version 2.0.6
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 * @param   array  $options
 	 * @param   string $status
@@ -117,7 +133,7 @@ class Posted_Display_Admin_Post {
 
 		$html  = '<hr>';
 		$html .= '<form method="post" action="">';
-		$html .= '<input type="hidden" name="posted_display_id" value="' . esc_attr( $options['id'] ) . '">';
+		$html .= '<input type="hidden" name="' . $this->key_name . '" value="' . esc_attr( $options['id'] ) . '">';
 		echo $html;
 
 		/** Common settings */
@@ -212,7 +228,7 @@ class Posted_Display_Admin_Post {
 		$html .= '<input type="text" name="posts_output_data" id="posts_output_data" class="regular-text" placeholder="e.g. 1,2,3" value="';
 		$html .= esc_attr( $options['output_data'] );
 		$html .= '">';
-		$html .= '<p>' . esc_html__( 'Ignore post__in if you do not set it.', $this->text_domain ) . '</p>';
+		$html .= '<p>' . esc_html__( 'Posts display new arrival order if you do not set it.', $this->text_domain ) . '</p>';
 		$html .= '</td></tr>';
 		$html .= '</table>';
 		echo $html;
@@ -226,14 +242,14 @@ class Posted_Display_Admin_Post {
 	/**
 	 * Information Message Render
 	 *
-	 * @version 1.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 */
 	private function information_render () {
 		$html  = '<div id="message" class="updated notice notice-success is-dismissible below-h2">';
 		$html .= '<p>Posted Display Information Update.</p>';
 		$html .= '<button type="button" class="notice-dismiss">';
-		$html .= '<span class="screen-reader-text">Dismiss this notice.</span>';
+		$html .= '<span class="screen-reader-text">Posted Display Information Update.</span>';
 		$html .= '</button>';
 		$html .= '</div>';
 

@@ -11,7 +11,7 @@ You can also save and display your browsing history to Cookie.
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
 
 ## ShortCode
-You can use the short code in the post page or fixed page. It is possible to get a short code with the registered template list, use Copy.  
+You can use the short code in the Posts or Pages. It is possible to get a short code with the registered template list, use Copy.  
 You can specify the maximum number to be displayed by changing the value of the posts.
 
 ```
@@ -23,12 +23,20 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 ```
 
 ### Short Code Params Sorted by
-* sort="0": Input order
-* sort="1": Date descending order
-* sort="2": Date ascending order
-* sort="3": Random
+- sort="0": Input order
+- sort="1": Date descending order
+- sort="2": Date ascending order
+- sort="3": Random
 
 ## Change Log
+
+### 2.1.4 (2017-11-29)
+- Checked : WordPress version 4.9.0 operation check.
+
+### 2.1.2 (2017-11-09)
+- Checked : WordPress version 4.8.3 operation check.
+- Updated : Translation update.
+- Fixed : Argument error when creating DB class (Notice).
 
 ### 2.1.1 (2017-09-24)
 - Checked : WordPress version 4.8.2 operation check.

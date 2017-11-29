@@ -102,7 +102,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Insert Data.
 	 *
-	 * @version 2.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 * @param   array $post($_POST)
 	 * @return  integer $id
@@ -120,8 +120,8 @@ class Posted_Display_Admin_Db {
 			'save_term'         => isset( $post['save_term'] ) ? $post['save_term'] : 7,
 			'save_item'         => isset( $post['save_item'] ) ? $post['save_item'] : 10,
 			'output_data'       => strip_tags( $output_data ),
-			'register_date'     => date( "Y-m-d H:i:s" ),
-			'update_date'       => date( "Y-m-d H:i:s" )
+			'register_date'     => date( 'Y-m-d H:i:s' ),
+			'update_date'       => date( 'Y-m-d H:i:s' )
 		);
 		$prepared = array(
 			'%s',
@@ -142,7 +142,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Update Data.
 	 *
-	 * @version 1.0.0
+	 * @version 2.1.2
 	 * @since   1.0.0
 	 * @param   array $post($_POST)
 	 */
@@ -159,7 +159,7 @@ class Posted_Display_Admin_Db {
 			'save_term'         => isset( $post['save_term'] ) ? $post['save_term'] : 7,
 			'save_item'         => isset( $post['save_item'] ) ? $post['save_item'] : 10,
 			'output_data'       => strip_tags( $output_data ),
-			'update_date'       => date( "Y-m-d H:i:s" )
+			'update_date'       => date( 'Y-m-d H:i:s' )
 		);
 		$key = array( 'id' => esc_html( $post['posted_display_id'] ) );
 		$prepared = array(
