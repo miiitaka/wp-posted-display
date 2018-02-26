@@ -30,6 +30,10 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.1.7 (2018-02-26)
+- Checked : WordPress version 4.9.4 operation check.
+- Checked : WordPress version 4.9.3 operation check.
+
 ### 2.1.6 (2018-01-19)
 - Checked : WordPress version 4.9.2 operation check.
 
