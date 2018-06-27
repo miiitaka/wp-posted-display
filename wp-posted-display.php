@@ -172,12 +172,12 @@ class Posted_Display {
 	/**
 	 * admin_scripts
 	 *
-	 * @version 2.0.6
+	 * @version 2.1.9
 	 * @since   1.1.0
 	 */
 	public function admin_scripts () {
-		wp_enqueue_script( 'wp-posted-display-admin-main-js'     , plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), $this->version );
-		wp_enqueue_script( 'wp-structuring-markup-admin-media-js', plugins_url( 'js/media-uploader-main.js', __FILE__ ), array( 'jquery' ), $this->version );
+		wp_enqueue_script( 'wp-posted-display-admin-main-js',  plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), $this->version );
+		wp_enqueue_script( 'wp-posted-display-admin-media-js', plugins_url( 'js/media-uploader-main.js', __FILE__ ), array( 'jquery' ), $this->version );
 		wp_enqueue_media();
 	}
 
