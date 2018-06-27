@@ -97,14 +97,14 @@ class Posted_Display {
 	/**
 	 * ShortCode Register.
 	 *
-	 * version 1.0.0
-	 * @since  1.0.0
-	 * @param  string $args short code params
-	 * @return string
+	 * @version 2.1.9
+	 * @since   1.0.0
+	 * @param   array  $args short code params
+	 * @return  string
 	 */
 	public function short_code_init ( $args ) {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-short-code.php' );
-		$obj = new Posted_Display_ShortCode( $args );
+		$obj = new Posted_Display_ShortCode();
 		return $obj->short_code_display( $args );
 	}
 
