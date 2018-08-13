@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 2.1.8
+Version: 2.2.0
 Author: Kazuya Takami
 Author URI: https://www.terakoya.work/
 License: GPLv2 or later
@@ -18,7 +18,7 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 2.1.8
+ * @version 2.2.0
  * @since   1.0.0
  */
 class Posted_Display {
@@ -34,10 +34,10 @@ class Posted_Display {
 	/**
 	 * Variable definition.
 	 *
-	 * @version 2.1.8
+	 * @version 2.2.0
 	 * @since   2.0.7
 	 */
-	private $version = '2.1.8';
+	private $version = '2.2.0';
 
 	/**
 	 * Constructor Define.
@@ -97,14 +97,14 @@ class Posted_Display {
 	/**
 	 * ShortCode Register.
 	 *
-	 * version 1.0.0
-	 * @since  1.0.0
-	 * @param  string $args short code params
-	 * @return string
+	 * @version 2.1.9
+	 * @since   1.0.0
+	 * @param   array  $args short code params
+	 * @return  string
 	 */
 	public function short_code_init ( $args ) {
 		require_once( plugin_dir_path( __FILE__ ) . 'includes/wp-posted-display-admin-short-code.php' );
-		$obj = new Posted_Display_ShortCode( $args );
+		$obj = new Posted_Display_ShortCode();
 		return $obj->short_code_display( $args );
 	}
 
@@ -172,12 +172,12 @@ class Posted_Display {
 	/**
 	 * admin_scripts
 	 *
-	 * @version 2.0.6
+	 * @version 2.1.9
 	 * @since   1.1.0
 	 */
 	public function admin_scripts () {
-		wp_enqueue_script( 'wp-posted-display-admin-main-js'     , plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), $this->version );
-		wp_enqueue_script( 'wp-structuring-markup-admin-media-js', plugins_url( 'js/media-uploader-main.js', __FILE__ ), array( 'jquery' ), $this->version );
+		wp_enqueue_script( 'wp-posted-display-admin-main-js',  plugins_url( 'js/main.min.js', __FILE__ ), array('jquery'), $this->version );
+		wp_enqueue_script( 'wp-posted-display-admin-media-js', plugins_url( 'js/media-uploader-main.js', __FILE__ ), array( 'jquery' ), $this->version );
 		wp_enqueue_media();
 	}
 

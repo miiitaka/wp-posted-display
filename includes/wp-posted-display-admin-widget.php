@@ -3,7 +3,7 @@
  * Admin Widget Register
  *
  * @author  Kazuya Takami
- * @version 2.1.0
+ * @version 2.2.0
  * @since   1.0.0
  */
 class Posted_Display_Widget extends WP_Widget {
@@ -56,7 +56,7 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Widget Form Display.
 	 *
-	 * @version 1.2.3
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array $instance
@@ -66,75 +66,32 @@ class Posted_Display_Widget extends WP_Widget {
 		/** DB Connect */
 		$db = new Posted_Display_Admin_Db();
 
-		$results = $db->get_list_options();
+		$results      = $db->get_list_options();
+		$option_array = $this->get_default_options();
 
 		if ( $results ) {
-			if ( !isset( $instance['title'] ) ) {
-				$instance['title'] = "";
-			}
-			if ( !isset( $instance['template'] ) ) {
-				$instance['template'] = "";
-			}
-			if ( !isset( $instance['sort'] ) ) {
-				$instance['sort'] = 0;
-			}
-			if ( !isset( $instance['posts'] ) ) {
-				$instance['posts'] = 5;
-			}
-			if ( !isset( $instance['target'] ) ) {
-				$instance['target'] = 'all';
-			}
+			$option_array = array_merge( $option_array, $instance );
 
-			$id   = $this->get_field_id( 'title' );
-			$name = $this->get_field_name( 'title' );
-			echo '<p><label for="' . $id . '">' . esc_html__( 'Title', $this->text_domain ) . ':</label><br>';
-			printf( '<input type="text" id="%s" name="%s" value="%s" class="widefat">', $id, $name, esc_attr( $instance['title'] ) );
-			echo '</p>';
+			/** Title form setting */
+			$this->form_input_text( 'title', 'Title', $option_array['title'] );
 
-			$id   = $this->get_field_id( 'template' );
-			$name = $this->get_field_name( 'template' );
-			echo '<p><label for="' . $id . '">' . esc_html__( 'Template', $this->text_domain ) . ':</label><br>';
-			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
-			foreach ( $results as $row ) {
-				if ( $row->id === $instance['template'] ) {
-					printf( '<option value="%d" selected="selected">%s</option>', $row->id, esc_html( $row->template_name ) );
-				} else {
-					printf( '<option value="%d">%s</option>', $row->id, esc_html( $row->template_name ) );
-				}
-			}
-			echo '</select></p>';
+			/** Title link form setting */
+			$this->form_checkbox( 'link', 'Title link setting ( Single category / tag / author only )', $option_array['link'] );
 
-			$id   = $this->get_field_id( 'sort' );
-			$name = $this->get_field_name( 'sort' );
-			echo '<p><label for="' . $id . '">' . esc_html__( 'Sorted by', $this->text_domain ) . ':</label><br>';
-			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
-			foreach ( $this->sort_array as $key => $row ) {
-				if ( $key == $instance['sort'] ) {
-					printf( '<option value="%d" selected="selected">%s</option>', $key, esc_html( $row ) );
-				} else {
-					printf( '<option value="%d">%s</option>', $key, esc_html( $row ) );
-				}
-			}
-			echo '</select></p>';
+			/** Title link form setting */
+			$this->form_checkbox( 'blank', 'Show title link in a new window', $option_array['blank'] );
 
-			$id   = $this->get_field_id( 'posts' );
-			$name = $this->get_field_name( 'posts' );
-			echo '<p><label for="' . $id . '">' . esc_html__( 'Number of posts to show', $this->text_domain ) . ':&nbsp;</label>';
-			printf( '<input type="number" id="%s" name="%s" value="%s" class="small-text">', $id, $name, esc_attr( $instance['posts'] ) );
-			echo '</p>';
+			/** Template form setting */
+			$this->form_select_template( 'template', 'Template', $option_array['template'], $results );
 
-			$id   = $this->get_field_id( 'target' );
-			$name = $this->get_field_name( 'target' );
-			echo '<p><label for="' . $id . '">' . esc_html__( 'Widget display target', $this->text_domain ) . ':</label><br>';
-			printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
-			foreach ( $this->target_array as $key => $row ) {
-				if ( $key == $instance['target'] ) {
-					printf( '<option value="%s" selected="selected">%s</option>', $key, esc_html( $row ) );
-				} else {
-					printf( '<option value="%s">%s</option>', $key, esc_html( $row ) );
-				}
-			}
-			echo '</select></p>';
+			/** Sort form setting */
+			$this->form_select_default( 'sort', 'Sorted by', $option_array['sort'], $this->sort_array );
+
+			/** Posts form setting */
+			$this->form_input_number( 'posts', 'Number of posts to show', $option_array['posts'] );
+
+			/** Target form setting */
+			$this->form_select_default( 'target', 'Widget display target', $option_array['target'], $this->target_array );
 		} else {
 			$post_url = admin_url() . 'admin.php?page=' . $this->text_domain . '/includes/wp-posted-display-admin-post.php';
 			echo '<p><a href="' . $post_url . '">' . esc_html__( 'Please register of template.', $this->text_domain ) . '</a></p>';
@@ -159,6 +116,9 @@ class Posted_Display_Widget extends WP_Widget {
 		} else {
 			$new_instance['posts'] = 5;
 		}
+		$new_instance['link']  = isset( $new_instance['link'] )  ? 'on' : '';
+		$new_instance['blank'] = isset( $new_instance['blank'] ) ? 'on' : '';
+
 		$instance['title']    = sanitize_text_field( $new_instance['title'] );
 		$instance['template'] = sanitize_text_field( $new_instance['template'] );
 		$instance['sort']     = sanitize_text_field( $new_instance['sort'] );
@@ -170,7 +130,7 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Widget Display.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array $args
@@ -185,20 +145,38 @@ class Posted_Display_Widget extends WP_Widget {
 		}
 
 		/** DB Connect */
-		$db      = new Posted_Display_Admin_Db();
-		$results = $db->get_options( esc_html( $instance['template'] ) );
+		if ( isset( $instance['template'] ) ) {
+			$db      = new Posted_Display_Admin_Db();
+			$results = $db->get_options( esc_html( $instance['template'] ) );
+		} else {
+			$results = __return_false();
+		}
 
 		if ( $results ) {
 			$cookie_name = $this->text_domain . '-' . esc_html( $instance['template'] );
-			$query_args  = $db->set_query( $results, $instance, $cookie_name );
-			$query       = new WP_Query( $query_args );
+			list( $query_args, $permalink ) = $db->set_query( $results, $instance, $cookie_name );
+
+			$query = new WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
 				/** Display widget header. */
 				echo $args['before_widget'] . PHP_EOL;
-				echo $args['before_title'] . PHP_EOL;
-				echo esc_html( $instance['title'] ) . PHP_EOL;
-				echo $args['after_title'] . PHP_EOL;
+
+				if ( !empty( $instance['title'] ) ) {
+					echo $args['before_title'] . PHP_EOL;
+
+					if ( $instance['link'] === 'on' && !empty( $permalink ) ) {
+						if ($instance['blank'] === 'on') {
+							echo '<a href="' . $permalink . '"' . ' target="_blank">';
+						} else {
+							echo '<a href="' . $permalink . '">';
+						}
+						echo esc_html( $instance['title'] ) . '</a>' . PHP_EOL;
+					} else {
+						echo esc_html( $instance['title'] ) . PHP_EOL;
+					}
+					echo $args['after_title'] . PHP_EOL;
+				}
 
 				/** Display widget body. */
 				echo '<ul>' . PHP_EOL;
@@ -233,5 +211,134 @@ class Posted_Display_Widget extends WP_Widget {
 				echo $args['after_widget'];
 			}
 		}
+	}
+
+	/**
+	 * Return the default options array
+	 *
+	 * @version 2.2.0
+	 * @since   2.2.0
+	 * @return  array $args
+	 */
+	private function get_default_options () {
+		$args['title']    = '';
+		$args['link']     = '';
+		$args['blank']    = '';
+		$args['template'] = '';
+		$args['sort']     = 0;
+		$args['posts']    = 5;
+		$args['target']   = 'all';
+
+		return (array) $args;
+	}
+
+	/**
+	 * Create form text
+	 *
+	 * @version 2.2.0
+	 * @since   2.2.0
+	 * @param   string $field
+	 * @param   string $label
+	 * @param   string $value
+	 */
+	private function form_input_text ( $field, $label, $value ) {
+		$id   = $this->get_field_id( $field );
+		$name = $this->get_field_name( $field );
+
+		printf( '<p><label for="%s">%s:</label><br>', $id, esc_html__( $label, $this->text_domain ) );
+		printf( '<input type="text" id="%s" name="%s" value="%s" class="widefat"></p>', $id, $name, esc_attr( $value ) );
+	}
+
+	/**
+	 * Create form number
+	 *
+	 * @version 2.2.0
+	 * @since   2.2.0
+	 * @param   string $field
+	 * @param   string $label
+	 * @param   string $value
+	 */
+	private function form_input_number ( $field, $label, $value ) {
+		$id   = $this->get_field_id( $field );
+		$name = $this->get_field_name( $field );
+
+		printf( '<p><label for="%s">%s:</label>', $id, esc_html__( $label, $this->text_domain ) );
+		printf( '<input type="number" id="%s" name="%s" value="%s" class="small-text"></p>', $id, $name, esc_attr( $value ) );
+	}
+
+	/**
+	 * Create form select (Template)
+	 *
+	 * @version 2.2.0
+	 * @since   2.2.0
+	 * @param   string $field
+	 * @param   string $label
+	 * @param   string $value
+	 * @param   array  $results
+	 */
+	private function form_select_template ( $field, $label, $value, $results ) {
+		$id   = $this->get_field_id( $field );
+		$name = $this->get_field_name( $field );
+
+		printf( '<p><label for="%s">%s:</label>', $id, esc_html__( $label, $this->text_domain ) );
+
+		printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
+		foreach ( $results as $row ) {
+			if ( $row->id === $value ) {
+				printf( '<option value="%d" selected="selected">%s</option>', $row->id, esc_html( $row->template_name ) );
+			} else {
+				printf( '<option value="%d">%s</option>', $row->id, esc_html( $row->template_name ) );
+			}
+		}
+		printf( '</select></p>' );
+	}
+
+	/**
+	 * Create form select (Default)
+	 *
+	 * @version 2.2.0
+	 * @since   2.2.0
+	 * @param   string $field
+	 * @param   string $label
+	 * @param   string $value
+	 * @param   array  $results
+	 */
+	private function form_select_default ( $field, $label, $value, $results ) {
+		$id   = $this->get_field_id( $field );
+		$name = $this->get_field_name( $field );
+
+		printf( '<p><label for="%s">%s:</label>', $id, esc_html__( $label, $this->text_domain ) );
+
+		printf( '<select id="%s" name="%s" class="widefat">', $id, $name );
+		foreach ( $results as $key => $row ) {
+			if ( $key == $value ) {
+				printf( '<option value="%d" selected="selected">%s</option>', $key, esc_html( $row ) );
+			} else {
+				printf( '<option value="%d">%s</option>', $key, esc_html( $row ) );
+			}
+		}
+		printf( '</select></p>' );
+	}
+
+	/**
+	 * Widget Form Checkbox.
+	 *
+	 * @version 2.2.0
+	 * @since   2.2.0
+	 * @access  private
+	 * @param   string  $field
+	 * @param   string  $label
+	 * @param   boolean $value
+	 */
+	public function form_checkbox ( $field, $label, $value ) {
+		$id   = $this->get_field_id( $field );
+		$name = $this->get_field_name( $field );
+
+		if ( $value === 'on' ) {
+			printf( '<p><input type="checkbox" id="%s" name="%s" class="checkbox" checked="checked">', $id, $name );
+		} else {
+			printf( '<p><input type="checkbox" id="%s" name="%s" class="checkbox">', $id, $name );
+		}
+		printf( '<label for="%s">%s</label></p>', $id, $label );
 	}
 }
