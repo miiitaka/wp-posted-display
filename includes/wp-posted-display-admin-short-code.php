@@ -3,7 +3,7 @@
  * Admin ShortCode Settings
  *
  * @author  Kazuya Takami
- * @version 1.1.2
+ * @version 2.2.0
  * @since   1.0.0
  */
 class Posted_Display_ShortCode {
@@ -19,7 +19,7 @@ class Posted_Display_ShortCode {
 	/**
 	 * ShortCode Display.
 	 *
-	 * @version 1.1.2
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $args
@@ -45,8 +45,9 @@ class Posted_Display_ShortCode {
 
 		if ( $results ) {
 			$cookie_name = $this->text_domain . '-' . esc_html( (int) $id );
-			$query_args  = $db->set_query( $results, $instance, $cookie_name );
-			$query       = new WP_Query( $query_args );
+			list( $query_args, $permalink ) = $db->set_query( $results, $instance, $cookie_name );
+
+			$query = new WP_Query( $query_args );
 
 			if ( $query->have_posts() ) {
 				/** Display ShortCode body. */

@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 2.1.0
+ * @version 2.2.0
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -208,13 +208,13 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
-	 * @version 2.1.0
+	 * @version 2.2.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $results
 	 * @param   array  $instance
 	 * @param   string $cookie_name
-	 * @return  array  $args
+	 * @return  array  array( $args, $permalink )
 	 */
 	public function set_query ( $results, $instance, $cookie_name ) {
 		/** Common Items Set */
@@ -224,6 +224,8 @@ class Posted_Display_Admin_Db {
 			"posts_per_page"      => esc_html( $instance['posts'] ),
 			"ignore_sticky_posts" => true
 		);
+		$ids       = explode( ',', esc_html( $results['output_data'] ) );
+		$permalink = '';
 
 		switch ( $instance['sort'] ) {
 			case 0: $args += array( "orderby" => "post__in", "order" => "ASC" );  break;
@@ -251,18 +253,27 @@ class Posted_Display_Admin_Db {
 				}
 				break;
 			case "Posts":
-				if ( !empty( $results['output_data'] ) ) {
-					$args += array( "post__in" => explode( ',', esc_html( $results['output_data'] ) ) );
+				if ( count( $ids ) > 0 ) {
+					$args += array( "post__in" => $ids );
 				}
 				break;
 			case "Categories":
-				$args += array( "category__in" => explode( ',', esc_html( $results['output_data']) ) );
+				if ( count( $ids ) > 0 ) {
+					$permalink = get_category_link( $ids[0] );
+					$args += array( "category__in" => $ids );
+				}
 				break;
 			case "Tags":
-				$args += array( "tag__in" => explode( ',', esc_html( $results['output_data']) ) );
+				if ( count( $ids ) > 0 ) {
+					$permalink = get_tag_link( $ids[0] );
+					$args += array( "tag__in" => $ids );
+				}
 				break;
 			case "Users":
-				$args += array( "author__in" => explode( ',', esc_html( $results['output_data']) ) );
+				if ( count( $ids ) > 0 ) {
+					$permalink = get_author_posts_url( $ids[0] );
+					$args += array( "author__in" => $ids );
+				}
 				break;
 			default:
 				if ( $this->exist_custom_post( $results['type'] ) ) {
@@ -274,7 +285,7 @@ class Posted_Display_Admin_Db {
 				break;
 		}
 
-		return (array) $args;
+		return (array) array( $args, $permalink );
 	}
 
 	/**
