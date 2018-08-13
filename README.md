@@ -30,6 +30,11 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.2.0 (2018-08-13)
+- Updated : Make link setting on the title possible.
+- Checked : WordPress version 4.9.8 operation check.
+- Checked : WordPress version 4.9.7 operation check.
+
 ### 2.1.8 (2018-06-08)
 - Checked : WordPress version 4.9.6 operation check.
 - Checked : WordPress version 4.9.5 operation check.
