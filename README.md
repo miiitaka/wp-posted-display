@@ -30,6 +30,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.2.1 (2018-08-16)
+- Fixed : Filter hook setting of the title missing.
+
 ### 2.2.0 (2018-08-13)
 - Updated : Make link setting on the title possible.
 - Checked : WordPress version 4.9.8 operation check.
