@@ -31,6 +31,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.3.0 (2018-09-19)
+- Updated : When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
+
 ### 2.2.1 (2018-08-16)
 - Fixed : Filter hook setting of the title missing.
 
