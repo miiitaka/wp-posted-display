@@ -3,7 +3,7 @@
  * Admin DB Connection
  *
  * @author  Kazuya Takami
- * @version 2.2.0
+ * @version 2.3.0
  * @since   1.0.0
  */
 class Posted_Display_Admin_Db {
@@ -30,13 +30,13 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Create Table.
 	 *
-	 * @version 1.0.0
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 */
 	public function create_table () {
 		global $wpdb;
 
-		$prepared     = $wpdb->prepare( "SHOW TABLES LIKE %s", $this->table_name );
+		$prepared     = $wpdb->prepare( 'SHOW TABLES LIKE %s', $this->table_name );
 		$is_db_exists = $wpdb->get_var( $prepared );
 
 		if ( is_null( $is_db_exists ) ) {
@@ -63,7 +63,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Get Data.
 	 *
-	 * @version 1.0.0
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 * @param   integer $id
 	 * @return  array   $args
@@ -71,7 +71,7 @@ class Posted_Display_Admin_Db {
 	public function get_options ( $id ) {
 		global $wpdb;
 
-		$query    = "SELECT * FROM " . $this->table_name . " WHERE id = %d";
+		$query    = 'SELECT * FROM ' . $this->table_name . ' WHERE id = %d';
 		$data     = array( $id );
 		$prepared = $wpdb->prepare( $query, $data );
 
@@ -81,7 +81,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Get All Data.
 	 *
-	 * @version 1.0.0
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 * @param   string $type
 	 * @return  array  $results
@@ -90,11 +90,11 @@ class Posted_Display_Admin_Db {
 		global $wpdb;
 
 		if ( $type === 'Cookie' ) {
-			$query    = "SELECT * FROM " . $this->table_name . " WHERE type = %s ORDER BY update_date DESC";
+			$query    = 'SELECT * FROM ' . $this->table_name . ' WHERE type = %s ORDER BY update_date DESC';
 			$data     = array( $type );
 			$prepared = $wpdb->prepare( $query, $data );
 		} else {
-			$prepared = "SELECT * FROM " . $this->table_name . " ORDER BY update_date DESC";
+			$prepared = 'SELECT * FROM ' . $this->table_name . ' ORDER BY update_date DESC';
 		}
 		return (array) $wpdb->get_results( $prepared );
 	}
@@ -208,7 +208,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
-	 * @version 2.2.0
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   array  $results
@@ -219,67 +219,92 @@ class Posted_Display_Admin_Db {
 	public function set_query ( $results, $instance, $cookie_name ) {
 		/** Common Items Set */
 		$args = array(
-			"post_status"         => "publish",
-			"no_found_rows"       => true,
-			"posts_per_page"      => esc_html( $instance['posts'] ),
-			"ignore_sticky_posts" => true
+			'post_status'         => 'publish',
+			'no_found_rows'       => true,
+			'posts_per_page'      => esc_html( $instance['posts'] ),
+			'ignore_sticky_posts' => true
 		);
 		$ids       = explode( ',', esc_html( $results['output_data'] ) );
 		$permalink = '';
+		$term_ids  = array();
 
 		switch ( $instance['sort'] ) {
-			case 0: $args += array( "orderby" => "post__in", "order" => "ASC" );  break;
-			case 1: $args += array( "orderby" => "date",     "order" => "DESC" ); break;
-			case 2: $args += array( "orderby" => "date",     "order" => "ASC" );  break;
-			case 3: $args += array( "orderby" => "rand" ); break;
+			case 0: $args += array( 'orderby' => 'post__in', 'order' => 'ASC' );  break;
+			case 1: $args += array( 'orderby' => 'date',     'order' => 'DESC' ); break;
+			case 2: $args += array( 'orderby' => 'date',     'order' => 'ASC' );  break;
+			case 3: $args += array( 'orderby' => 'rand' ); break;
 		}
 
 		switch ( $results['type'] ) {
-			case "Cookie":
+			case 'Cookie':
 				if ( isset( $_COOKIE[$cookie_name] ) ) {
 					$post_array = explode( ',', esc_html( $_COOKIE[$cookie_name] ) );
 					if ( is_single() ) {
-						global $post;
-						$key = array_search( $post->ID, $post_array );
+						$key = array_search( get_the_ID(), $post_array );
 						if ( $key !== false ) {
 							array_splice( $post_array, $key, 1 );
 						}
 					}
 					if ( is_array( $post_array ) ) {
-						$args += array( "post__in" => array_reverse( $post_array ) );
+						$args += array( 'post__in' => array_reverse( $post_array ) );
 					}
 				} else {
 					$args = array();
 				}
 				break;
-			case "Posts":
-				if ( count( $ids ) > 0 ) {
-					$args += array( "post__in" => $ids );
+			case 'Posts':
+				if ( count( $ids ) > 0 && !empty( $ids[0] ) ) {
+					$args += array( 'post__in' => $ids );
 				}
 				break;
-			case "Categories":
-				if ( count( $ids ) > 0 ) {
+			case 'Categories':
+				if ( count( $ids ) > 0 && !empty( $ids[0] ) ) {
 					$permalink = get_category_link( $ids[0] );
-					$args += array( "category__in" => $ids );
+					$args += array( 'category__in' => $ids );
+				} elseif ( is_single() ) {
+					$id    = get_the_ID();
+					$terms = get_the_terms( 0, 'category' );
+
+					if ( $terms && !is_wp_error( $terms ) ) {
+						foreach( $terms as $term ) {
+							$term_ids[] = $term->term_id;
+						}
+						$args += array( 'category__in' => $term_ids, 'post__not_in' => array( $id ) );
+					}
 				}
 				break;
-			case "Tags":
-				if ( count( $ids ) > 0 ) {
+			case 'Tags':
+				if ( count( $ids ) > 0 && !empty( $ids[0] ) ) {
 					$permalink = get_tag_link( $ids[0] );
-					$args += array( "tag__in" => $ids );
+					$args += array( 'tag__in' => $ids );
+				} elseif ( is_single() ) {
+					$id    = get_the_ID();
+					$terms = get_the_terms( 0, 'post_tag' );
+
+					if ( $terms && !is_wp_error( $terms ) ) {
+						foreach( $terms as $term ) {
+							$term_ids[] = $term->term_id;
+						}
+						$args += array( 'tag__in' => $term_ids, 'post__not_in' => array( $id ) );
+					}
 				}
 				break;
-			case "Users":
-				if ( count( $ids ) > 0 ) {
+			case 'Users':
+				if ( count( $ids ) > 0 && !empty( $ids[0] ) ) {
 					$permalink = get_author_posts_url( $ids[0] );
-					$args += array( "author__in" => $ids );
+					$args += array( 'author__in' => $ids );
+				} elseif ( is_single() ) {
+					$posts = get_post();
+					if ( $posts->post_author ) {
+						$args += array( 'author__in' => $posts->post_author, 'post__not_in' => array( $posts->ID ) );
+					}
 				}
 				break;
 			default:
 				if ( $this->exist_custom_post( $results['type'] ) ) {
-					$args += array( "post_type" => $results['type'] );
+					$args += array( 'post_type' => $results['type'] );
 					if ( !empty( $results['output_data']) ) {
-						$args += array( "post__in"  => explode( ',', esc_html( $results['output_data']) ) );
+						$args += array( 'post__in'  => explode( ',', esc_html( $results['output_data']) ) );
 					}
 				}
 				break;
@@ -291,32 +316,32 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Query Settings.
 	 *
-	 * @version 2.0.0
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 * @access  private
 	 * @param   array  $post
 	 * @return  string $return_output_data
 	 */
 	private function set_output_data ( $post ) {
-		$return_output_data = "";
+		$return_output_data = '';
 		switch ( $post['type'] ) {
-			case "Cookie":
+			case 'Cookie':
 				break;
-			case "Posts":
-				$return_output_data = isset( $post['posts_output_data'] ) ? $post['posts_output_data'] : "";
+			case 'Posts':
+				$return_output_data = isset( $post['posts_output_data'] ) ? $post['posts_output_data'] : '';
 				break;
-			case "Categories":
-				$return_output_data = isset( $post['categories_output_data'] ) ? $post['categories_output_data'] : "";
+			case 'Categories':
+				$return_output_data = isset( $post['categories_output_data'] ) ? $post['categories_output_data'] : '';
 				break;
-			case "Tags":
-				$return_output_data = isset( $post['tags_output_data'] ) ? $post['tags_output_data'] : "";
+			case 'Tags':
+				$return_output_data = isset( $post['tags_output_data'] ) ? $post['tags_output_data'] : '';
 				break;
-			case "Users":
-				$return_output_data = isset( $post['users_output_data'] ) ? $post['users_output_data'] : "";
+			case 'Users':
+				$return_output_data = isset( $post['users_output_data'] ) ? $post['users_output_data'] : '';
 				break;
 			default:
 				if ( $this->exist_custom_post( $post['type'] ) ) {
-					$return_output_data = isset( $post['posts_output_data'] ) ? $post['posts_output_data'] : "";
+					$return_output_data = isset( $post['posts_output_data'] ) ? $post['posts_output_data'] : '';
 				}
 				break;
 		}
@@ -350,7 +375,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Template replace.
 	 *
-	 * @version 1.1.1
+	 * @version 2.3.0
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   string $template
@@ -370,14 +395,14 @@ class Posted_Display_Admin_Db {
 	 * ]
 	 */
 	public function set_template ( $template, $items ) {
-		$template = str_replace( '##title##',       esc_html( $items["title"] ),       $template );
-		$template = str_replace( '##summary##',     esc_html( $items["excerpt"] ),     $template );
-		$template = str_replace( '##image##',       esc_html( $items["image"] ),       $template );
-		$template = str_replace( '##date##',        esc_html( $items["date"] ),        $template );
-		$template = str_replace( '##link##',        esc_url( $items["link"]),          $template );
-		$template = str_replace( '##tag##',         esc_html( $items["tag"] ),         $template );
-		$template = str_replace( '##category##',    esc_html( $items["category"] ),    $template );
-		$template = str_replace( '##author_name##', esc_html( $items["author_name"] ), $template );
+		$template = str_replace( '##title##',       esc_html( $items['title'] ),       $template );
+		$template = str_replace( '##summary##',     esc_html( $items['excerpt'] ),     $template );
+		$template = str_replace( '##image##',       esc_html( $items['image'] ),       $template );
+		$template = str_replace( '##date##',        esc_html( $items['date'] ),        $template );
+		$template = str_replace( '##link##',        esc_url( $items['link']),          $template );
+		$template = str_replace( '##tag##',         esc_html( $items['tag'] ),         $template );
+		$template = str_replace( '##category##',    esc_html( $items['category'] ),    $template );
+		$template = str_replace( '##author_name##', esc_html( $items['author_name'] ), $template );
 		$template = str_replace( '\\', '', $template );
 
 		/** Escape */

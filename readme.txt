@@ -16,6 +16,7 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
+* When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
 
 **In a Posts or Pages**
 
