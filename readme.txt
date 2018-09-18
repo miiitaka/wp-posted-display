@@ -3,7 +3,7 @@ Contributors: miiitaka
 Tags: post, posts, widget, history, cookie, category, tag, shortcode
 Requires at least: 4.3.1
 Tested up to: 4.9.8
-Stable tag: 2.2.1
+Stable tag: 2.3.0
 
 Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
 
@@ -16,6 +16,7 @@ Plug-in Posted Display Widget & ShortCode Add. You can also save and display you
 * You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
 * You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
+* When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
 
 **In a Posts or Pages**
 
@@ -52,6 +53,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 2. "Posted Display" has been added to the Widget. Display to select the template you created.
 
 == Changelog ==
+
+= 2.3.0 (2018-09-19) =
+* Updated : When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
 
 = 2.2.1 (2018-08-16) =
 * Fixed : Filter hook setting of the title missing.

@@ -4,11 +4,12 @@ https://wordpress.org/plugins/wp-posted-display/
 Plug-in Posted Display Widget & ShortCode Add.
 You can also save and display your browsing history to Cookie.
 
-* Save your browsing history of the posts to Cookie, you can view the information in the widget and the short code.
-* You can create a widget and a short code that can display the posts in any.
-* You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
-* You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
-* You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
+- Save your browsing history of the posts to Cookie, you can view the information in the widget and the short code.
+- You can create a widget and a short code that can display the posts in any.
+- You can view the information in the widget and the short code posts that belong to any category ID.(Multiple specified)
+- You can view the information in the widget and the short code posts that belong to any tag ID.(Multiple specified)
+- You can view the information in the widget and the short code posts that belong to any user ID.(Multiple specified)
+- When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
 
 ## ShortCode
 You can use the short code in the Posts or Pages. It is possible to get a short code with the registered template list, use Copy.  
@@ -29,6 +30,9 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 - sort="3": Random
 
 ## Change Log
+
+### 2.3.0 (2018-09-19)
+- Updated : When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
 
 ### 2.2.1 (2018-08-16)
 - Fixed : Filter hook setting of the title missing.
