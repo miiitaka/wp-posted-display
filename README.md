@@ -31,6 +31,11 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.4.0 (2019-01-02)
+- Check : WordPress version 5.0.2 operation check.
+- Check : WordPress version 5.0.1 operation check.
+- Check : WordPress version 5.0.0 operation check.
+
 ### 2.3.0 (2018-09-19)
 - Updated : When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
 
