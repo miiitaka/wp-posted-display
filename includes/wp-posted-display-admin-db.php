@@ -375,7 +375,7 @@ class Posted_Display_Admin_Db {
 	/**
 	 * Template replace.
 	 *
-	 * @version 2.3.0
+	 * @version 2.4.1
 	 * @since   1.0.0
 	 * @access  public
 	 * @param   string $template
@@ -400,8 +400,8 @@ class Posted_Display_Admin_Db {
 		$template = str_replace( '##image##',       esc_html( $items['image'] ),       $template );
 		$template = str_replace( '##date##',        esc_html( $items['date'] ),        $template );
 		$template = str_replace( '##link##',        esc_url( $items['link']),          $template );
-		$template = str_replace( '##tag##',         esc_html( $items['tag'] ),         $template );
-		$template = str_replace( '##category##',    esc_html( $items['category'] ),    $template );
+		$template = str_replace( '##tag##',         $items['tag'],                     $template );
+		$template = str_replace( '##category##',    $items['category'],                $template );
 		$template = str_replace( '##author_name##', esc_html( $items['author_name'] ), $template );
 		$template = str_replace( '\\', '', $template );
 
