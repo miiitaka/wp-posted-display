@@ -33,6 +33,7 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ### 2.4.1 (2019-01-23)
 - Fixed : A list of categories and tags is displayed in escape.
+- Check : WordPress version 5.0.3 operation check.
 
 ### 2.4.0 (2019-01-02)
 - Check : WordPress version 5.0.2 operation check.
