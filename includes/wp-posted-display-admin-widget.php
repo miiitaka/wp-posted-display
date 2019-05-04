@@ -3,7 +3,7 @@
  * Admin Widget Register
  *
  * @author  Kazuya Takami
- * @version 2.2.1
+ * @version 2.5.0
  * @since   1.0.0
  */
 class Posted_Display_Widget extends WP_Widget {
@@ -44,15 +44,13 @@ class Posted_Display_Widget extends WP_Widget {
 	/**
 	 * Constructor Define.
 	 *
-	 * @version 1.0.0
+	 * @version 2.5.0
 	 * @since   1.0.0
 	 * @access  public
 	 */
 	public function __construct () {
 		$widget_options = array( 'description' => esc_html__( 'Posted Display Widget', $this->text_domain ) );
 		parent::__construct( false, esc_html__( 'Posted Display', $this->text_domain ), $widget_options );
-
-		add_filter( 'widget_title', array( $this, 'widget_title_filter' ), 10, 3 );
 	}
 
 	/**
@@ -336,32 +334,5 @@ class Posted_Display_Widget extends WP_Widget {
 			printf( '<p><input type="checkbox" id="%s" name="%s" class="checkbox">', $id, $name );
 		}
 		printf( '<label for="%s">%s</label></p>', $id, $label );
-	}
-
-	/**
-	 * Widget Form Checkbox.
-	 *
-	 * @version 2.2.1
-	 * @since   2.2.1
-	 * @access  private
-	 * @param   string  $title
-	 * @param   array   $instance
-	 * @param   mixed   $id_base
-	 * @return  string  $title
-	 */
-	public function widget_title_filter ( $title, $instance, $id_base ) {
-		if ( !empty( $title ) && $id_base === 'posted_display_widget' ) {
-			if ( $instance['link'] === 'on' && !empty( $instance['permalink'] ) ) {
-				$before = '<a href="' . $instance['permalink'] . '"';
-				if ($instance['blank'] === 'on') {
-					$before .= ' target="_blank"';
-				}
-				$before .= '>';
-				$after   = '</a>';
-
-				$title = $before . $title . $after;
-			}
-		}
-		return $title;
 	}
 }

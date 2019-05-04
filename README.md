@@ -31,17 +31,21 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
+### 2.5.0 (2019-05-xx)
+- Deleted : Removed the ability to put a link on the title.
+- Checked : WordPress version 5.1.1 operation check.
+
 ### 2.4.2 (2019-03-10)
-- Check : WordPress version 5.1.0 operation check.
+- Checked : WordPress version 5.1.0 operation check.
 
 ### 2.4.1 (2019-01-23)
 - Fixed : A list of categories and tags is displayed in escape.
-- Check : WordPress version 5.0.3 operation check.
+- Checked : WordPress version 5.0.3 operation check.
 
 ### 2.4.0 (2019-01-02)
-- Check : WordPress version 5.0.2 operation check.
-- Check : WordPress version 5.0.1 operation check.
-- Check : WordPress version 5.0.0 operation check.
+- Checked : WordPress version 5.0.2 operation check.
+- Checked : WordPress version 5.0.1 operation check.
+- Checked : WordPress version 5.0.0 operation check.
 
 ### 2.3.0 (2018-09-19)
 - Updated : When the output type is category, tag or user, when ID is not specified, it is automatically acquired from information of post page.
