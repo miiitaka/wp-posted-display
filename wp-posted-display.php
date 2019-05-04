@@ -18,7 +18,7 @@ new Posted_Display();
  * Basic Class
  *
  * @author  Kazuya Takami
- * @version 2.4.2
+ * @version 2.5.0
  * @since   1.0.0
  */
 class Posted_Display {
@@ -26,26 +26,30 @@ class Posted_Display {
 	/**
 	 * Variable definition.
 	 *
-	 * @version 2.0.6
+	 * @version 2.5.0
 	 * @since   1.2.2
 	 */
-	private $text_domain = 'wp-posted-display';
+	private $text_domain;
 
 	/**
 	 * Variable definition.
 	 *
-	 * @version 2.4.2
+	 * @version 2.5.0
 	 * @since   2.0.7
 	 */
-	private $version = '2.4.2';
+	private $version;
 
 	/**
 	 * Constructor Define.
 	 *
-	 * @version 2.0.8
+	 * @version 2.5.0
 	 * @since   1.0.0
 	 */
 	public function __construct () {
+		$data = get_file_data( __FILE__, array( 'version' => 'Version', 'text_domain' => 'Text Domain' ) );
+		$this->version     = isset( $data['version'] ) ? $data['version'] : '';
+		$this->text_domain = isset( $data['text_domain'] ) ? $data['text_domain'] : '';
+
 		register_activation_hook( __FILE__, array( $this, 'create_table' ) );
 		add_shortcode( $this->text_domain, array( $this, 'short_code_init' ) );
 		add_action( 'plugins_loaded', array( $this, 'plugins_loaded' ) );
