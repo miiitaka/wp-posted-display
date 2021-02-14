@@ -31,10 +31,10 @@ if ( shortcode_exists( 'wp-posted-display' ) ) {
 
 ## Change Log
 
-### 2.5.0 (2019-05-xx)
+### 2.5.0 (2021-02-14)
 - Updated : Get plug-in version & Text domain automatically.
 - Deleted : Removed the ability to put a link on the title.
-- Checked : WordPress version 5.1.1 operation check.
+- Checked : WordPress version 5.6.1 operation check.
 
 ### 2.4.2 (2019-03-10)
 - Checked : WordPress version 5.1.0 operation check.
