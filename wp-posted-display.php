@@ -3,7 +3,7 @@
 Plugin Name: WordPress Posted Display
 Plugin URI: https://github.com/miiitaka/wp-posted-display
 Description: Plug-in Posted Display Widget & ShortCode Add. You can also save and display your browsing history to Cookie.
-Version: 2.4.2
+Version: 2.5.0
 Author: Kazuya Takami
 Author URI: https://www.terakoya.work/
 License: GPLv2 or later
